@@ -1,4 +1,4 @@
-package hello;
+package com.clement.magichome;
 
 import java.util.concurrent.atomic.AtomicLong;
 
