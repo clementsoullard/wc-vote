@@ -13,7 +13,7 @@ public class DayScheduler {
 	/**
 	 * Every day the TV stops at midnight.
 	 */
-	@Scheduled(cron = "0 0 0 * * MON-FRI")
+	@Scheduled(cron = "0 1 1 * * MON-FRI")
 	public void closeTv() throws IOException {
 		SchedulerApplication.writeCountDown(-1);
 	}
@@ -21,7 +21,7 @@ public class DayScheduler {
 	/**
 	 * Credited on Wednesday.
 	 */
-	@Scheduled(cron = "0 0 1 * * WED")
+	@Scheduled(cron = "0 1 1 * * WED")
 	public void giveCreditForWednesday() throws IOException {
 		SchedulerApplication.writeCountDown(30 * 60);
 	}
@@ -29,8 +29,15 @@ public class DayScheduler {
 	/**
 	 * Credited on Saturday.
 	 */
-	@Scheduled(cron = "0 0 1 * * SAT-SUN")
+	@Scheduled(cron = "0 1 1 * * SAT")
 	public void giveCreditForWeekEnd() throws IOException {
+		SchedulerApplication.writeCountDown(60 * 60);
+	}
+	/**
+	 * Credited on Saturday.
+	 */
+	@Scheduled(cron = "0 1 1 * * SUN")
+	public void giveCreditForWeekEndSunday() throws IOException {
 		SchedulerApplication.writeCountDown(60 * 60);
 	}
 
