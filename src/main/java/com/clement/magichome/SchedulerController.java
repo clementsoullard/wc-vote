@@ -21,9 +21,7 @@ public class SchedulerController {
 	public ActionResult greeting(
 			@RequestParam(value = "value", defaultValue = "90") Integer value)
 			throws Exception {
-		File file = new File(Constant.path);
-		PrintStream ps = new PrintStream(file);
-		ps.print(value);
+		SchedulerApplication.writeCountDown(value);
 		return new ActionResult(counter.incrementAndGet(), "Hehe");
 	}
 }
