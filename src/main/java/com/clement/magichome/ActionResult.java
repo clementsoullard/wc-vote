@@ -1,11 +1,11 @@
 package com.clement.magichome;
 
-public class Greeting {
+public class ActionResult {
 
     private final long id;
     private final String content;
 
-    public Greeting(long id, String content) {
+    public ActionResult(long id, String content) {
         this.id = id;
         this.content = content;
     }

@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
 @EnableScheduling
-public class AppConfig {
+public class DayScheduler {
 
 	/**
 	 * Every day the TV stops at midnight.

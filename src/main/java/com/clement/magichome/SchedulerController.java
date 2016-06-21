@@ -12,19 +12,18 @@ import java.io.FileWriter;
 import java.io.PrintStream;
 
 @RestController
-public class GreetingController {
+public class SchedulerController {
 
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 
 	@RequestMapping("/greeting")
-	public Greeting greeting(
+	public ActionResult greeting(
 			@RequestParam(value = "value", defaultValue = "90") Integer value)
 			throws Exception {
-		File file = new File("/tmp/scheduler/CD");
-		// FileOutputStream fos=new FileOutputStream(file);
+		File file = new File(Constant.path);
 		PrintStream ps = new PrintStream(file);
 		ps.print(value);
-		return new Greeting(counter.incrementAndGet(), "Hehe");
+		return new ActionResult(counter.incrementAndGet(), "Hehe");
 	}
 }
