@@ -33,6 +33,7 @@ public class DayScheduler {
 	public void giveCreditForWeekEnd() throws IOException {
 		SchedulerApplication.writeCountDown(60 * 60);
 	}
+
 	/**
 	 * Credited on Saturday.
 	 */
@@ -40,5 +41,6 @@ public class DayScheduler {
 	public void giveCreditForWeekEndSunday() throws IOException {
 		SchedulerApplication.writeCountDown(60 * 60);
 	}
+
 
 }
