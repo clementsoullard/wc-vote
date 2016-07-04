@@ -10,18 +10,20 @@ import com.mongodb.client.MongoDatabase;
 
 @Repository
 public class LogService {
-	MongoClient mongoClient = new MongoClient("192.168.1.20", 27017);;
 
-	// public MongoClient getMongoClient() {
-	// if (mongoClient == null) {
-	// mongoClient = new MongoClient("192.168.1.20",27017);
-	// }
-	// return mongoClient;
-	// }
+	private static MongoCollection mc;
+
+	public static MongoCollection  getLogCollection() {
+		if (mc == null) {
+			MongoClient mongoClient = new MongoClient("192.168.1.20", 27017);
+			mongoClient = new MongoClient("192.168.1.20", 27017);
+			mc = mongoClient.getDatabase("test").getCollection("log");
+		}
+		return mc;
+	}
 
 	public void insertSomtething() {
-		MongoDatabase md = mongoClient.getDatabase("test");
-		MongoCollection mc = md.getCollection("log");
+		MongoCollection mc =getLogCollection(); 
 		LogEntry logEntry = new LogEntry();
 		logEntry.setMetricValue(22);
 		logEntry.setMetricName("TV");

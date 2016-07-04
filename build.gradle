@@ -27,6 +27,7 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile 'org.mongodb:mongodb-driver:3.2.2'
+    compile group: 'com.google.code.gson', name: 'gson', version: '1.7.2'
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
