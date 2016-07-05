@@ -17,11 +17,11 @@ public class SchedulerController {
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 
-	@RequestMapping("/greeting")
+	@RequestMapping("/credit")
 	public ActionResult greeting(
 			@RequestParam(value = "value", defaultValue = "90") Integer value)
 			throws Exception {
 		SchedulerApplication.writeCountDown(value);
-		return new ActionResult(counter.incrementAndGet(), "Hehe");
+		return new ActionResult(counter.incrementAndGet(), "Ok");
 	}
 }

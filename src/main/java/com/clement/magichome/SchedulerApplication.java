@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
  * @author Clement_Soullard
  *
  */
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
+@SpringBootApplication(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
 public class SchedulerApplication {
 
 	public static void main(String[] args) {
@@ -24,6 +24,9 @@ public class SchedulerApplication {
 
 	public static void writeCountDown(int value) {
 		File file = new File(Constant.path);
+		if (!file.getParentFile().exists()) {
+			file.getParentFile().mkdir();
+		}
 		PrintStream ps;
 		try {
 			ps = new PrintStream(file);

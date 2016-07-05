@@ -8,6 +8,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
 @EnableScheduling
+/**
+ * This class credit some minutes for the TV.
+ * 
+ * @author Clément
+ *
+ */
 public class DayScheduler {
 
 	/**
@@ -41,6 +47,5 @@ public class DayScheduler {
 	public void giveCreditForWeekEndSunday() throws IOException {
 		SchedulerApplication.writeCountDown(60 * 60);
 	}
-
 
 }
