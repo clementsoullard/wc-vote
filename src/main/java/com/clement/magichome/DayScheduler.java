@@ -2,9 +2,13 @@ package com.clement.magichome;
 
 import java.io.IOException;
 
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Configuration
 @EnableScheduling
@@ -15,6 +19,8 @@ import org.springframework.scheduling.annotation.Scheduled;
  *
  */
 public class DayScheduler {
+	
+	static final Logger LOG = LoggerFactory.getLogger(DayScheduler.class);
 
 	/**
 	 * Every day the TV stops at midnight.
@@ -22,6 +28,15 @@ public class DayScheduler {
 	@Scheduled(cron = "0 1 1 * * MON-FRI")
 	public void closeTv() throws IOException {
 		SchedulerApplication.writeCountDown(-1);
+	}
+
+	/**
+	 * Every day the TV stops at midnight.
+	 */
+	@Scheduled(cron = "1 35 6 * * MON-FRI",zone="Europe/Paris")
+	public void creditTvTest() throws IOException {
+		LOG.debug("Test credit 3600 sec");
+		SchedulerApplication.writeCountDown(60 * 60);
 	}
 
 	/**
