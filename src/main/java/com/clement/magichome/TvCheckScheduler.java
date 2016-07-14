@@ -70,6 +70,11 @@ public class TvCheckScheduler {
 				pauseMode = false;
 			}
 		}
+		// If the relay is close there is no pause.
+		else {
+			pauseMode = false;
+		}
+		;
 	}
 
 	/**

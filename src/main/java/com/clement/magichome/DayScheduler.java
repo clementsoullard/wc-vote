@@ -33,9 +33,9 @@ public class DayScheduler {
 	/**
 	 * Every day the TV stops at midnight.
 	 */
-	@Scheduled(cron = "1 35 6 * * MON-FRI",zone="Europe/Paris")
+	@Scheduled(cron = "1 0 9 * * MON-FRI",zone="Europe/Paris")
 	public void creditTvTest() throws IOException {
-		LOG.debug("Test credit 3600 sec");
+		LOG.info("Test credit 5mn sec");
 		SchedulerApplication.writeCountDown(60 * 60);
 	}
 
