@@ -1,27 +1,29 @@
 package com.clement.magichome;
 
-import java.util.concurrent.atomic.AtomicLong;
+import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.PrintStream;
+import com.clement.magichome.dto.CreditResult;
+import com.clement.magichome.object.TVStatus;
 
 @RestController
 public class SchedulerController {
 
-	private static final String template = "Hello, %s!";
-	private final AtomicLong counter = new AtomicLong();
+	@Resource
+	TvCheckScheduler tvCheckScheduler;
 
 	@RequestMapping("/credit")
-	public ActionResult greeting(
-			@RequestParam(value = "value", defaultValue = "90") Integer value)
-			throws Exception {
+	public CreditResult credit(@RequestParam(value = "value", defaultValue = "90") Integer value) throws Exception {
 		SchedulerApplication.writeCountDown(value);
-		return new ActionResult(counter.incrementAndGet(), "Ok");
+		return new CreditResult("Ok");
+	}
+
+	@RequestMapping("/tvstatus")
+	public TVStatus tvStatus() throws Exception {
+		TVStatus tvStatus = tvCheckScheduler.getStandByState();
+		return tvStatus;
 	}
 }

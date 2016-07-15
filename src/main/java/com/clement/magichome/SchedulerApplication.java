@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -21,14 +22,14 @@ import org.springframework.context.annotation.Bean;
  *
  */
 @SpringBootApplication(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
-public class SchedulerApplication {
+public class SchedulerApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SchedulerApplication.class, args);
 	}
 
 	public static void writeCountDown(int value) {
-		File file = new File(Constant.path);
+		File file = new File(Constant.pathCountdown);
 		if (!file.getParentFile().exists()) {
 			file.getParentFile().mkdir();
 		}
@@ -40,28 +41,51 @@ public class SchedulerApplication {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Create a file if the Livebox is in Standby mode.
+	 * 
+	 * @param value
+	 */
+	public static void writeStandby(boolean value) {
+				File file = new File(Constant.pathStandby);
+		if (value) {
+			if (!file.getParentFile().exists()) {
+				file.getParentFile().mkdir();
+			}
+			try {
+				PrintStream ps;
+				ps = new PrintStream(file);
+				ps.print("1");
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			file.delete();
+		}
+	}
+
 	@Bean
 	@SuppressWarnings("static-method")
 	public EmbeddedServletContainerFactory servletContainer() {
-	    TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-	    tomcat.addAdditionalTomcatConnectors(createConnector());
-	    tomcat.addContextValves(createRemoteIpValves());
-	    tomcat.setContextPath("/tvscheduler");
-	   // tomcat.getAdditionalTomcatConnectors();
-	    return tomcat;
+		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+		tomcat.addAdditionalTomcatConnectors(createConnector());
+		tomcat.addContextValves(createRemoteIpValves());
+		tomcat.setContextPath("/tvscheduler");
+		// tomcat.getAdditionalTomcatConnectors();
+		return tomcat;
 	}
 
 	private static RemoteIpValve createRemoteIpValves() {
-	    RemoteIpValve remoteIpValve = new RemoteIpValve();
-	    remoteIpValve.setRemoteIpHeader("x-forwarded-for");
-	    remoteIpValve.setProtocolHeader("x-forwarded-proto");
-	    return remoteIpValve;
+		RemoteIpValve remoteIpValve = new RemoteIpValve();
+		remoteIpValve.setRemoteIpHeader("x-forwarded-for");
+		remoteIpValve.setProtocolHeader("x-forwarded-proto");
+		return remoteIpValve;
 	}
 
 	private static Connector createConnector() {
-	    Connector connector = new Connector("AJP/1.3");
-	    connector.setPort(8009);
-	    return connector;
+		Connector connector = new Connector("AJP/1.3");
+		connector.setPort(8009);
+		return connector;
 	}
 }

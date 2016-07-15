@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-
+import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Clément
  *
  */
+@Repository
 public class DayScheduler {
 	
 	static final Logger LOG = LoggerFactory.getLogger(DayScheduler.class);
@@ -33,7 +34,7 @@ public class DayScheduler {
 	/**
 	 * Every day the TV stops at midnight.
 	 */
-	@Scheduled(cron = "1 0 9 * * MON-FRI",zone="Europe/Paris")
+	@Scheduled(cron = "1 0 6 * * MON-FRI",zone="Europe/Paris")
 	public void creditTvTest() throws IOException {
 		LOG.info("Test credit 5mn sec");
 		SchedulerApplication.writeCountDown(60 * 60);

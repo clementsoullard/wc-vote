@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import com.clement.magichome.object.TVStatus;
 import com.clement.magichome.object.TVWrapper;
 import com.clement.magichome.service.LogService;
 import com.google.gson.Gson;
@@ -31,50 +32,54 @@ import com.google.gson.Gson;
  */
 public class TvCheckScheduler {
 
-	private static final int PAUSE_CODE = -4;
-
-	private static final int RESUME_CODE = -5;
-
 	static final Logger LOG = LoggerFactory.getLogger(TvCheckScheduler.class);
 
-	Boolean pauseMode = false;
 	@Resource
 	LogService logService;
 
-	Gson gson = new Gson();
+	private Gson gson = new Gson();
+
+	TVWrapper tvWrapper;
+	Boolean tvStatusRelay;
 
 	/**
-	 * Every day the TV stops at midnight.
+	 * Every 15 sec. check the status of the TV and .
 	 */
 	@Scheduled(cron = "*/15 * * * * *")
-	public void closeTv() throws IOException {
-		InputStreamReader xml = new InputStreamReader(getStatusStream());
-		TVWrapper tvWrapper = gson.fromJson(xml, TVWrapper.class);
+	public void updateSandbyStatus() throws IOException {
+		InputStreamReader xml = new InputStreamReader(getStreamStanbyStateFromLivebox());
+		tvWrapper = gson.fromJson(xml, TVWrapper.class);
 		Integer activeStandbyState = Integer.parseInt(tvWrapper.getResult().getData().getActiveStandbyState());
-		LOG.debug("Standby=" + (activeStandbyState == 1) + ", tvStatusJava=" + pauseMode + ", getTvStatusRelay="
-				+ getTvStatusRelay());
-		// If the TV relay is open
+		Boolean standbyState = (activeStandbyState == 1);
+		SchedulerApplication.writeStandby(standbyState);
+		Boolean relayStatus = getTvStatusRelay();
+		tvWrapper.getResult().setRelayStatus(relayStatus);
+		if (!relayStatus && !standbyState) {
+			pressOnOffButton();
+			// http://192.168.1.12:8080/remoteControl/cmd?operation=01&key=116&mode=0
+		}
+		LOG.debug("Standby=" + standbyState + ", getTvStatusRelay=" + getTvStatusRelay());
+
 		if (getTvStatusRelay()) {
-			// If the tv is in standby mode.
-			if (activeStandbyState == 1) {
-				if (!pauseMode) {
-					LOG.debug("Pause");
-					SchedulerApplication.writeCountDown(PAUSE_CODE);
-				}
-				pauseMode = true;
-			} else {
-				if (pauseMode) {
-					LOG.debug("Resume");
-					SchedulerApplication.writeCountDown(RESUME_CODE);
-				}
-				pauseMode = false;
-			}
+
 		}
-		// If the relay is close there is no pause.
-		else {
-			pauseMode = false;
+	}
+
+	/**
+	 * 
+	 */
+	private void pressOnOffButton() {
+		try {
+			String uri = "http://192.168.1.12:8080/remoteControl/cmd?operation=01&key=116&mode=0";
+			URL url = new URL(uri);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("Accept", "application/xml");
+			connection.getInputStream().read();
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
 		}
-		;
+
 	}
 
 	/**
@@ -99,19 +104,29 @@ public class TvCheckScheduler {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
 		}
 		LOG.debug("Close state detected at relay level");
 		return false;
 	}
 
-	InputStream getStatusStream() throws IOException {
+	/**
+	 * Contact the livebox and get the status of it.
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	private InputStream getStreamStanbyStateFromLivebox() throws IOException {
 		String uri = "http://192.168.1.12:8080/remoteControl/cmd?operation=10";
 		URL url = new URL(uri);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("GET");
 		connection.setRequestProperty("Accept", "application/xml");
 		return connection.getInputStream();
+	}
+
+	public TVStatus getStandByState() {
+		return tvWrapper.getResult();
 	}
 
 }
