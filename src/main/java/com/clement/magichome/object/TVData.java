@@ -5,14 +5,14 @@ public class TVData {
 	private Integer timeShiftingState;
 	private String playedMediaType;
 	private String playedMediaState;
-	private String playedMediaId;
+	private Integer playedMediaId;
 	private String playedMediaContextId;
 	private String playedMediaPosition;
 	private String osdContext;
 	private String macAddress;
 	private String wolSupport;
 	private String friendlyName;
-	private String activeStandbyState;
+	private Integer activeStandbyState;
 
 	public Integer getTimeShiftingState() {
 		return timeShiftingState;
@@ -38,11 +38,11 @@ public class TVData {
 		this.playedMediaState = playedMediaState;
 	}
 
-	public String getPlayedMediaId() {
+	public Integer getPlayedMediaId() {
 		return playedMediaId;
 	}
 
-	public void setPlayedMediaId(String playedMediaId) {
+	public void setPlayedMediaId(Integer playedMediaId) {
 		this.playedMediaId = playedMediaId;
 	}
 
@@ -94,11 +94,11 @@ public class TVData {
 		this.friendlyName = friendlyName;
 	}
 
-	public String getActiveStandbyState() {
+	public Integer getActiveStandbyState() {
 		return activeStandbyState;
 	}
 
-	public void setActiveStandbyState(String activeStandbyState) {
+	public void setActiveStandbyState(Integer activeStandbyState) {
 		this.activeStandbyState = activeStandbyState;
 	}
 

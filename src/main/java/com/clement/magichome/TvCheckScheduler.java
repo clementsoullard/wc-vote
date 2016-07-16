@@ -7,12 +7,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,12 +39,21 @@ public class TvCheckScheduler {
 	static final Logger LOG = LoggerFactory.getLogger(TvCheckScheduler.class);
 
 	@Resource
-	LogService logService;
-
+	private LogService logService;
+	@Resource
+	private PropertyManager propertyManager;
 	private Gson gson = new Gson();
 
-	TVWrapper tvWrapper;
-	Boolean tvStatusRelay;
+	private TVWrapper tvWrapper;
+
+	private Map<Integer, Float> minutesPerChannel = new HashMap<Integer, Float>();
+
+	private Date from = new Date();
+
+	private Date to;
+
+	@Resource
+	FileService fileService;
 
 	/**
 	 * Every 15 sec. check the status of the TV and .
@@ -49,20 +62,44 @@ public class TvCheckScheduler {
 	public void updateSandbyStatus() throws IOException {
 		InputStreamReader xml = new InputStreamReader(getStreamStanbyStateFromLivebox());
 		tvWrapper = gson.fromJson(xml, TVWrapper.class);
-		Integer activeStandbyState = Integer.parseInt(tvWrapper.getResult().getData().getActiveStandbyState());
+
+		Integer activeStandbyState = tvWrapper.getResult().getData().getActiveStandbyState();
 		Boolean standbyState = (activeStandbyState == 1);
-		SchedulerApplication.writeStandby(standbyState);
-		Boolean relayStatus = getTvStatusRelay();
+		if (!standbyState) {
+			Integer channel = tvWrapper.getResult().getData().getPlayedMediaId();
+			Float minutes = minutesPerChannel.get(channel);
+			if (minutes == null) {
+				minutes = 0F;
+			}
+			minutes += .25F;
+			minutesPerChannel.put(channel, minutes);
+			LOG.debug("Chaine=" + channel + ", minute=" + minutes);
+		}
+
+		fileService.writeStandby(standbyState);
+		Boolean relayStatus = fileService.getTvStatusRelay();
 		tvWrapper.getResult().setRelayStatus(relayStatus);
+
+		tvWrapper.getResult().setRemaininingSecond(fileService.getSecondRemaining());
 		if (!relayStatus && !standbyState) {
 			pressOnOffButton();
-			// http://192.168.1.12:8080/remoteControl/cmd?operation=01&key=116&mode=0
 		}
-		LOG.debug("Standby=" + standbyState + ", getTvStatusRelay=" + getTvStatusRelay());
+		LOG.debug("Standby=" + standbyState + ", getTvStatusRelay=" + relayStatus);
 
-		if (getTvStatusRelay()) {
+	}
 
+	/**
+	 * Every 15 sec. check the status of the TV and .
+	 */
+	@Scheduled(cron = "7 */5 * * * *")
+	public void putInDb() throws IOException {
+		to = new Date();
+		for (Integer channel : minutesPerChannel.keySet()) {
+			Float minutes = minutesPerChannel.get(channel);
+			logService.insertlogEntry(from, to, channel, minutes);
 		}
+		from = new Date();
+		minutesPerChannel.clear();
 	}
 
 	/**
@@ -70,7 +107,7 @@ public class TvCheckScheduler {
 	 */
 	private void pressOnOffButton() {
 		try {
-			String uri = "http://192.168.1.12:8080/remoteControl/cmd?operation=01&key=116&mode=0";
+			String uri = propertyManager.getLiveboxUrlPrefix() + "/remoteControl/cmd?operation=01&key=116&mode=0";
 			URL url = new URL(uri);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
@@ -83,41 +120,13 @@ public class TvCheckScheduler {
 	}
 
 	/**
-	 * Return the TV status stored in the file /tmp/scheduler/ST
-	 * 
-	 * @return true is the TV is on at the scheduler level.
-	 */
-	boolean getTvStatusRelay() {
-		File file = new File("/tmp/scheduler/ST");
-		try {
-			if (file.exists()) {
-				FileInputStream fis = new FileInputStream(file);
-				byte buffer[] = new byte[5];
-				IOUtils.read(fis, buffer);
-				String valueRead = new String(buffer).trim();
-				// If 1 is read from the livebox then it is in standby
-				// (therefore not consuming seconds)
-				LOG.debug("Value read at relay level " + valueRead);
-				if (valueRead != null && valueRead.equals("1")) {
-					LOG.debug("Open state detected at relay level");
-					return true;
-				}
-			}
-		} catch (IOException e) {
-			LOG.error(e.getMessage(), e);
-		}
-		LOG.debug("Close state detected at relay level");
-		return false;
-	}
-
-	/**
 	 * Contact the livebox and get the status of it.
 	 * 
 	 * @return
 	 * @throws IOException
 	 */
 	private InputStream getStreamStanbyStateFromLivebox() throws IOException {
-		String uri = "http://192.168.1.12:8080/remoteControl/cmd?operation=10";
+		String uri = propertyManager.getLiveboxUrlPrefix() + "/remoteControl/cmd?operation=10";
 		URL url = new URL(uri);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("GET");

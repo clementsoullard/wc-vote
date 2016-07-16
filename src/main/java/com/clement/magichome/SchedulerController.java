@@ -15,9 +15,12 @@ public class SchedulerController {
 	@Resource
 	TvCheckScheduler tvCheckScheduler;
 
+	@Resource
+	FileService fileService;
+
 	@RequestMapping("/credit")
 	public CreditResult credit(@RequestParam(value = "value", defaultValue = "90") Integer value) throws Exception {
-		SchedulerApplication.writeCountDown(value);
+		fileService.writeCountDown(value);
 		return new CreditResult("Ok");
 	}
 

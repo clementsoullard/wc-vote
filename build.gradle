@@ -1,16 +1,22 @@
 buildscript {
     repositories {
         mavenCentral()
+          jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE")
+       classpath 'org.hidetake:gradle-ssh-plugin:2.4.0'
+    
     }
 }
 
+
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
-
+apply plugin: 'war'
 apply plugin: 'spring-boot'
+apply plugin: 'org.hidetake.ssh'
 
 jar {
     baseName = 'gs-rest-service'
@@ -35,4 +41,43 @@ dependencies {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
+}
+
+remotes {
+  web01 {
+    role 'masterNode'
+    host = '192.168.1.201'
+    user = 'clement'
+  }
+ }
+ 
+ 
+ task checkWebServers << {
+  ssh.run {
+    session(remotes.web01) {
+      // Execute a command
+      def result = execute 'sudo service httpd status'
+
+      // Any Gradle methods or properties are available in a session closure
+      copy {
+        from "src/main/resources/example"
+        into "$buildDir/tmp"
+      }
+
+      // Also Groovy methods or properties are available in a session closure
+      println result
+    }
+  
+  }
+}
+
+task reload << {
+  ssh.run {  
+    settings {  
+      pty = true
+    }
+    session(remotes.web01) {  
+      execute 'sudo service tomcat restart'  
+    }
+  }
 }

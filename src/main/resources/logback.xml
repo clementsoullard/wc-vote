@@ -8,7 +8,7 @@
     </layout>
   </appender>
   
-  <logger name="com.clement" level="INFO"/>
+  <logger name="com.clement" level="DEBUG"/>
   
 
   <root level="OFF">

@@ -2,8 +2,18 @@ package com.clement.magichome.object;
 
 public class TVStatus {
 	private Boolean relayStatus;
-	
+
+	private Integer remaininingSecond;
+
 	private TVData data;
+
+	public Integer getRemaininingSecond() {
+		return remaininingSecond;
+	}
+
+	public void setRemaininingSecond(Integer remaininingSecond) {
+		this.remaininingSecond = remaininingSecond;
+	}
 
 	public TVData getData() {
 		return data;

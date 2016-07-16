@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
+import javax.annotation.Resource;
+
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.valves.RemoteIpValve;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +17,8 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
+
 /**
  * This is the main class that launch the spring application.
  * 
@@ -24,46 +28,12 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
 public class SchedulerApplication extends SpringBootServletInitializer {
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(SchedulerApplication.class, args);
 	}
 
-	public static void writeCountDown(int value) {
-		File file = new File(Constant.pathCountdown);
-		if (!file.getParentFile().exists()) {
-			file.getParentFile().mkdir();
-		}
-		PrintStream ps;
-		try {
-			ps = new PrintStream(file);
-			ps.print(value);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
 
-	/**
-	 * Create a file if the Livebox is in Standby mode.
-	 * 
-	 * @param value
-	 */
-	public static void writeStandby(boolean value) {
-				File file = new File(Constant.pathStandby);
-		if (value) {
-			if (!file.getParentFile().exists()) {
-				file.getParentFile().mkdir();
-			}
-			try {
-				PrintStream ps;
-				ps = new PrintStream(file);
-				ps.print("1");
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		} else {
-			file.delete();
-		}
-	}
 
 	@Bean
 	@SuppressWarnings("static-method")
