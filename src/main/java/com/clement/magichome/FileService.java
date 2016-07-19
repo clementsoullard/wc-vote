@@ -21,7 +21,12 @@ public class FileService {
 	@Resource
 	PropertyManager propertyManager;
 
-	public void writeCountDown(int value) {
+	/**
+	 * 
+	 * @param value
+	 * @return true
+	 */
+	public boolean writeCountDown(int value) {
 		File file = new File(propertyManager.getPathCountDown());
 		if (!file.getParentFile().exists()) {
 			file.getParentFile().mkdir();
@@ -30,9 +35,12 @@ public class FileService {
 		try {
 			ps = new PrintStream(file);
 			ps.print(value);
+			ps.close();
+			return true;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	/**

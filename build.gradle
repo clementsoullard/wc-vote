@@ -32,6 +32,8 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile 'org.mongodb:mongodb-driver:3.2.2'
     compile group: 'com.google.code.gson', name: 'gson', version: '1.7.2'
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
@@ -44,40 +46,27 @@ task wrapper(type: Wrapper) {
 }
 
 remotes {
-  web01 {
-    role 'masterNode'
-    host = '192.168.1.201'
+ webServer {
+    host = '192.168.1.20'
     user = 'clement'
+    identity = file('id_rsa')
   }
+ 
  }
  
- 
- task checkWebServers << {
-  ssh.run {
-    session(remotes.web01) {
-      // Execute a command
-      def result = execute 'sudo service httpd status'
+ssh.settings {
+  knownHosts = allowAnyHosts
 
-      // Any Gradle methods or properties are available in a session closure
-      copy {
-        from "src/main/resources/example"
-        into "$buildDir/tmp"
-      }
-
-      // Also Groovy methods or properties are available in a session closure
-      println result
-    }
-  
-  }
 }
 
-task reload << {
-  ssh.run {  
-    settings {  
-      pty = true
-    }
-    session(remotes.web01) {  
-      execute 'sudo service tomcat restart'  
+
+task deploy << {
+  ssh.run {
+    session(remotes.webServer) {
+      execute 'tomcat-8/bin/shutdown.sh'
+      execute 'sleep 10'
+      put from: 'build/libs/rest.war', into: 'tomcat-8/webapps/tvscheduler.war'
+      execute 'tomcat-8/bin/startup.sh'
     }
   }
 }

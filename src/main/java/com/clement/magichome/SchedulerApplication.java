@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
  * @author Clement_Soullard
  *
  */
-@SpringBootApplication(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
+@SpringBootApplication
 public class SchedulerApplication extends SpringBootServletInitializer {
 
 
@@ -39,19 +39,19 @@ public class SchedulerApplication extends SpringBootServletInitializer {
 	@SuppressWarnings("static-method")
 	public EmbeddedServletContainerFactory servletContainer() {
 		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-		tomcat.addAdditionalTomcatConnectors(createConnector());
-		tomcat.addContextValves(createRemoteIpValves());
+//		tomcat.addAdditionalTomcatConnectors(createConnector());
+	//	tomcat.addContextValves(createRemoteIpValves());
 		tomcat.setContextPath("/tvscheduler");
 		// tomcat.getAdditionalTomcatConnectors();
 		return tomcat;
 	}
 
-	private static RemoteIpValve createRemoteIpValves() {
-		RemoteIpValve remoteIpValve = new RemoteIpValve();
-		remoteIpValve.setRemoteIpHeader("x-forwarded-for");
-		remoteIpValve.setProtocolHeader("x-forwarded-proto");
-		return remoteIpValve;
-	}
+//	private static RemoteIpValve createRemoteIpValves() {
+//		RemoteIpValve remoteIpValve = new RemoteIpValve();
+//		remoteIpValve.setRemoteIpHeader("x-forwarded-for");
+//		remoteIpValve.setProtocolHeader("x-forwarded-proto");
+//		return remoteIpValve;
+//	}
 
 	private static Connector createConnector() {
 		Connector connector = new Connector("AJP/1.3");

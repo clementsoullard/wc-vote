@@ -67,20 +67,22 @@ public class TvCheckScheduler {
 		Boolean standbyState = (activeStandbyState == 1);
 		if (!standbyState) {
 			Integer channel = tvWrapper.getResult().getData().getPlayedMediaId();
-			Float minutes = minutesPerChannel.get(channel);
-			if (minutes == null) {
-				minutes = 0F;
+			if (channel != null) {
+				Float minutes = minutesPerChannel.get(channel);
+				if (minutes == null) {
+					minutes = 0F;
+				}
+				minutes += .25F;
+				minutesPerChannel.put(channel, minutes);
+				LOG.debug("Chaine=" + channel + ", minute=" + minutes);
 			}
-			minutes += .25F;
-			minutesPerChannel.put(channel, minutes);
-			LOG.debug("Chaine=" + channel + ", minute=" + minutes);
 		}
 
 		fileService.writeStandby(standbyState);
 		Boolean relayStatus = fileService.getTvStatusRelay();
 		tvWrapper.getResult().setRelayStatus(relayStatus);
 
-		tvWrapper.getResult().setRemaininingSecond(fileService.getSecondRemaining());
+		tvWrapper.getResult().setRemainingSecond(fileService.getSecondRemaining());
 		if (!relayStatus && !standbyState) {
 			pressOnOffButton();
 		}
@@ -134,6 +136,13 @@ public class TvCheckScheduler {
 		return connection.getInputStream();
 	}
 
+	/**
+	 * Get the tv status
+	 * 
+	 * @param withRefresh
+	 *            if with refresh is required, there is a specifi
+	 * @return
+	 */
 	public TVStatus getStandByState() {
 		return tvWrapper.getResult();
 	}

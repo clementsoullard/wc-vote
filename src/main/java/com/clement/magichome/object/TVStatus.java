@@ -1,18 +1,32 @@
 package com.clement.magichome.object;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class TVStatus {
+
+	NumberFormat nf = new DecimalFormat("00");
+
 	private Boolean relayStatus;
 
-	private Integer remaininingSecond;
+	private Integer remainingSecond;
 
 	private TVData data;
 
-	public Integer getRemaininingSecond() {
-		return remaininingSecond;
+	public Integer getRemainingSecond() {
+		return remainingSecond;
 	}
 
-	public void setRemaininingSecond(Integer remaininingSecond) {
-		this.remaininingSecond = remaininingSecond;
+	public String getRemainingTime() {
+		Integer second = remainingSecond % 60;
+		Integer minutes = remainingSecond / 60;
+		Integer hours = minutes / 60;
+		minutes = minutes % 60;
+		return nf.format(hours) + ":" + nf.format(minutes) + ":" + nf.format(second);
+	}
+
+	public void setRemainingSecond(Integer remaininingSecond) {
+		this.remainingSecond = remaininingSecond;
 	}
 
 	public TVData getData() {
@@ -30,4 +44,5 @@ public class TVStatus {
 	public void setRelayStatus(Boolean relayStatus) {
 		this.relayStatus = relayStatus;
 	}
+
 }
