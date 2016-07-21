@@ -10,12 +10,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.clement.magichome.object.Channel;
+import com.clement.magichome.object.LogEntry;
 
-@RepositoryRestResource(collectionResourceRel = "channel", path = "channel")
-public interface ChannelRepository extends MongoRepository<Channel, String> {
-	
-
-
-	List<Channel> findByEpgId(@Param("epgId") String id);
+@RepositoryRestResource(collectionResourceRel = "log", path = "log")
+public interface LogRepository extends MongoRepository<LogEntry, String> {
 
 }

@@ -53,7 +53,7 @@ public class TvCheckScheduler {
 	private Date to;
 
 	@Resource
-	FileService fileService;
+	private FileService fileService;
 
 	/**
 	 * Every 15 sec. check the status of the TV and .
@@ -146,5 +146,7 @@ public class TvCheckScheduler {
 	public TVStatus getStandByState() {
 		return tvWrapper.getResult();
 	}
+	
+	
 
 }
