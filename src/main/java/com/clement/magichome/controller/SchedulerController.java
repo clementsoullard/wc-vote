@@ -1,7 +1,10 @@
 package com.clement.magichome.controller;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +16,7 @@ import com.clement.magichome.dto.CreditResult;
 import com.clement.magichome.dto.MinutesPerChannel;
 import com.clement.magichome.object.TVStatus;
 import com.clement.magichome.service.LogRepositoryImpl;
+import com.clement.magichome.service.LogService;
 
 @RestController
 public class SchedulerController {
@@ -23,8 +27,11 @@ public class SchedulerController {
 	@Resource
 	FileService fileService;
 
-	@Resource
+	@Autowired
 	LogRepositoryImpl logRepositoryImpl;
+
+	@Autowired
+	LogService logService;
 
 	@RequestMapping("/credit")
 	public CreditResult credit(@RequestParam(value = "value", defaultValue = "90") Integer value) throws Exception {
@@ -50,6 +57,13 @@ public class SchedulerController {
 	@RequestMapping("/test")
 	public void test() throws Exception {
 		AggregationResults<MinutesPerChannel> mpc = logRepositoryImpl.getMinutesPerChannel();
+		System.out.println();
+	}
+
+	@RequestMapping("/test2")
+	public void test2() throws Exception {
+
+		logService.insertlogEntry(new Date(), new Date(), 1, 2.2F);
 		System.out.println();
 	}
 }

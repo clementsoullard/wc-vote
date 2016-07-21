@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
 public class LogEntry {
 
 	private String metricName;
@@ -57,8 +60,8 @@ public class LogEntry {
 	}
 
 	public Document getDocument() {
-		Document document =  new Document().append("metricName", metricName)
-				.append("channel", channel).append("minutes", minutes).append("from", fromDate).append("to", toDate);
+		Document document = new Document("logEntry", new Document().append("metricName", metricName)
+				.append("channel", channel).append("minutes", minutes).append("from", fromDate).append("to", toDate));
 		return document;
 	}
 }

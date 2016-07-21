@@ -11,6 +11,14 @@ public class PropertyManager {
 	@Value("${livebox.urlPrefix}")
 	String liveboxUrlPrefix;
 
+	@Value("${databaseName}")
+	String databaseName;
+
+	public String getDatabaseName() {
+		return databaseName;
+	}
+
+
 	public String getPathCountDown() {
 		return workPath + "/CD";
 	}
@@ -26,7 +34,7 @@ public class PropertyManager {
 	public String getPathRemaining() {
 		return workPath + "/REM";
 	}
-	
+
 	public String getLiveboxUrlPrefix() {
 		return liveboxUrlPrefix;
 	}

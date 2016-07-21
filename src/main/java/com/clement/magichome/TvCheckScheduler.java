@@ -42,6 +42,7 @@ public class TvCheckScheduler {
 	private LogService logService;
 	@Resource
 	private PropertyManager propertyManager;
+	
 	private Gson gson = new Gson();
 
 	private TVWrapper tvWrapper;
