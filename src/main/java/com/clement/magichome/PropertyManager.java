@@ -11,12 +11,6 @@ public class PropertyManager {
 	@Value("${livebox.urlPrefix}")
 	String liveboxUrlPrefix;
 
-	@Value("${databaseName}")
-	String databaseName;
-
-	public String getDatabaseName() {
-		return databaseName;
-	}
 
 
 	public String getPathCountDown() {

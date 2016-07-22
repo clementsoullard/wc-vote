@@ -14,7 +14,9 @@ import com.clement.magichome.FileService;
 import com.clement.magichome.TvCheckScheduler;
 import com.clement.magichome.dto.CreditResult;
 import com.clement.magichome.dto.MinutesPerChannel;
+import com.clement.magichome.object.LogEntry;
 import com.clement.magichome.object.TVStatus;
+import com.clement.magichome.service.LogRepository;
 import com.clement.magichome.service.LogRepositoryImpl;
 import com.clement.magichome.service.LogService;
 
@@ -26,6 +28,9 @@ public class SchedulerController {
 
 	@Resource
 	FileService fileService;
+
+	@Resource
+	private LogRepository logRepository;
 
 	@Autowired
 	LogRepositoryImpl logRepositoryImpl;
@@ -63,7 +68,8 @@ public class SchedulerController {
 	@RequestMapping("/test2")
 	public void test2() throws Exception {
 
-		logService.insertlogEntry(new Date(), new Date(), 1, 2.2F);
+		// logService.insertlogEntry(new Date(), new Date(), 1, 2.2F);
+		logRepository.insert(new LogEntry());
 		System.out.println();
 	}
 }

@@ -3,11 +3,14 @@ package com.clement.magichome.object;
 import java.util.Date;
 
 import org.bson.Document;
+import org.springframework.data.annotation.Id;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 public class LogEntry {
+
+	@Id private String id;
 
 	private String metricName;
 
@@ -59,9 +62,13 @@ public class LogEntry {
 		this.toDate = toDate;
 	}
 
-	public Document getDocument() {
-		Document document = new Document("logEntry", new Document().append("metricName", metricName)
-				.append("channel", channel).append("minutes", minutes).append("from", fromDate).append("to", toDate));
-		return document;
+	public DBObject getDocument() {
+		DBObject dbObject=new BasicDBObject();
+		dbObject.put("metricName", metricName);
+		dbObject.put("channel", channel);
+		dbObject.put("minutes", minutes);
+		dbObject.put("from", fromDate);
+		dbObject.put("to", toDate);
+		return dbObject;
 	}
 }

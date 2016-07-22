@@ -1,7 +1,5 @@
 package com.clement.magichome;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,16 +11,15 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import com.clement.magichome.object.TVStatus;
 import com.clement.magichome.object.TVWrapper;
+import com.clement.magichome.service.LogRepository;
 import com.clement.magichome.service.LogService;
 import com.google.gson.Gson;
 
@@ -42,7 +39,8 @@ public class TvCheckScheduler {
 	private LogService logService;
 	@Resource
 	private PropertyManager propertyManager;
-	
+
+
 	private Gson gson = new Gson();
 
 	private TVWrapper tvWrapper;
@@ -147,7 +145,5 @@ public class TvCheckScheduler {
 	public TVStatus getStandByState() {
 		return tvWrapper.getResult();
 	}
-	
-	
 
 }
