@@ -60,16 +60,14 @@ public class SchedulerController {
 	}
 
 	@RequestMapping("/test")
-	public void test() throws Exception {
+	public AggregationResults<MinutesPerChannel> test() throws Exception {
 		AggregationResults<MinutesPerChannel> mpc = logRepositoryImpl.getMinutesPerChannel();
-		System.out.println();
+		return mpc;
 	}
 
 	@RequestMapping("/test2")
 	public void test2() throws Exception {
-
 		// logService.insertlogEntry(new Date(), new Date(), 1, 2.2F);
-		logRepository.insert(new LogEntry());
-		System.out.println();
+		logRepository.save(new LogEntry("TV", 12, 2.2F, new Date(), new Date()));
 	}
 }

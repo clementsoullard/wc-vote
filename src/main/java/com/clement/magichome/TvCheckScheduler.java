@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import com.clement.magichome.object.LogEntry;
 import com.clement.magichome.object.TVStatus;
 import com.clement.magichome.object.TVWrapper;
 import com.clement.magichome.service.LogRepository;
@@ -37,9 +38,12 @@ public class TvCheckScheduler {
 
 	@Resource
 	private LogService logService;
+
+	@Resource
+	private LogRepository logRepository;
+
 	@Resource
 	private PropertyManager propertyManager;
-
 
 	private Gson gson = new Gson();
 
@@ -97,7 +101,7 @@ public class TvCheckScheduler {
 		to = new Date();
 		for (Integer channel : minutesPerChannel.keySet()) {
 			Float minutes = minutesPerChannel.get(channel);
-			logService.insertlogEntry(from, to, channel, minutes);
+			logRepository.save(new LogEntry("TV", channel, minutes, from, to));
 		}
 		from = new Date();
 		minutesPerChannel.clear();

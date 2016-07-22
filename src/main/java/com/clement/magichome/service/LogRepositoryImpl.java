@@ -25,14 +25,17 @@ public class LogRepositoryImpl {
 	MongoTemplate mongoTemplate;
 
 	public AggregationResults<MinutesPerChannel> getMinutesPerChannel() {
-		LOG.debug("Huhum " + mongoTemplate);
 		try {
 			Aggregation aggregation = newAggregation(match(Criteria.where("metricName").in("TV")),
 					project("channel", "minutes"), group("channel").sum("minutes").as("totalMinutes"));
 			LOG.debug("Construction de la requete effectuée");
-					AggregationResults<MinutesPerChannel> minutesPerChannelAgg = mongoTemplate.aggregate(aggregation, "log", MinutesPerChannel.class);
-					LOG.debug("Requete effectue");
-					return minutesPerChannelAgg;
+			AggregationResults<MinutesPerChannel> minutesPerChannelAgg = mongoTemplate.aggregate(aggregation, "log",
+					MinutesPerChannel.class);
+			LOG.debug("Requete effectue");
+			for (MinutesPerChannel minutesPerChannel : minutesPerChannelAgg) {
+				LOG.debug(minutesPerChannel.getChannel().toString() + " " + minutesPerChannel.getTotalMinutes());
+			}
+			return minutesPerChannelAgg;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}

@@ -27,7 +27,7 @@ public class LogService {
 			logEntry.setFromDate(from);
 			logEntry.setToDate(to);
 			LOG.debug("Insert");
-			mongoTemplate.getCollection("log").insert(logEntry.getDocument());
+//			mongoTemplate.getCollection("log").insert(logEntry.getDocument());
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

@@ -2,15 +2,18 @@ package com.clement.magichome.object;
 
 import java.util.Date;
 
-import org.bson.Document;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
+@Document(collection = "log")
 public class LogEntry {
 
-	@Id private String id;
+	@Id
+	private String id;
 
 	private String metricName;
 
@@ -21,6 +24,17 @@ public class LogEntry {
 	private Date fromDate;
 
 	private Date toDate;
+
+	public LogEntry() {
+	}
+
+	public LogEntry(String metricName, Integer channel, Float minutes, Date fromDate, Date toDate) {
+		this.metricName = metricName;
+		this.channel = channel;
+		this.minutes = minutes;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+	}
 
 	public String getMetricName() {
 		return metricName;
@@ -62,13 +76,13 @@ public class LogEntry {
 		this.toDate = toDate;
 	}
 
-	public DBObject getDocument() {
-		DBObject dbObject=new BasicDBObject();
-		dbObject.put("metricName", metricName);
-		dbObject.put("channel", channel);
-		dbObject.put("minutes", minutes);
-		dbObject.put("from", fromDate);
-		dbObject.put("to", toDate);
-		return dbObject;
-	}
+//	public DBObject getDocument() {
+//		DBObject dbObject = new BasicDBObject();
+//		dbObject.put("metricName", metricName);
+//		dbObject.put("channel", channel);
+//		dbObject.put("minutes", minutes);
+//		dbObject.put("from", fromDate);
+//		dbObject.put("to", toDate);
+//		return dbObject;
+//	}
 }
