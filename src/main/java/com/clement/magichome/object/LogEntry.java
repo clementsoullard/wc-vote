@@ -3,11 +3,7 @@ package com.clement.magichome.object;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 
 @Document(collection = "log")
 public class LogEntry {

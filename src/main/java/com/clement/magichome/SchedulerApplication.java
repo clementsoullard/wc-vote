@@ -1,23 +1,12 @@
 package com.clement.magichome;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-
-import javax.annotation.Resource;
-
 import org.apache.catalina.connector.Connector;
-import org.apache.catalina.valves.RemoteIpValve;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-
-import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
 
 /**
  * This is the main class that launch the spring application.

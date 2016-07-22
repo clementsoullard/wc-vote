@@ -10,7 +10,6 @@
   
   <logger name="com.clement" level="DEBUG"/>
   
-
   <root level="OFF">
     <appender-ref ref="STDOUT" />
   </root>
