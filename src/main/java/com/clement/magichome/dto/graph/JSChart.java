@@ -22,7 +22,7 @@ public class JSChart {
 		this.subCaption = subCaption;
 	}
 
-	String subCaption = "Top 5 stores in last month by revenue";
+	String subCaption = "Depuis le début";
 
 
 }

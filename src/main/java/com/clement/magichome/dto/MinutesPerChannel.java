@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 public class MinutesPerChannel {
 	Float totalMinutes;
 	
-	@Id private String channel;
+	@Id private String channelName;
 
 
 	public Float getTotalMinutes() {
@@ -16,11 +16,11 @@ public class MinutesPerChannel {
 		this.totalMinutes = totalMinutes;
 	}
 
-	public String getChannel() {
-		return channel;
+	public String getChannelName() {
+		return channelName;
 	}
 
-	public void setChannel(String channel) {
-		this.channel = channel;
+	public void setChannelName(String channel) {
+		this.channelName = channel;
 	}
 }

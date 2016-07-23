@@ -11,7 +11,8 @@ public class PropertyManager {
 	@Value("${livebox.urlPrefix}")
 	String liveboxUrlPrefix;
 
-
+	@Value("${production.mode}")
+	Boolean productionMode;
 
 	public String getPathCountDown() {
 		return workPath + "/CD";
@@ -31,5 +32,9 @@ public class PropertyManager {
 
 	public String getLiveboxUrlPrefix() {
 		return liveboxUrlPrefix;
+	}
+	
+	public Boolean getProductionMode() {
+		return productionMode;
 	}
 }

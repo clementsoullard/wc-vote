@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -17,11 +18,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import com.clement.magichome.object.Channel;
 import com.clement.magichome.object.LogEntry;
 import com.clement.magichome.object.TVStatus;
 import com.clement.magichome.object.TVWrapper;
+import com.clement.magichome.service.ChannelRepository;
 import com.clement.magichome.service.LogRepository;
-import com.clement.magichome.service.LogService;
 import com.google.gson.Gson;
 
 @Configuration
@@ -37,10 +39,10 @@ public class TvCheckScheduler {
 	static final Logger LOG = LoggerFactory.getLogger(TvCheckScheduler.class);
 
 	@Resource
-	private LogService logService;
+	private LogRepository logRepository;
 
 	@Resource
-	private LogRepository logRepository;
+	private ChannelRepository channelRepository;
 
 	@Resource
 	private PropertyManager propertyManager;
@@ -72,12 +74,12 @@ public class TvCheckScheduler {
 			Integer channel = tvWrapper.getResult().getData().getPlayedMediaId();
 			if (channel != null) {
 				Float minutes = minutesPerChannel.get(channel);
-				if (minutes == null) {
+					if (minutes == null) {
 					minutes = 0F;
 				}
 				minutes += .25F;
 				minutesPerChannel.put(channel, minutes);
-				LOG.debug("Chaine=" + channel + ", minute=" + minutes);
+//				LOG.debug("Chaine=" + channel + ", minute=" + minutes);
 			}
 		}
 
@@ -90,8 +92,11 @@ public class TvCheckScheduler {
 			pressOnOffButton();
 		}
 		LOG.debug("Standby=" + standbyState + ", getTvStatusRelay=" + relayStatus);
-
+		
 	}
+
+	/** *Cache map for channel name */
+	Map<Integer, String> channelNameCache = new HashMap<>();
 
 	/**
 	 * Every 15 sec. check the status of the TV and .
@@ -101,25 +106,51 @@ public class TvCheckScheduler {
 		to = new Date();
 		for (Integer channel : minutesPerChannel.keySet()) {
 			Float minutes = minutesPerChannel.get(channel);
-			logRepository.save(new LogEntry("TV", channel, minutes, from, to));
+			String channelName = getChannelName(channel);
+			logRepository.save(new LogEntry("TV", channel, channelName, minutes, from, to));
 		}
 		from = new Date();
 		minutesPerChannel.clear();
 	}
 
 	/**
+	 * Get the channel name and manage a cache.
 	 * 
+	 * @param channel
+	 * @return
+	 */
+	private String getChannelName(Integer channelId) {
+		String channelName = channelNameCache.get(channelId);
+		if (channelName == null) {
+			List<Channel> channels = channelRepository.findByEpgId(channelId.toString());
+			LOG.debug("Nombre de chaine " + channels.size());
+			if (channels.size() > 0) {
+				channelName = channels.get(0).getName();
+				LOG.debug("Chanine name " + channelName);
+			} else {
+				channelName = "Chaine inconnue";
+				LOG.debug("Chaine inconnue " + channelName);
+			}
+			channelNameCache.put(channelId, channelName);
+		}
+		return channelName;
+	}
+
+	/**
+	 * Switch of TV, in case difference with the relay status
 	 */
 	private void pressOnOffButton() {
-		try {
-			String uri = propertyManager.getLiveboxUrlPrefix() + "/remoteControl/cmd?operation=01&key=116&mode=0";
-			URL url = new URL(uri);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.setRequestProperty("Accept", "application/xml");
-			connection.getInputStream().read();
-		} catch (IOException e) {
-			LOG.error(e.getMessage(), e);
+		if (propertyManager.getProductionMode()) {
+			try {
+				String uri = propertyManager.getLiveboxUrlPrefix() + "/remoteControl/cmd?operation=01&key=116&mode=0";
+				URL url = new URL(uri);
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				connection.setRequestMethod("GET");
+				connection.setRequestProperty("Accept", "application/xml");
+				connection.getInputStream().read();
+			} catch (IOException e) {
+				LOG.error(e.getMessage(), e);
+			}
 		}
 
 	}

@@ -17,7 +17,6 @@ import com.clement.magichome.object.LogEntry;
 import com.clement.magichome.object.TVStatus;
 import com.clement.magichome.service.LogRepository;
 import com.clement.magichome.service.LogRepositoryImpl;
-import com.clement.magichome.service.LogService;
 
 @RestController
 public class SchedulerController {
@@ -33,9 +32,6 @@ public class SchedulerController {
 
 	@Autowired
 	LogRepositoryImpl logRepositoryImpl;
-
-	@Autowired
-	LogService logService;
 
 	@RequestMapping("/credit")
 	public CreditResult credit(@RequestParam(value = "value", defaultValue = "90") Integer value) throws Exception {
@@ -67,6 +63,6 @@ public class SchedulerController {
 	@RequestMapping("/test2")
 	public void test2() throws Exception {
 		// logService.insertlogEntry(new Date(), new Date(), 1, 2.2F);
-		logRepository.save(new LogEntry("TV", 12, 2.2F, new Date(), new Date()));
+		logRepository.save(new LogEntry("TV", 12, "Cully", 2.2F, new Date(), new Date()));
 	}
 }
