@@ -38,8 +38,8 @@ public class DayScheduler {
 	/**
 	 * Every day the TV stops at midnight.
 	 */
-	@Scheduled(cron = "1 0 6 * * MON-FRI", zone = "Europe/Paris")
-	public void creditTvTest() throws IOException {
+	@Scheduled(cron = "1 0 11 * * MON-FRI", zone = "Europe/Paris")
+	public void creditTvVacances() throws IOException {
 		LOG.info("Test credit 5mn sec");
 		fileService.writeCountDown(60 * 60);
 	}
@@ -47,7 +47,7 @@ public class DayScheduler {
 	/**
 	 * Credited on Wednesday.
 	 */
-	@Scheduled(cron = "0 1 1 * * WED")
+	@Scheduled(cron = "0 1 1 * * WED", zone = "Europe/Paris")
 	public void giveCreditForWednesday() throws IOException {
 		fileService.writeCountDown(30 * 60);
 	}
@@ -55,7 +55,7 @@ public class DayScheduler {
 	/**
 	 * Credited on Saturday.
 	 */
-	@Scheduled(cron = "0 1 1 * * SAT")
+	@Scheduled(cron = "0 1 1 * * SAT", zone = "Europe/Paris")
 	public void giveCreditForWeekEnd() throws IOException {
 		fileService.writeCountDown(60 * 60);
 	}
@@ -63,7 +63,7 @@ public class DayScheduler {
 	/**
 	 * Credited on Saturday.
 	 */
-	@Scheduled(cron = "0 1 1 * * SUN")
+	@Scheduled(cron = "0 1 1 * * SUN", zone = "Europe/Paris")
 	public void giveCreditForWeekEndSunday() throws IOException {
 		fileService.writeCountDown(60 * 60);
 	}

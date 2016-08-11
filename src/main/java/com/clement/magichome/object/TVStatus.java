@@ -18,11 +18,16 @@ public class TVStatus {
 	}
 
 	public String getRemainingTime() {
+		if (remainingSecond == -2) {
+			return "Télé activée sans limite de temps";
+		} else if (remainingSecond <= 0) {
+			return "Plus de temps restant";
+		}
 		Integer second = remainingSecond % 60;
 		Integer minutes = remainingSecond / 60;
 		Integer hours = minutes / 60;
 		minutes = minutes % 60;
-		return nf.format(hours) + ":" + nf.format(minutes) + ":" + nf.format(second);
+		return "Il reste " + nf.format(hours) + ":" + nf.format(minutes) + ":" + nf.format(second);
 	}
 
 	public void setRemainingSecond(Integer remaininingSecond) {
