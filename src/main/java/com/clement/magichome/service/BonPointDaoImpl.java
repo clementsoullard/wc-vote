@@ -24,6 +24,7 @@ public class BonPointDaoImpl {
 			BasicQuery query = new BasicQuery("{pointConsumed: {$ne: 0}}");
 			LOG.debug("Construction de la requete effectuée");
 			List<BonPoint> bonPoints = mongoTemplate.find(query, BonPoint.class);
+			return bonPoints;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}

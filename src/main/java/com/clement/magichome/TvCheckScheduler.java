@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,6 +28,7 @@ import com.clement.magichome.service.LogRepository;
 import com.google.gson.Gson;
 
 @Configuration
+@EnableAutoConfiguration
 @EnableScheduling
 /**
  * This class credit some minutes for the TV.
@@ -49,7 +51,7 @@ public class TvCheckScheduler {
 
 	private Gson gson = new Gson();
 
-	private TVWrapper tvWrapper;
+	private TVWrapper tvWrapper = new TVWrapper();
 
 	private Map<Integer, Float> minutesPerChannel = new HashMap<Integer, Float>();
 
@@ -74,12 +76,12 @@ public class TvCheckScheduler {
 			Integer channel = tvWrapper.getResult().getData().getPlayedMediaId();
 			if (channel != null) {
 				Float minutes = minutesPerChannel.get(channel);
-					if (minutes == null) {
+				if (minutes == null) {
 					minutes = 0F;
 				}
 				minutes += .25F;
 				minutesPerChannel.put(channel, minutes);
-//				LOG.debug("Chaine=" + channel + ", minute=" + minutes);
+				// LOG.debug("Chaine=" + channel + ", minute=" + minutes);
 			}
 		}
 
@@ -92,7 +94,7 @@ public class TvCheckScheduler {
 			pressOnOffButton();
 		}
 		LOG.debug("Standby=" + standbyState + ", getTvStatusRelay=" + relayStatus);
-		
+
 	}
 
 	/** *Cache map for channel name */

@@ -20,7 +20,7 @@ public class TVStatus {
 	public String getRemainingTime() {
 		if (remainingSecond == -2) {
 			return "Télé activée sans limite de temps";
-		} else if (remainingSecond <= 0) {
+		} else if (remainingSecond <= 0 || remainingSecond == null) {
 			return "Plus de temps restant";
 		}
 		Integer second = remainingSecond % 60;
