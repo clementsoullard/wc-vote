@@ -2,3 +2,5 @@
 db.log.aggregate( [
    { $group: { _id: "$channel", totalPop: { $sum: "$minutes" } } }
 ] )
+// Trouver tout les bon point qui ne sont pas encore consommés
+ db.bonPoint.find({pointConsumed: {$ne: 0}});

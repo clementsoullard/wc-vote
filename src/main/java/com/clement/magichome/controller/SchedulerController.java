@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.clement.magichome.FileService;
 import com.clement.magichome.TvCheckScheduler;
 import com.clement.magichome.dto.CreditResult;
+import com.clement.magichome.dto.Punition;
 import com.clement.magichome.dto.PunitionResult;
 import com.clement.magichome.dto.graph.Wrapper;
 import com.clement.magichome.object.BonPoint;
@@ -67,12 +69,12 @@ public class SchedulerController {
 	}
 
 	@RequestMapping("/punition")
-	public PunitionResult punition(@RequestParam(value = "value", defaultValue = "10") Integer value,
-			@RequestParam(value = "rationale", defaultValue = "desobeissance") String rationale) throws Exception {
+	public PunitionResult punition(@RequestBody Punition punition) throws Exception {
 		// logService.insertlogEntry(new Date(), new Date(), 1, 2.2F);
-		bonPointRepository.save(new BonPoint(value, value, new Date(), rationale));
+		bonPointRepository
+				.save(new BonPoint(punition.getValue(), punition.getValue(), new Date(), punition.getRationale()));
 		PunitionResult punitionResult = new PunitionResult();
-		punitionResult.setMessage("La punition " + value + " a été appliquée");
+		punitionResult.setMessage("La punition " + punition.getValue() + " a été appliquée");
 		return punitionResult;
 	}
 }
