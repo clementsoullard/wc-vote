@@ -25,13 +25,47 @@ public class BonPointTest {
 
 	@Test
 	public void testFindBonPoint() {
+		insertBonPointBilanNegatif();
 		List<BonPoint> bonPoints = bonPointDaoImpl.findBonPointsAvailable();
-		org.junit.Assert.assertEquals(bonPoints.size(), 3);
+		for (BonPoint bonPoint : bonPoints) {
+			bonPoint.setPointConsumed(bonPoint.getPointConsumed() + 1);
+			bonPointRepository.save(bonPoint);
+		}
+	}
+
+	public void insertBonPointBilanNegatif() {
+		bonPointRepository.deleteAll();
+		bonPointRepository.save(new BonPoint(10, 10, new Date(), "recompense"));
+		bonPointRepository.save(new BonPoint(-10, -10, new Date(), "desobeissance"));
+		bonPointRepository.save(new BonPoint(-10, -10, new Date(), "desobeissance"));
+	}
+
+	public void insertBonPointBilanPositif() {
+		bonPointRepository.deleteAll();
+		bonPointRepository.save(new BonPoint(10, 10, new Date(), "recompense"));
+		bonPointRepository.save(new BonPoint(10, 10, new Date(), "recompense"));
+		bonPointRepository.save(new BonPoint(-10, -10, new Date(), "desobeissance"));
 	}
 
 	@Test
-	public void testInsertBonPoint() {
-		bonPointRepository.save(new BonPoint(10, 10, new Date(), "10"));
+	public void testSumBonPoint() {
+		insertBonPointBilanNegatif();
+		Integer sumBonPoint = bonPointDaoImpl.sumBonPoint();
+		org.junit.Assert.assertEquals(-10, sumBonPoint.intValue());
+	}
+
+	@Test
+	public void testRetirePointPunition() {
+		insertBonPointBilanNegatif();
+		Integer minutes = bonPointDaoImpl.pointToDistribute(-60, 30);
+		bonPointDaoImpl.removePunition(minutes);
+	}
+
+	@Test
+	public void testRetirePointRecompense() {
+		insertBonPointBilanPositif();
+		Integer minutes = bonPointDaoImpl.pointToDistribute(-60, 30);
+		bonPointDaoImpl.removePunition(minutes);
 	}
 
 }

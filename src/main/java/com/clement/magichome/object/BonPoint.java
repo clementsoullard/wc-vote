@@ -2,7 +2,12 @@ package com.clement.magichome.object;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+
 public class BonPoint {
+	@Id
+	private String id;
+
 	private Integer point;
 	private Integer pointConsumed;
 	private Date date;

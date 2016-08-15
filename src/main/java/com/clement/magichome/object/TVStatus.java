@@ -3,10 +3,16 @@ package com.clement.magichome.object;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+/**
+ * This is return by the web service to give the TV status.
+ * 
+ * @author cleme
+ *
+ */
 public class TVStatus {
 
 	NumberFormat nf = new DecimalFormat("00");
-
+	/** Gives the status of the relay */
 	private Boolean relayStatus;
 
 	private Integer remainingSecond;
@@ -18,9 +24,11 @@ public class TVStatus {
 	}
 
 	public String getRemainingTime() {
-		if (remainingSecond == -2) {
+		if (remainingSecond == null) {
+			return "Statut Non défini";
+		} else if (remainingSecond == -2) {
 			return "Télé activée sans limite de temps";
-		} else if (remainingSecond <= 0 || remainingSecond == null) {
+		} else if (remainingSecond <= 0) {
 			return "Plus de temps restant";
 		}
 		Integer second = remainingSecond % 60;
