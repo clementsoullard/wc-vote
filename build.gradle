@@ -64,7 +64,7 @@ task deploy << {
     session(remotes.webServer) {
       execute 'tomcat-8/bin/shutdown.sh'
       execute 'sleep 10'
-      put from: 'build/libs/rest.war', into: 'tomcat-8/webapps/tvscheduler.war'
+      put from: 'build/libs/rest-scheduler-ws.war', into: 'tomcat-8/webapps/tvscheduler.war'
       execute 'tomcat-8/bin/startup.sh'
     }
   }

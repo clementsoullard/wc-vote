@@ -24,7 +24,7 @@ import com.clement.magichome.service.LogRepository;
 import com.clement.magichome.service.LogRepositoryImpl;
 
 @RestController
-public class SchedulerController {
+public class TVSchedulerController {
 
 	@Resource
 	TvCheckScheduler tvCheckScheduler;
