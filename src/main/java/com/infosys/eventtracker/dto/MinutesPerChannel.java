@@ -1,4 +1,4 @@
-package com.clement.magichome.dto;
+package com.infosys.eventtracker.dto;
 
 import org.springframework.data.annotation.Id;
 

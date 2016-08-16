@@ -1,7 +1,4 @@
-package com.clement.magichome.test;
-
-import java.util.Date;
-import java.util.List;
+package com.infosys.eventtracker.test;
 
 import javax.annotation.Resource;
 
@@ -10,62 +7,27 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.clement.magichome.object.BonPoint;
-import com.clement.magichome.service.BonPointDaoImpl;
-import com.clement.magichome.service.BonPointRepository;
+import com.infosys.eventtracker.dto.Participation;
+import com.infosys.eventtracker.service.BonPointDaoImpl;
+import com.infosys.eventtracker.service.ParticipationRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class BonPointTest {
+public class ParticipationTest {
 
 	@Resource
 	BonPointDaoImpl bonPointDaoImpl;
 	@Resource
-	BonPointRepository bonPointRepository;
+	ParticipationRepository participationRepository;
 
-	@Test
-	public void testFindBonPoint() {
-		insertBonPointBilanNegatif();
-		List<BonPoint> bonPoints = bonPointDaoImpl.findBonPointsAvailable();
-		for (BonPoint bonPoint : bonPoints) {
-			bonPoint.setPointConsumed(bonPoint.getPointConsumed() + 1);
-			bonPointRepository.save(bonPoint);
-		}
-	}
-
-	public void insertBonPointBilanNegatif() {
-		bonPointRepository.deleteAll();
-		bonPointRepository.save(new BonPoint(10, 10, new Date(), "recompense"));
-		bonPointRepository.save(new BonPoint(-10, -10, new Date(), "desobeissance"));
-		bonPointRepository.save(new BonPoint(-10, -10, new Date(), "desobeissance"));
-	}
-
-	public void insertBonPointBilanPositif() {
-		bonPointRepository.deleteAll();
-		bonPointRepository.save(new BonPoint(10, 10, new Date(), "recompense"));
-		bonPointRepository.save(new BonPoint(10, 10, new Date(), "recompense"));
-		bonPointRepository.save(new BonPoint(-10, -10, new Date(), "desobeissance"));
+	public void insertParticipation() {
+		participationRepository.deleteAll();
+		participationRepository.save(new Participation("John", "Doe", "john_doe@infosys.com", true, true, false));
 	}
 
 	@Test
-	public void testSumBonPoint() {
-		insertBonPointBilanNegatif();
-		Integer sumBonPoint = bonPointDaoImpl.sumBonPoint();
-		org.junit.Assert.assertEquals(-10, sumBonPoint.intValue());
-	}
-
-	@Test
-	public void testRetirePointPunition() {
-		insertBonPointBilanNegatif();
-		Integer minutes = bonPointDaoImpl.pointToDistribute(-60, 30);
-		bonPointDaoImpl.removePunition(minutes);
-	}
-
-	@Test
-	public void testRetirePointRecompense() {
-		insertBonPointBilanPositif();
-		Integer minutes = bonPointDaoImpl.pointToDistribute(-60, 30);
-		bonPointDaoImpl.removePunition(minutes);
+	public void testInsertParticipation() {
+		insertParticipation();
 	}
 
 }

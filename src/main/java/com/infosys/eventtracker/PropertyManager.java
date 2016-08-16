@@ -1,4 +1,4 @@
-package com.clement.magichome;
+package com.infosys.eventtracker;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

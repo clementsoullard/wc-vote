@@ -1,4 +1,4 @@
-package com.clement.magichome;
+package com.infosys.eventtracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

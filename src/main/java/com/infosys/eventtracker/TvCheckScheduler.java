@@ -1,4 +1,4 @@
-package com.clement.magichome;
+package com.infosys.eventtracker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,13 +19,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import com.clement.magichome.object.Channel;
-import com.clement.magichome.object.LogEntry;
-import com.clement.magichome.object.TVStatus;
-import com.clement.magichome.object.TVWrapper;
-import com.clement.magichome.service.ChannelRepository;
-import com.clement.magichome.service.LogRepository;
 import com.google.gson.Gson;
+import com.infosys.eventtracker.object.Channel;
+import com.infosys.eventtracker.object.LogEntry;
+import com.infosys.eventtracker.object.TVStatus;
+import com.infosys.eventtracker.object.TVWrapper;
+import com.infosys.eventtracker.service.ChannelRepository;
+import com.infosys.eventtracker.service.LogRepository;
 
 @Configuration
 @EnableAutoConfiguration

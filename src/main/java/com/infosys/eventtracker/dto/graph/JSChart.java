@@ -1,4 +1,4 @@
-package com.clement.magichome.dto.graph;
+package com.infosys.eventtracker.dto.graph;
 
 public class JSChart {
 	

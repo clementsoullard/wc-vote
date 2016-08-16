@@ -1,4 +1,4 @@
-package com.clement.magichome.service;
+package com.infosys.eventtracker.service;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Repository;
 
-import com.clement.magichome.object.BonPoint;
+import com.infosys.eventtracker.object.BonPoint;
 
 @Repository
 public class BonPointDaoImpl {
@@ -22,7 +22,7 @@ public class BonPointDaoImpl {
 	private MongoTemplate mongoTemplate;
 
 	@Autowired
-	private BonPointRepository bonPointRepository;
+	private ParticipationRepository bonPointRepository;
 
 	public List<BonPoint> findBonPointsAvailable() {
 		try {
@@ -91,49 +91,5 @@ public class BonPointDaoImpl {
 		return pointToDistribute;
 	}
 
-	/**
-	 * Once the points have been selected and applied to a new count down timer.
-	 * They must be ignored for the further count down.
-	 * 
-	 * @param pointToRemove
-	 */
-	public void removePunition(Integer pointToRemove) {
-		Integer takenOutPoint = pointToRemove;
-		if (pointToRemove > 0) {
-			List<BonPoint> bonPointsPositifs = findPostiveBonPointsAvailable();
-			for (BonPoint bonPoint : bonPointsPositifs) {
-				if (takenOutPoint > 0) {
-					Integer reste = bonPoint.getPointConsumed();
-					if (takenOutPoint >= reste) {
-						takenOutPoint -= reste;
-						bonPoint.setPointConsumed(0);
-					} else {
-						reste -= takenOutPoint;
-						bonPoint.setPointConsumed(reste);
-						takenOutPoint = 0;
-					}
-					bonPointRepository.save(bonPoint);
-				}
-			}
-		} else {
-
-			List<BonPoint> bonPointsnegatives = findNegativeBonPointsAvailable();
-			for (BonPoint bonPoint : bonPointsnegatives) {
-				if (takenOutPoint < 0) {
-					Integer reste = bonPoint.getPointConsumed();
-					if (takenOutPoint <= reste) {
-						takenOutPoint -= reste;
-						bonPoint.setPointConsumed(0);
-					} else {
-						reste -= takenOutPoint;
-						bonPoint.setPointConsumed(reste);
-						takenOutPoint = 0;
-					}
-					bonPointRepository.save(bonPoint);
-				}
-			}
-
-		}
-	}
 
 }

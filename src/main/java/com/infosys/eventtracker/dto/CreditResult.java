@@ -1,6 +1,6 @@
-package com.clement.magichome.dto;
+package com.infosys.eventtracker.dto;
 
-import com.clement.magichome.object.TVStatus;
+import com.infosys.eventtracker.object.TVStatus;
 
 public class CreditResult {
 

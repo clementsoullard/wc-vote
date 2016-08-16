@@ -1,4 +1,4 @@
-package com.clement.magichome.object;
+package com.infosys.eventtracker.object;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

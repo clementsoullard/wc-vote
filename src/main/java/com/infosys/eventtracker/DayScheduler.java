@@ -1,4 +1,4 @@
-package com.clement.magichome;
+package com.infosys.eventtracker;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
-import com.clement.magichome.service.BonPointDaoImpl;
+import com.infosys.eventtracker.service.BonPointDaoImpl;
 
 @Configuration
 @EnableScheduling
@@ -40,54 +40,7 @@ public class DayScheduler {
 		fileService.writeCountDown(-1);
 	}
 
-	/**
-	 * Every day the TV stops at midnight.
-	 */
-	@Scheduled(cron = "1 0 11 * * MON-TUE", zone = "Europe/Paris")
-	public void creditTvVacances() throws IOException {
-		Integer minutes = bonPointDaoImpl.pointToDistribute(-60, 30);
-		fileService.writeCountDown(60 * (60 + minutes));
-		bonPointDaoImpl.removePunition(minutes);
-	}
 
-	/**
-	 * Every day the TV stops at midnight.
-	 */
-	@Scheduled(cron = "1 0 11 * * THU-FRI", zone = "Europe/Paris")
-	public void creditTvVacances2() throws IOException {
-		Integer minutes = bonPointDaoImpl.pointToDistribute(-60, 30);
-		fileService.writeCountDown(60 * (60 + minutes));
-		bonPointDaoImpl.removePunition(minutes);
-	}
 
-	/**
-	 * Credited on Wednesday.
-	 */
-	@Scheduled(cron = "0 1 14 * * WED", zone = "Europe/Paris")
-	public void giveCreditForWednesday() throws IOException {
-		Integer minutes = bonPointDaoImpl.pointToDistribute(-60, 30);
-		fileService.writeCountDown(60 * (60 + minutes));
-		bonPointDaoImpl.removePunition(minutes);
-	}
-
-	/**
-	 * Credited on Saturday.
-	 */
-	@Scheduled(cron = "0 1 11 * * SAT", zone = "Europe/Paris")
-	public void giveCreditForWeekEnd() throws IOException {
-		Integer minutes = bonPointDaoImpl.pointToDistribute(-60, 30);
-		fileService.writeCountDown(60 * (60 + minutes));
-		bonPointDaoImpl.removePunition(minutes);
-	}
-
-	/**
-	 * Credited on Saturday.
-	 */
-	@Scheduled(cron = "0 1 11 * * SUN", zone = "Europe/Paris")
-	public void giveCreditForWeekEndSunday() throws IOException {
-		Integer minutes = bonPointDaoImpl.pointToDistribute(-60, 30);
-		fileService.writeCountDown(60 * (60 + minutes));
-		bonPointDaoImpl.removePunition(minutes);
-	}
 
 }

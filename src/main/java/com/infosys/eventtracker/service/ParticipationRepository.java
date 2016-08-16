@@ -1,12 +1,13 @@
 
-package com.clement.magichome.service;
+package com.infosys.eventtracker.service;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import com.clement.magichome.object.BonPoint;
+import com.infosys.eventtracker.dto.Participation;
+import com.infosys.eventtracker.object.BonPoint;
 
-@RepositoryRestResource(collectionResourceRel = "bonPoint", path = "bon-point")
-public interface BonPointRepository extends MongoRepository<BonPoint, String> {
+@RepositoryRestResource(collectionResourceRel = "participation", path = "participation")
+public interface ParticipationRepository extends MongoRepository<Participation, String> {
 
 }

@@ -1,4 +1,4 @@
-package com.clement.magichome;
+package com.infosys.eventtracker;
 
 import java.io.File;
 import java.io.FileInputStream;

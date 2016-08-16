@@ -1,20 +1,78 @@
-package com.clement.magichome.dto;
+package com.infosys.eventtracker.dto;
 
-public class Punition {
-	Integer value;
-	
-	String rationale;
-	
-	public Integer getValue() {
-		return value;
+public class Participation {
+
+	private String firstName;
+
+	private String lastName;
+
+	private String email;
+
+	private boolean vegetarianOption;
+
+	private boolean isEmployee;
+
+	private boolean isChild;
+
+	public Participation(String firstName, String lastName, String email, boolean vegetarianOption, boolean isEmployee,
+			boolean isChild) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.vegetarianOption = vegetarianOption;
+		this.isEmployee = isEmployee;
+		this.isChild = isChild;
 	}
-	public void setValue(Integer value) {
-		this.value = value;
+
+	public String getFirstName() {
+		return firstName;
 	}
-	public String getRationale() {
-		return rationale;
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	public void setRationale(String rationale) {
-		this.rationale = rationale;
+
+	public String getLastName() {
+		return lastName;
 	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isVegetarianOption() {
+		return vegetarianOption;
+	}
+
+	public void setVegetarianOption(boolean vegetarianOption) {
+		this.vegetarianOption = vegetarianOption;
+	}
+
+	public boolean isEmployee() {
+		return isEmployee;
+	}
+
+	public void setEmployee(boolean isEmployee) {
+		this.isEmployee = isEmployee;
+	}
+
+	public boolean isChild() {
+		return isChild;
+	}
+
+	public void setChild(boolean isChild) {
+		this.isChild = isChild;
+	}
+
+
+
 }

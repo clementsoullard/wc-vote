@@ -1,4 +1,4 @@
-package com.clement.magichome.service;
+package com.infosys.eventtracker.service;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
@@ -17,10 +17,10 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
-import com.clement.magichome.dto.MinutesPerChannel;
-import com.clement.magichome.dto.graph.Data;
-import com.clement.magichome.dto.graph.Wrapper;
-import com.clement.magichome.object.LogEntry;
+import com.infosys.eventtracker.dto.MinutesPerChannel;
+import com.infosys.eventtracker.dto.graph.Data;
+import com.infosys.eventtracker.dto.graph.Wrapper;
+import com.infosys.eventtracker.object.LogEntry;
 
 @Repository
 public class LogRepositoryImpl {
