@@ -1,0 +1,49 @@
+<div class="container">
+	<form novalidate class="simple-form">
+		<div class="form-group row">
+
+			<label for="inputFirstName" class="col-sm-2 col-form-label">First
+				Name</label>
+			<div class="col-sm-2">
+				<input type="text" ng-model="user.firstName" />
+			</div>
+			<label for="inputFirstName" class="col-sm-2 col-form-label">Last
+				Name</label>
+			<div class="col-sm-2">
+				<input type="text" ng-model="user.lastName" />
+			</div>
+
+		</div>
+		<div class="form-group row">
+			<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+			<div class="col-sm-10">
+				<input type="email" ng-model="user.email" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Gender:</label> <span class="col-sm-2 col-form-label"><input type="radio" ng-model="user.gender"
+				value="male" />male </span><span class="col-sm-2 col-form-label"><input type="radio" ng-model="user.gender"
+				value="female" />female</span>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Veg: </label><span class="col-sm-2 col-form-label"><input type="radio" ng-model="user.vegetarian"
+				ng-value="true" />Vegetarian </span><span class="col-sm-2 col-form-label"><input type="radio"
+				ng-model="user.vegetarian" ng-value="false" />Non Veg</span>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Employee: </label><span class="col-sm-2 col-form-label"><input type="radio" ng-model="user.employee"
+				ng-value="true" />Employee </span><span class="col-sm-2 col-form-label"><input type="radio"
+				ng-model="user.employee" ng-value="false" />Relative</span>
+		</div>
+		<div class="form-group row">
+			<label  class="col-sm-2 col-form-label">Children: </label><span class="col-sm-2 col-form-label"><input type="radio" ng-model="user.child"
+				ng-value="true" />Child </span><span class="col-sm-2 col-form-label"><input type="radio" ng-model="user.child"
+				ng-value="false" />Adult</span>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">Age: </label><span class="col-sm-2 col-form-label"><input type="text" ng-model="user.age" /></span>
+			<input type="button" ng-click="reset()" value="Reset" /> <input
+				type="submit" ng-click="update(user)" value="Save" />
+		</div>
+	</form>
+</div>

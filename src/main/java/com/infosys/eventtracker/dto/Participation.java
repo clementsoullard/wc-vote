@@ -1,6 +1,11 @@
 package com.infosys.eventtracker.dto;
 
+import org.springframework.data.annotation.Id;
+
 public class Participation {
+
+	@Id
+	private String id;
 
 	private String firstName;
 
@@ -8,11 +13,34 @@ public class Participation {
 
 	private String email;
 
-	private boolean vegetarianOption;
+	private boolean vegetarian;
 
-	private boolean isEmployee;
+	private boolean employee;
+
+	private String gender;
+
+	private String age;
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
 	private boolean isChild;
+
+	public Participation() {
+	}
 
 	public Participation(String firstName, String lastName, String email, boolean vegetarianOption, boolean isEmployee,
 			boolean isChild) {
@@ -20,8 +48,8 @@ public class Participation {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.vegetarianOption = vegetarianOption;
-		this.isEmployee = isEmployee;
+		this.vegetarian = vegetarianOption;
+		this.employee = isEmployee;
 		this.isChild = isChild;
 	}
 
@@ -50,19 +78,19 @@ public class Participation {
 	}
 
 	public boolean isVegetarianOption() {
-		return vegetarianOption;
+		return vegetarian;
 	}
 
 	public void setVegetarianOption(boolean vegetarianOption) {
-		this.vegetarianOption = vegetarianOption;
+		this.vegetarian = vegetarianOption;
 	}
 
 	public boolean isEmployee() {
-		return isEmployee;
+		return employee;
 	}
 
 	public void setEmployee(boolean isEmployee) {
-		this.isEmployee = isEmployee;
+		this.employee = isEmployee;
 	}
 
 	public boolean isChild() {
@@ -72,7 +100,5 @@ public class Participation {
 	public void setChild(boolean isChild) {
 		this.isChild = isChild;
 	}
-
-
 
 }

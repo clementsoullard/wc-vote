@@ -62,40 +62,6 @@ public class TvCheckScheduler {
 	@Resource
 	private FileService fileService;
 
-	/**
-	 * Every 15 sec. check the status of the TV and .
-	 */
-	@Scheduled(cron = "*/15 * * * * *")
-	public void updateSandbyStatus() throws IOException {
-		InputStreamReader xml = new InputStreamReader(getStreamStanbyStateFromLivebox());
-		tvWrapper = gson.fromJson(xml, TVWrapper.class);
-
-		Integer activeStandbyState = tvWrapper.getResult().getData().getActiveStandbyState();
-		Boolean standbyState = (activeStandbyState == 1);
-		if (!standbyState) {
-			Integer channel = tvWrapper.getResult().getData().getPlayedMediaId();
-			if (channel != null) {
-				Float minutes = minutesPerChannel.get(channel);
-				if (minutes == null) {
-					minutes = 0F;
-				}
-				minutes += .25F;
-				minutesPerChannel.put(channel, minutes);
-				// LOG.debug("Chaine=" + channel + ", minute=" + minutes);
-			}
-		}
-
-		fileService.writeStandby(standbyState);
-		Boolean relayStatus = fileService.getTvStatusRelay();
-		tvWrapper.getResult().setRelayStatus(relayStatus);
-
-		tvWrapper.getResult().setRemainingSecond(fileService.getSecondRemaining());
-		if (!relayStatus && !standbyState) {
-			pressOnOffButton();
-		}
-		LOG.debug("Standby=" + standbyState + ", getTvStatusRelay=" + relayStatus);
-
-	}
 
 	/** *Cache map for channel name */
 	Map<Integer, String> channelNameCache = new HashMap<>();
