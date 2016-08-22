@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.infosys.eventtracker.dto.Participation;
-import com.infosys.eventtracker.service.BonPointDaoImpl;
+import com.infosys.eventtracker.service.ParticipationDaoImpl;
 import com.infosys.eventtracker.service.ParticipationRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -16,7 +16,7 @@ import com.infosys.eventtracker.service.ParticipationRepository;
 public class ParticipationTest {
 
 	@Resource
-	BonPointDaoImpl bonPointDaoImpl;
+	ParticipationDaoImpl bonPointDaoImpl;
 	@Resource
 	ParticipationRepository participationRepository;
 

@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
-import com.infosys.eventtracker.service.BonPointDaoImpl;
+import com.infosys.eventtracker.service.ParticipationDaoImpl;
 
 @Configuration
 @EnableScheduling
@@ -27,7 +27,7 @@ public class DayScheduler {
 	static final Logger LOG = LoggerFactory.getLogger(DayScheduler.class);
 
 	@Resource
-	BonPointDaoImpl bonPointDaoImpl;
+	ParticipationDaoImpl bonPointDaoImpl;
 
 	@Resource
 	FileService fileService;
@@ -37,10 +37,6 @@ public class DayScheduler {
 	 */
 	@Scheduled(cron = "0 1 1 * * MON-FRI")
 	public void closeTv() throws IOException {
-		fileService.writeCountDown(-1);
 	}
-
-
-
 
 }

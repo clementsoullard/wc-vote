@@ -4,6 +4,14 @@ import org.springframework.data.annotation.Id;
 
 public class Participation {
 
+	public String getIdr() {
+		return id;
+	}
+
+	public void setIdr(String id) {
+		this.id = id;
+	}
+
 	@Id
 	private String id;
 
@@ -77,11 +85,11 @@ public class Participation {
 		this.email = email;
 	}
 
-	public boolean isVegetarianOption() {
+	public boolean isVegetarian() {
 		return vegetarian;
 	}
 
-	public void setVegetarianOption(boolean vegetarianOption) {
+	public void setVegetarian(boolean vegetarianOption) {
 		this.vegetarian = vegetarianOption;
 	}
 

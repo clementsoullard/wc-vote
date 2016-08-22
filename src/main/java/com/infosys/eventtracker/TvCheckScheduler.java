@@ -104,39 +104,8 @@ public class TvCheckScheduler {
 		return channelName;
 	}
 
-	/**
-	 * Switch of TV, in case difference with the relay status
-	 */
-	private void pressOnOffButton() {
-		if (propertyManager.getProductionMode()) {
-			try {
-				String uri = propertyManager.getLiveboxUrlPrefix() + "/remoteControl/cmd?operation=01&key=116&mode=0";
-				URL url = new URL(uri);
-				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				connection.setRequestMethod("GET");
-				connection.setRequestProperty("Accept", "application/xml");
-				connection.getInputStream().read();
-			} catch (IOException e) {
-				LOG.error(e.getMessage(), e);
-			}
-		}
 
-	}
 
-	/**
-	 * Contact the livebox and get the status of it.
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	private InputStream getStreamStanbyStateFromLivebox() throws IOException {
-		String uri = propertyManager.getLiveboxUrlPrefix() + "/remoteControl/cmd?operation=10";
-		URL url = new URL(uri);
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestMethod("GET");
-		connection.setRequestProperty("Accept", "application/xml");
-		return connection.getInputStream();
-	}
 
 	/**
 	 * Get the tv status

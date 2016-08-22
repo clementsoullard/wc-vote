@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository;
 import com.infosys.eventtracker.object.BonPoint;
 
 @Repository
-public class BonPointDaoImpl {
+public class ParticipationDaoImpl {
 
 	final static float DISTRIBUTION_FACTOR = 2F;
 
-	static final Logger LOG = LoggerFactory.getLogger(BonPointDaoImpl.class);
+	static final Logger LOG = LoggerFactory.getLogger(ParticipationDaoImpl.class);
 
 	@Autowired
 	private MongoTemplate mongoTemplate;

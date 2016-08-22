@@ -12,10 +12,9 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  */
 
 @SpringBootApplication
-public class SchedulerApplication extends SpringBootServletInitializer {
-
+public class EventTrackerApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
-		SpringApplication.run(SchedulerApplication.class, args);
+		SpringApplication.run(EventTrackerApplication.class, args);
 	}
 
 }
