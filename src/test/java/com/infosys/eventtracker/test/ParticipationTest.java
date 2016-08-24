@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.infosys.eventtracker.dto.Participation;
@@ -13,6 +14,7 @@ import com.infosys.eventtracker.service.ParticipationRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+@TestPropertySource(locations="classpath:test.properties")
 public class ParticipationTest {
 
 	@Resource
@@ -22,7 +24,7 @@ public class ParticipationTest {
 
 	public void insertParticipation() {
 		participationRepository.deleteAll();
-		participationRepository.save(new Participation("John", "Doe", "john_doe@infosys.com", true, true, false));
+		participationRepository.save(new Participation("Lady", "Di", "lady_di@infosys.com", true, true, false));
 	}
 
 	@Test

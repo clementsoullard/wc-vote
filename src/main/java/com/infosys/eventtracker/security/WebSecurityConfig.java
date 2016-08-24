@@ -19,6 +19,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.ldapAuthentication().userDnPatterns("uid={0},ou=Persons").groupSearchBase("ou=groups").contextSource()
-				.url("ldap://localhost:10399/dc=infosys,dc=com");
+				.url("ldap://10.161.86.8:10399/dc=infosys,dc=com");
 	}
 }
