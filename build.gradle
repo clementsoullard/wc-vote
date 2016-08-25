@@ -27,6 +27,8 @@ repositories {
     mavenCentral()
 }
 
+sourceSets.main.resources.srcDirs = ['src/main/resources/' , 'src/main/environment/prod']
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 

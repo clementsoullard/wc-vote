@@ -17,6 +17,30 @@ angular.module('myApp.participation', ['ngRoute'])
  */
 		
  $scope.update = function (user) {
+	 /** This is to identify the event it is related to */
+	 
+	 user.event='infyplay2016';
+	 
+	 /** We use the tracer to identify if a registration has been done on the same computer */
+	 var x = document.cookie;
+	 
+	 if(!x){
+		 var d = new Date();
+	 	d.setTime(d.getTime() + (30*24*60*60*1000));
+	 	var expires = "expires="+ d.toUTCString();
+	 	var rndNumber=Math.floor((Math.random() * 1000000) + 1);
+	 	document.cookie =  "tracer="+rndNumber+" ; " + expires;
+	 	x=document.cookie;
+	 }
+	 else{
+		 console.log('There is one cookie in the session ' + x.substring(7));
+	 }
+	 /** This is to identify the event it is related to */
+
+	 user.tracer=x.substring(7);
+	 
+	 
+	 
     $http.post('/event-tracker/ws-participation',user).
         success(function(data) {
      	  	$scope.message='Thanks for applying. You have been properly registred. You can also register husband/wife and children after closing this window.';
@@ -35,8 +59,15 @@ angular.module('myApp.participation', ['ngRoute'])
 	 function list(){
 		 $http.get('/event-tracker/ws-participation').
 	      success(function(data) {
-	        	console.log(JSON.stringify(data._embedded));
+	        //	console.log(JSON.stringify(data._embedded));
 	            $scope.participations = data._embedded.participation;
+	            $scope.nbTotal = data.page.totalElements;
+	        });
+		 
+		 $http.get('/event-tracker/ws-participation-stats').
+	      success(function(data) {
+	        //	console.log(JSON.stringify(data._embedded));
+	            $scope.participationStats = data;
 	        });
 		 }
 	/**

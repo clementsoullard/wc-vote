@@ -1,7 +1,5 @@
 package com.infosys.eventtracker.dto;
 
-import com.infosys.eventtracker.object.TVStatus;
-
 public class PunitionResult {
 
 	private String message;

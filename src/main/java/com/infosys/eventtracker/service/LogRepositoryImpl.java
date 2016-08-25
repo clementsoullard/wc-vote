@@ -5,7 +5,6 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.matc
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Repository;
 import com.infosys.eventtracker.dto.MinutesPerChannel;
 import com.infosys.eventtracker.dto.graph.Data;
 import com.infosys.eventtracker.dto.graph.Wrapper;
-import com.infosys.eventtracker.object.LogEntry;
 
 @Repository
 public class LogRepositoryImpl {

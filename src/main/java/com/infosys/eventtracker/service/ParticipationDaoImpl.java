@@ -1,7 +1,5 @@
 package com.infosys.eventtracker.service;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Repository;
 
-import com.infosys.eventtracker.object.BonPoint;
+import com.infosys.eventtracker.dto.Participation;
 
 @Repository
 public class ParticipationDaoImpl {
@@ -21,75 +19,53 @@ public class ParticipationDaoImpl {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	@Autowired
-	private ParticipationRepository bonPointRepository;
-
-	public List<BonPoint> findBonPointsAvailable() {
+	/**
+	 * Return the number of child
+	 * 
+	 * @return
+	 */
+	public Integer getChildNb() {
 		try {
-			BasicQuery query = new BasicQuery("{pointConsumed: {$ne: 0}}");
+			BasicQuery query = new BasicQuery("{isChild: {$eq: true}}");
 			LOG.debug("Construction de la requete effectuée");
-			List<BonPoint> bonPoints = mongoTemplate.find(query, BonPoint.class);
-			return bonPoints;
+			Long enfantCount = mongoTemplate.count(query, Participation.class);
+			return enfantCount.intValue();
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 		}
 		return null;
-	}
-
-	public List<BonPoint> findPostiveBonPointsAvailable() {
-		try {
-			BasicQuery query = new BasicQuery("{pointConsumed: {$gt: 0}}");
-			LOG.debug("Construction de la requete effectuée");
-			List<BonPoint> bonPoints = mongoTemplate.find(query, BonPoint.class);
-			return bonPoints;
-		} catch (Exception e) {
-			LOG.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
-	public List<BonPoint> findNegativeBonPointsAvailable() {
-		try {
-			BasicQuery query = new BasicQuery("{pointConsumed: {$lt: 0}}");
-			LOG.debug("Construction de la requete effectuée");
-			List<BonPoint> bonPoints = mongoTemplate.find(query, BonPoint.class);
-			return bonPoints;
-		} catch (Exception e) {
-			LOG.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
-	public Integer sumBonPoint() {
-		Integer sum = 0;
-		List<BonPoint> bonPoints = findBonPointsAvailable();
-		for (BonPoint bonPoint : bonPoints) {
-			sum += bonPoint.getPointConsumed();
-		}
-		return sum;
 	}
 
 	/**
-	 * This is called by the scheduler to compute the number of point to
-	 * distribute and propagate into the timer computation. Note: This does not
-	 * take the point off the Bon Point, in rder to do this, you have to call
-	 * the method
+	 * Return the number of vegatarians
 	 * 
-	 * @see removePunition()
-	 * @param min
-	 * @param max
 	 * @return
 	 */
-	public Integer pointToDistribute(Integer min, Integer max) {
-		Integer sum = sumBonPoint();
-		Integer pointToDistribute = Math.round(sum.floatValue() / DISTRIBUTION_FACTOR + (1 * Math.signum(sum)));
-		if (pointToDistribute < min) {
-			pointToDistribute = min;
-		} else if (pointToDistribute > max) {
-			pointToDistribute = max;
+	public Integer getVegetarianNb() {
+		try {
+			BasicQuery query = new BasicQuery("{vegetarian: {$eq: true}}");
+			LOG.debug("Construction de la requete effectuée");
+			Long vegetarianCount = mongoTemplate.count(query, Participation.class);
+			return vegetarianCount.intValue();
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
 		}
-		return pointToDistribute;
+		return null;
+	}	/**
+	 * Return the number of vegatarians
+	 * 
+	 * @return
+	 */
+	public Integer getFemaleNb() {
+		try {
+			BasicQuery query = new BasicQuery("{gender: {$eq: female}}");
+			LOG.debug("Construction de la requete effectuée");
+			Long femaleCount = mongoTemplate.count(query, Participation.class);
+			return femaleCount.intValue();
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		return null;
 	}
-
 
 }

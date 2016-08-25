@@ -21,6 +21,13 @@ public class Participation {
 
 	private String email;
 
+	private String event;
+
+	/**
+	 * Tracer used to identify if the submitssion is issued by the same person
+	 */
+	private String tracer;
+
 	private boolean vegetarian;
 
 	private boolean employee;
@@ -28,6 +35,26 @@ public class Participation {
 	private String gender;
 
 	private String age;
+
+	public Participation(String firstName, String lastName, String email, boolean vegetarianOption, boolean isEmployee,
+			boolean isChild, String tracer) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.vegetarian = vegetarianOption;
+		this.employee = isEmployee;
+		this.isChild = isChild;
+		this.tracer = tracer;
+	}
+
+	public String getEvent() {
+		return event;
+	}
+
+	public void setEvent(String event) {
+		this.event = event;
+	}
 
 	public String getAge() {
 		return age;
@@ -48,17 +75,6 @@ public class Participation {
 	private boolean isChild;
 
 	public Participation() {
-	}
-
-	public Participation(String firstName, String lastName, String email, boolean vegetarianOption, boolean isEmployee,
-			boolean isChild) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.vegetarian = vegetarianOption;
-		this.employee = isEmployee;
-		this.isChild = isChild;
 	}
 
 	public String getFirstName() {
@@ -107,6 +123,14 @@ public class Participation {
 
 	public void setChild(boolean isChild) {
 		this.isChild = isChild;
+	}
+
+	public String getTracer() {
+		return tracer;
+	}
+
+	public void setTracer(String tracer) {
+		this.tracer = tracer;
 	}
 
 }

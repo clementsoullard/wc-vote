@@ -24,7 +24,7 @@ public class ParticipationTest {
 
 	public void insertParticipation() {
 		participationRepository.deleteAll();
-		participationRepository.save(new Participation("Lady", "Di", "lady_di@infosys.com", true, true, false));
+		participationRepository.save(new Participation("Lady", "Di", "lady_di@infosys.com", true, true, false,"Cououc"));
 	}
 
 	@Test
