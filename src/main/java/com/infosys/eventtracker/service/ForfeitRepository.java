@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.infosys.eventtracker.dto.Forfeit;
 
-@RepositoryRestResource(collectionResourceRel = "forfeit", path = "ws-forfeit")
+@RepositoryRestResource(collectionResourceRel = "forfeit", path = "forfeit")
 public interface ForfeitRepository extends MongoRepository<Forfeit, String> {
 
 }

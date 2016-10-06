@@ -13,7 +13,7 @@ angular.module('myApp.participation', ['ngRoute'])
 
  
 /**
- * Insert a new entry fonction
+ * Insert a new entry function
  */
 		
  $scope.update = function (user) {
@@ -57,7 +57,7 @@ angular.module('myApp.participation', ['ngRoute'])
  * List the entries
  */		
 	 function list(){
-		 $http.get('/event-tracker/ws-participation').
+		 $http.get('/event-tracker/ws-participation?size=100').
 	      success(function(data) {
 	        //	console.log(JSON.stringify(data._embedded));
 	            $scope.participations = data._embedded.participation;

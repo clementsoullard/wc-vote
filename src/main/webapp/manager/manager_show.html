@@ -1,0 +1,42 @@
+<div class="container">
+
+<div class="alert alert-danger" ng-if="message&&error">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  {{message}}
+</div>
+<div class="alert alert-success" ng-if="message&&!error">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  {{message}}
+</div>
+
+<div ng-if="!message">
+<h2>List of shows</h2>
+	<form novalidate class="simple-form">
+		<div class="form-group row">
+			<label for="inputFirstName" class="col-sm-2 col-form-label">First
+				Name</label>
+			<div class="col-sm-2">
+				<input type="text" ng-model="user.firstName" />
+			</div>
+			<div class="form-group row">
+		<span class="col-sm-5"></span>
+		<input type="submit" class="btn btn-info col-sm-2" ng-click="update(user)"
+				value="Save" />
+		</div>
+	</form>
+<hr>
+</div>
+<h2>Show list</h2>
+	<ul class="list-group" ng-repeat="participation in participations">
+		<li class="list-group-item">
+			<div class="row">
+			<strong class="col-sm-2">
+				{{participation.firstName}} {{participation.lastName}} </strong> 
+				<span class="col-sm-3"> {{participation.email}} </span> 
+	 			<span class="col-sm-2"> <strong>Veg:</strong> {{participation.vegetarian}}</span>
+				<span class="col-sm-2"> <strong>Employee:</strong> {{participation.employee}} </span>
+				<span  class="col-sm-2"> <strong>Child:</strong> {{participation.child}}</span>
+			<a ng-click="remove(participation.idr)"><i class="icon-remove pull-right"></i>X</a>
+		</div>
+		</li>
+	</ul>

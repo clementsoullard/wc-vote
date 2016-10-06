@@ -58,7 +58,7 @@ public class ParticipationDaoImpl {
 	 */
 	public Integer getFemaleNb() {
 		try {
-			BasicQuery query = new BasicQuery("{gender: {$eq: female}}");
+			BasicQuery query = new BasicQuery("{gender: 'female'}");
 			LOG.debug("Construction de la requete effectuée");
 			Long femaleCount = mongoTemplate.count(query, Participation.class);
 			return femaleCount.intValue();

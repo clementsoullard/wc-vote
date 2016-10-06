@@ -4,8 +4,7 @@
 angular.module('myApp', [
   'ngRoute',
   'myApp.participation',
-  'myApp.view2',
-  'myApp.version',
+   'myApp.version',
   'ng-fusioncharts'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
