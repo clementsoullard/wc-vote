@@ -141,7 +141,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	list();		 
 	
     var uploader = $scope.uploader = new FileUploader({
-        url: 'upload.php'
+        url: 'upload'
     });
 
     // FILTERS
