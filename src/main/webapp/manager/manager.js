@@ -3,9 +3,9 @@
 angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/manager', {
-    templateUrl: 'manager/manager_forfeit.html',
-    controller: 'forfeitCtrl'
+  $routeProvider.when('/event', {
+    templateUrl: 'manager/manager_event.html',
+    controller: 'eventMgrCtrl'
   })
   .when('/show', {
 	    templateUrl: 'manager/manager_show.html',
@@ -14,14 +14,14 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
   ;
 }])
 
-.controller('forfeitCtrl',  ['$scope','$http', function($scope,$http) {
+.controller('eventMgrCtrl',  ['$scope','$http', function($scope,$http) {
 /**
  * Insert a new entry fonction
  */
- $scope.update = function (forfeit) {
-    $http.post('/event-tracker/ws/forfeit',forfeit).
+ $scope.update = function (event) {
+    $http.post('/event-tracker/ws/event',event).
         success(function(data) {
-     	  	$scope.message='Thanks for submitting the idea.';
+     	  	$scope.message='Event registered.';
        	  	$scope.error=false;
             list();
         }).
@@ -35,16 +35,16 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
  * List the entries
  */		
 	 function list(){
-		 $http.get('/event-tracker/ws/forfeit').
+		 $http.get('/event-tracker/ws/event').
 	      success(function(data) {
 	        	console.log(JSON.stringify(data._embedded));
-	            $scope.forfeits = data._embedded.forfeit;
+	            $scope.events = data._embedded.event;
 	        });
 		 }
 	/**
 	* List the entries
 	*/		
-	$scope.remove = function(id){ $http.delete('/event-tracker/ws/forfeit/'+id).
+	$scope.remove = function(id){ $http.delete('/event-tracker/ws/event/'+id).
 			success(function(data) {
 		  	$scope.message='The entry has been removed.';
 			list();
