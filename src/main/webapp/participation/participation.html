@@ -12,6 +12,16 @@
 </div>
 
 <div ng-if="!message" style="background-color: white; padding:20px">
+
+<div ng-repeat="event in events">
+		<div class="form-group row">
+				<h2 class="col-sm-5">{{event.name}}</h2>
+				<span class="col-sm-5"></span> <input type="submit"
+					class="btn btn-info col-sm-2" ng-click="register(event)" value="Register" />
+			</div>
+
+</div>
+
 <h2>Register to the Infy Play Event, Sat 24th September</h2>
 	<form novalidate class="simple-form">
 	

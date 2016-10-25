@@ -52,19 +52,29 @@ angular.module('myApp.participation', ['ngRoute'])
        	  	$scope.error=true;
 		})
 		};
+		/**
+		 * List the active events
+		 */
+		 function listActiveEvents(){
+			 $http.get('ws-active-events').
+		      success(function(data) {
+		            $scope.events = data;
+	        });
+		 }
+
 			
 /**
  * List the entries
  */		
 	 function list(){
-		 $http.get('/event-tracker/ws-participation?size=100').
+		 $http.get('ws/participation?size=100').
 	      success(function(data) {
 	        //	console.log(JSON.stringify(data._embedded));
 	            $scope.participations = data._embedded.participation;
 	            $scope.nbTotal = data.page.totalElements;
 	        });
 		 
-		 $http.get('/event-tracker/ws-participation-stats').
+		 $http.get('ws-participation-stats').
 	      success(function(data) {
 	        //	console.log(JSON.stringify(data._embedded));
 	            $scope.participationStats = data;
@@ -73,12 +83,13 @@ angular.module('myApp.participation', ['ngRoute'])
 	/**
 	* List the entries
 	*/		
-	$scope.remove = function(id){ $http.delete('/event-tracker/ws-participation/'+id).
+	$scope.remove = function(id){ $http.delete('ws/participation/'+id).
 			success(function(data) {
 		  	$scope.message='The entry has been removed.';
 			list();
 		});
 	}
 		
-		list();		 
+		list();		
+		listActiveEvents();
 }]);

@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.clement.eventtracker.dto.Participation;
 
-@RepositoryRestResource(collectionResourceRel = "participation", path = "ws-participation")
+@RepositoryRestResource(collectionResourceRel = "participation", path = "participation")
 public interface ParticipationRepository extends MongoRepository<Participation, String> {
 
 }

@@ -3,8 +3,10 @@ package com.clement.eventtracker.dto;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+
 /**
  * This class is representing on event.
+ * 
  * @author Clement_Soullard
  *
  */
@@ -18,11 +20,12 @@ public class Event {
 		this.id = id;
 	}
 
-	
 	@Id
 	private String id;
 
 	private String name;
+
+	private Boolean active = true;
 
 	private Date date;
 
@@ -40,6 +43,14 @@ public class Event {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 }
