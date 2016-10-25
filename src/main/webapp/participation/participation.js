@@ -6,19 +6,39 @@ angular.module('myApp.participation', ['ngRoute'])
   $routeProvider.when('/participation', {
     templateUrl: 'participation/participation.html',
     controller: 'participationCtrl'
-  });
+  }).when('/register/:idEvent', {
+	    templateUrl: 'participation/register.html',
+	    controller: 'registerCtrl'
+	  });
 }])
 
-.controller('participationCtrl',  ['$scope','$http', function($scope,$http) {
+.controller('participationCtrl',  ['$scope','$http','$location', function($scope,$http,$location) {
 
  
-/**
- * Insert a new entry function
- */
+		/**
+		 * List the active events
+		 */
+		 function listActiveEvents(){
+			 $http.get('ws-active-events').
+		      success(function(data) {
+		            $scope.events = data;
+	        });
+		 }
+
+			/**
+			 * Register 
+			 */
+			 $scope.register = function (event){
+				 $location.path("register/"+event.idr);
+			 }
+
+		 
+		listActiveEvents();
+}])
+.controller('registerCtrl',  ['$scope','$http','$routeParams',function($scope,$http,$routeParams) {
 		
- $scope.update = function (user) {
 	 /** This is to identify the event it is related to */
-	 
+	var user={}; 
 	 user.event='infyplay2016';
 	 
 	 /** We use the tracer to identify if a registration has been done on the same computer */
@@ -38,12 +58,27 @@ angular.module('myApp.participation', ['ngRoute'])
 	 /** This is to identify the event it is related to */
 
 	 user.tracer=x.substring(7);
-	 
-	 
-	 
+
+	var idEvent=$routeParams.idEvent;
+		console.log("Coucou register "+idEvent)
+
+/**
+ * retrieve an event
+ */
+		function getEvent(idEvent){
+			$http.get('ws/event/'+idEvent).
+			success(function(data) {
+			$scope.event = data;
+			});
+		};
+/**
+ * Insert a new entry function
+ */
+		
+ $scope.update = function (user) {
     $http.post('/event-tracker/ws-participation',user).
-        success(function(data) {
-     	  	$scope.message='Thanks for applying. You have been properly registred. You can also register husband/wife and children after closing this window.';
+        	success(function(data) {
+     	  	$scope.message='Thanks for registering.';
        	  	$scope.error=false;
             list();
         }).
@@ -51,45 +86,43 @@ angular.module('myApp.participation', ['ngRoute'])
      	  	$scope.message='An issue occured';
        	  	$scope.error=true;
 		})
-		};
-		/**
-		 * List the active events
-		 */
-		 function listActiveEvents(){
-			 $http.get('ws-active-events').
-		      success(function(data) {
-		            $scope.events = data;
-	        });
-		 }
+	};
 
-			
-/**
- * List the entries
- */		
-	 function list(){
-		 $http.get('ws/participation?size=100').
-	      success(function(data) {
-	        //	console.log(JSON.stringify(data._embedded));
-	            $scope.participations = data._embedded.participation;
-	            $scope.nbTotal = data.page.totalElements;
-	        });
-		 
-		 $http.get('ws-participation-stats').
-	      success(function(data) {
-	        //	console.log(JSON.stringify(data._embedded));
-	            $scope.participationStats = data;
-	        });
-		 }
-	/**
-	* List the entries
-	*/		
-	$scope.remove = function(id){ $http.delete('ws/participation/'+id).
-			success(function(data) {
-		  	$scope.message='The entry has been removed.';
-			list();
-		});
-	}
+		/**
+		 * List the entries
+		 */		
+			 function list(){
+				 $http.get('ws/participation?size=100').
+			      success(function(data) {
+			        //	console.log(JSON.stringify(data._embedded));
+			            $scope.participations = data._embedded.participation;
+			            $scope.nbTotal = data.page.totalElements;
+			        });
+				 
+			$http.get('ws-participation-stats').
+			     success(function(data) {
+			      //	console.log(JSON.stringify(data._embedded));
+			         $scope.participationStats = data;
+			     });
+			}
 		
-		list();		
-		listActiveEvents();
-}]);
+		/**
+		* Remove the entries
+		*/		
+		$scope.remove = function(id){ $http.delete('ws/participation/'+id).
+				success(function(data) {
+			  	$scope.message='The entry has been removed.';
+				list();
+			});
+		}
+
+		/**
+		 * Action at page loading.
+		 */
+		list();	
+		getEvent(idEvent);
+
+}
+
+
+]);
