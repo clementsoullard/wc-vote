@@ -1,6 +1,8 @@
 package com.clement.eventtracker.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
@@ -29,6 +31,8 @@ public class Event {
 
 	private Date date;
 
+	private List<Participation> participations;
+
 	public String getName() {
 		return name;
 	}
@@ -51,6 +55,21 @@ public class Event {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public List<Participation> getParticipations() {
+		return participations;
+	}
+
+	public void setParticipations(List<Participation> participations) {
+		this.participations = participations;
+	}
+
+	public void addParticipation(Participation participation) {
+		if (participations == null) {
+			participations = new ArrayList<Participation>();
+		}
+		participations.add(participation);
 	}
 
 }

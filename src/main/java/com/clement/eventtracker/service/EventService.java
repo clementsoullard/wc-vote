@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.clement.eventtracker.dto.Event;
+import com.clement.eventtracker.dto.Participation;
 
 @Component
 public class EventService {
@@ -32,5 +33,12 @@ public class EventService {
 			LOG.error(e.getMessage(), e);
 		}
 		return null;
+	}
+
+	public void registerEvent(String idEvent, Participation participation) {
+
+		Event event = eventRepository.findOne(idEvent);
+		event.addParticipation(participation);
+		eventRepository.save(event);
 	}
 }

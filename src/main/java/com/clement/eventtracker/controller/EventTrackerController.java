@@ -5,10 +5,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clement.eventtracker.dto.Event;
+import com.clement.eventtracker.dto.Participation;
 import com.clement.eventtracker.dto.ParticipationStats;
 import com.clement.eventtracker.service.EventService;
 import com.clement.eventtracker.service.ParticipationDaoImpl;
@@ -22,9 +25,9 @@ public class EventTrackerController {
 
 	@Resource
 	private ParticipationDaoImpl participationDaoImpl;
-@Autowired 
-private EventService eventService;
-	
+	@Autowired
+	private EventService eventService;
+
 	@RequestMapping("/ws-participation-stats")
 	public ParticipationStats getParticipationStats() throws Exception {
 		ParticipationStats participationStats = new ParticipationStats();
@@ -33,10 +36,16 @@ private EventService eventService;
 		participationStats.setNbWomen(participationDaoImpl.getFemaleNb());
 		return participationStats;
 	}
-	
+
 	@RequestMapping("/ws-active-events")
 	public List<Event> getActiveEvents() throws Exception {
 		return eventService.getCurrentOpenEvent();
+	}
+
+	@RequestMapping("/ws-register/{idEvent}")
+	public void patricipateEvent(@PathVariable("idEvent") String idEvent, @RequestBody Participation participation)
+			throws Exception {
+		eventService.registerEvent(idEvent, participation);
 	}
 
 }

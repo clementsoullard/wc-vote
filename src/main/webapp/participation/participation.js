@@ -76,7 +76,7 @@ angular.module('myApp.participation', ['ngRoute'])
  */
 		
  $scope.update = function (user) {
-    $http.post('/event-tracker/ws-participation',user).
+    $http.post('/event-tracker/ws-register/'+idEvent,user).
         	success(function(data) {
      	  	$scope.message='Thanks for registering.';
        	  	$scope.error=false;
@@ -91,15 +91,15 @@ angular.module('myApp.participation', ['ngRoute'])
 		/**
 		 * List the entries
 		 */		
-			 function list(){
-				 $http.get('ws/participation?size=100').
+		function list(){
+				 $http.get('ws/event/'+idEvent).
 			      success(function(data) {
 			        //	console.log(JSON.stringify(data._embedded));
-			            $scope.participations = data._embedded.participation;
-			            $scope.nbTotal = data.page.totalElements;
+			            $scope.participations = data.participations;
+			            $scope.nbTotal = data.participations.length;
 			        });
 				 
-			$http.get('ws-participation-stats').
+		$http.get('ws-participation-stats').
 			     success(function(data) {
 			      //	console.log(JSON.stringify(data._embedded));
 			         $scope.participationStats = data;
