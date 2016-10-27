@@ -24,13 +24,37 @@ public class Event {
 
 	@Id
 	private String id;
-
+/**
+ * Name of the event
+ */
 	private String name;
-
+	/**
+	 * If the event is active
+	 */
 	private Boolean active = true;
-
+	/**
+	 * If the event is for employee only
+	 */
+	private Boolean forEmployeeOnly = true;
+	/**
+	 * If the event needs the veg info
+	 */
+	private Boolean needVegetarianInfo = false;
+	/**
+	 * If the event need the info weither the child are welcome.
+	 */
+	private Boolean needChildInfo = false;
+	/**
+ 	* The description of the event
+ 	*/
+	private String description;
+	/**
+ 	* The date of the event
+ 	*/
 	private Date date;
-
+	/**
+	 * The list of participants to the event
+	 */
 	private List<Participation> participations;
 
 	public String getName() {
@@ -70,6 +94,38 @@ public class Event {
 			participations = new ArrayList<Participation>();
 		}
 		participations.add(participation);
+	}
+
+	public Boolean getForEmployeeOnly() {
+		return forEmployeeOnly;
+	}
+
+	public void setForEmployeeOnly(Boolean forEmployeeOnly) {
+		this.forEmployeeOnly = forEmployeeOnly;
+	}
+
+	public Boolean getNeedVegetarianInfo() {
+		return needVegetarianInfo;
+	}
+
+	public void setNeedVegetarianInfo(Boolean needVegetarianInfo) {
+		this.needVegetarianInfo = needVegetarianInfo;
+	}
+
+	public Boolean getNeedChildInfo() {
+		return needChildInfo;
+	}
+
+	public void setNeedChildInfo(Boolean needChildInfo) {
+		this.needChildInfo = needChildInfo;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
