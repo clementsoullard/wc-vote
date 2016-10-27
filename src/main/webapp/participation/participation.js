@@ -79,12 +79,14 @@ angular.module('myApp.participation', ['ngRoute'])
     $http.post('/event-tracker/ws-register/'+idEvent,user).
         	success(function(data) {
      	  	$scope.message='Thanks for registering.';
+     	  	$scope.user={};
        	  	$scope.error=false;
             list();
         }).
 		error(function(data) {
      	  	$scope.message='An issue occured.';
-       	  	$scope.error=true;
+     	  	$scope.user={};
+     	  	$scope.error=true;
 		})
 	};
 
@@ -94,14 +96,12 @@ angular.module('myApp.participation', ['ngRoute'])
 		function list(){
 				 $http.get('ws/event/'+idEvent).
 			      success(function(data) {
-			        //	console.log(JSON.stringify(data._embedded));
 			            $scope.participations = data.participations;
 			            $scope.nbTotal = data.participations.length;
 			        });
 				 
 		$http.get('ws-participation-stats').
 			     success(function(data) {
-			      //	console.log(JSON.stringify(data._embedded));
 			         $scope.participationStats = data;
 			     });
 			}
