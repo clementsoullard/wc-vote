@@ -8,10 +8,10 @@
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   {{message}}
   <br>
-  <a href="#"  aria-label="close">Enter some other peoples (relatives or colleagues)</a>
+  <a href="#/register"  aria-label="close">Thanks.</a>
 </div>
 
-<div ng-if="!message" style="background-color: white; padding:20px">
+<div style="background-color: white; padding:20px">
 
 <div ng-repeat="event in events">
 		<div class="form-group row">
@@ -49,7 +49,7 @@
 			<div ng-if="user.employee && user.employee != null" class="form-group row">
 			<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
 			<div class="col-sm-10">
-				<input type="email" ng-model="user.email" size="50" />
+				<input type="text" ng-model="user.email" size="50" />
 			</div>
 		</div>
 		
@@ -106,10 +106,7 @@
 			<strong class="col-sm-6">
 				{{participation.firstName}} {{participation.lastName}} </strong> 
 				<span class="col-sm-5"> {{participation.email}} </span> 
-	 			<!-- <span class="col-sm-2"> <strong>Veg:</strong> {{participation.vegetarian}}</span>
-				<span class="col-sm-2"> <strong>Employee:</strong> {{participation.employee}} </span>
-				<span  class="col-sm-2"> <strong>Child:</strong> {{participation.child}}</span>
- -->			<span  class="pull-right"><a class="close" data-dismiss="alert" aria-label="close" ng-click="remove(participation.idr)">&times;</a>
+	 			<span  class="pull-right"><a class="close" data-dismiss="alert" aria-label="close" ng-click="remove(participation.idr)">&times;</a>
 			</span>
 			</li>
 	</ul>

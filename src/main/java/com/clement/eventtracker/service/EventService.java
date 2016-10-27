@@ -8,7 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.clement.eventtracker.dto.Event;
@@ -35,10 +37,21 @@ public class EventService {
 		return null;
 	}
 
+	/**
+	 * Register a user to the event.
+	 * 
+	 * @param idEvent
+	 * @param participation
+	 */
 	public void registerEvent(String idEvent, Participation participation) {
-
 		Event event = eventRepository.findOne(idEvent);
 		event.addParticipation(participation);
 		eventRepository.save(event);
+	}
+
+	public void unregisterEvent(String idEvent, String idParticipation) {
+		mongoTemplate.updateMulti(new Query(),
+				new Update().pull("participations", new Query(Criteria.where("id").is(idParticipation))),
+				Event.class);
 	}
 }

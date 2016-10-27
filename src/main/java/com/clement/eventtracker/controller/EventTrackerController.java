@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clement.eventtracker.dto.Event;
@@ -45,7 +47,13 @@ public class EventTrackerController {
 	@RequestMapping("/ws-register/{idEvent}")
 	public void patricipateEvent(@PathVariable("idEvent") String idEvent, @RequestBody Participation participation)
 			throws Exception {
+		participation.setIdr(ObjectId.get().toString());
 		eventService.registerEvent(idEvent, participation);
+	}
+	@RequestMapping(value="/ws-unregister/{idEvent}/{id}",method=RequestMethod.DELETE)
+	public void unregister(@PathVariable("idEvent") String idEvent, @PathVariable("id") String idParticipation)
+			throws Exception {
+		eventService.unregisterEvent(idEvent, idParticipation);
 	}
 
 }

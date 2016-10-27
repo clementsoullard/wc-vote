@@ -1,15 +1,12 @@
 package com.clement.eventtracker.dto;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 public class Participation {
 
 	public String getIdr() {
 		return id;
-	}
-
-	public void setIdr(String id) {
-		this.id = id;
 	}
 
 	@Id
@@ -131,6 +128,10 @@ public class Participation {
 
 	public void setTracer(String tracer) {
 		this.tracer = tracer;
+	}
+
+	public void setIdr(String idr) {
+		id = idr;
 	}
 
 }

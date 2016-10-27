@@ -83,7 +83,7 @@ angular.module('myApp.participation', ['ngRoute'])
             list();
         }).
 		error(function(data) {
-     	  	$scope.message='An issue occured';
+     	  	$scope.message='An issue occured.';
        	  	$scope.error=true;
 		})
 	};
@@ -109,7 +109,7 @@ angular.module('myApp.participation', ['ngRoute'])
 		/**
 		* Remove the entries
 		*/		
-		$scope.remove = function(id){ $http.delete('ws/participation/'+id).
+		$scope.remove = function(email){ $http.delete('ws-unregister/'+idEvent+'/'+email).
 				success(function(data) {
 			  	$scope.message='The entry has been removed.';
 				list();
