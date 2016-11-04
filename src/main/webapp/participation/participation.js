@@ -38,8 +38,7 @@ angular.module('myApp.participation', ['ngRoute'])
 .controller('registerCtrl',  ['$scope','$http','$routeParams',function($scope,$http,$routeParams) {
 		
 	 /** This is to identify the event it is related to */
-	var user={}; 
-	 user.event='infyplay2016';
+	var participant={forEmployeeOnly: false, employee: null}; 
 	 
 	 /** We use the tracer to identify if a registration has been done on the same computer */
 	 var x = document.cookie;
@@ -57,7 +56,7 @@ angular.module('myApp.participation', ['ngRoute'])
 	 }
 	 /** This is to identify the event it is related to */
 
-	 user.tracer=x.substring(7);
+	 participant.tracer=x.substring(7);
 
 	var idEvent=$routeParams.idEvent;
 		console.log("Coucou register "+idEvent)
@@ -79,13 +78,13 @@ angular.module('myApp.participation', ['ngRoute'])
     $http.post('/event-tracker/ws-register/'+idEvent,user).
         	success(function(data) {
      	  	$scope.message='Thanks for registering.';
-     	  	$scope.user={};
+     	  	$scope.participant={};
        	  	$scope.error=false;
             list();
         }).
 		error(function(data) {
      	  	$scope.message='An issue occured.';
-     	  	$scope.user={};
+     	  	$scope.participant={};
      	  	$scope.error=true;
 		})
 	};
@@ -97,7 +96,12 @@ angular.module('myApp.participation', ['ngRoute'])
 				 $http.get('ws/event/'+idEvent).
 			      success(function(data) {
 			            $scope.participations = data.participations;
+			            if(data.participations != null){
 			            $scope.nbTotal = data.participations.length;
+			            }
+			            else{
+			            	$scope.nbTotal =0;
+			            }
 			        });
 				 
 		$http.get('ws-participation-stats').

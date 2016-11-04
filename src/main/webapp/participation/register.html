@@ -7,76 +7,78 @@
 <div class="alert alert-success" ng-if="message&&!error">
   <a  class="close" data-dismiss="alert" aria-label="close">&times;</a>
   {{message}}
-  <br>
-  <a href="#/register"  aria-label="close">Thanks.</a>
+ 
 </div>
 
 <div style="background-color: white; padding:20px">
 
+<h1>{{event.name}} on {{event.date | date: fullDate}}</h1>	
+<h3>Registration until {{event.dateMaxRegistration| date: fullDate}}<span ng-if="event.maxParticipant">, open to {{event.maxParticipant}} persons max.</span></h3>
 
-<h2>Register to {{event.name}}</h2>
 			<p>{{event.description}}</p>
+			<p>{{event.childInfo}}</p>
 	<form novalidate class="simple-form">
-		<div class="form-group row">
+		<div class="row">
 			<label for="inputFirstName" class="col-sm-2 col-form-label">First
 				Name</label>
 			<div class="col-sm-2">
-				<input type="text" ng-model="user.firstName" />
+				<input type="text" ng-model="participant.firstName" />
 			</div>
 			<label for="inputFirstName" class="col-sm-2 col-form-label">Last
 				Name</label>
 			<div class="col-sm-2">
-				<input type="text" ng-model="user.lastName" />
+				<input type="text" ng-model="participant.lastName" />
 			</div>
-</div>
-		<div ng-if="!event.forEmployeeOnly" class="form-group row">
+		</div>
+		<div ng-show="!event.forEmployeeOnly" class="form-group row">
 			<label class="col-sm-2 col-form-label">Infosys Employee: </label><span
 				class="col-sm-2 col-form-label"><input type="radio"
-				ng-model="user.employee" ng-value="true" />Employee </span><span
+				ng-model="participant.employee" ng-value="true" />Employee</span><span
 				class="col-sm-2 col-form-label"><input type="radio"
-				ng-model="user.employee" ng-value="false" />Relative</span>
-		</div>
-
-			<div ng-if="user.employee && user.employee != null || event.forEmployeeOnly	" class="form-group row">
+				ng-model="participant.employee" ng-value="false" />Relative</span>
+		</div>	
+	<div ng-show="participant.employee==true">
+</div>
+		<div ng-if="participant.employee && participant.employee != null || event.forEmployeeOnly" class="form-group row">
 			<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
 			<div class="col-sm-10">
-				<input type="text" ng-model="user.email" size="50" />
+				<input type="text" ng-model="participant.email" size="50" />
 			</div>
 		</div>
 		
-		<div ng-if="needGenderInfo"  class="form-group row">
+		<div ng-show="needGenderInfo"  class="form-group row">
 			<label class="col-sm-2 col-form-label">Gender:</label> <span
 				class="col-sm-2 col-form-label"><input type="radio"
-				ng-model="user.gender" value="male" />Male </span><span
+				ng-model="participant.gender" value="male" />Male </span><span
 				class="col-sm-2 col-form-label"><input type="radio"
-				ng-model="user.gender" value="female" />Female</span>
+				ng-model="participant.gender" value="female" />Female</span>
 		</div>
-		<div ng-if="needVegetarianInfo" class="form-group row">
+		<div ng-show="needVegetarianInfo" class="form-group row">
 			<label class="col-sm-2 col-form-label">Veg: </label><span
 				class="col-sm-2 col-form-label"><input type="radio"
-				ng-model="user.vegetarian" ng-value="true" />Vegetarian </span><span
+				ng-model="participant.vegetarian" ng-value="true" />Vegetarian </span><span
 				class="col-sm-2 col-form-label"><input type="radio"
-				ng-model="user.vegetarian" ng-value="false" />Non Veg</span>
+				ng-model="participant.vegetarian" ng-value="false" />Non Veg</span>
 		</div>
 
 
-		<div ng-if="!user.employee && user.employee != null" class="form-group row">
+		<div ng-show="!participant.employee && participant.employee != null" class="form-group row">
 			<label class="col-sm-2 col-form-label">Children: </label><span
 				class="col-sm-2 col-form-label"><input type="radio"
-				ng-model="user.child" ng-value="true" />Child </span><span
+				ng-model="participant.child" ng-value="true" />Child </span><span
 				class="col-sm-2 col-form-label"><input type="radio"
-				ng-model="user.child" ng-value="false" />Adult</span>
+				ng-model="participant.child" ng-value="false" />Adult</span>
 		</div>
 
-		<div ng-if="!user.employee && user.employee != null && user.child && user.child != null" class="form-group row">
+		<div ng-show="!participant.employee && participant.employee != null && participant.child && participant.child != null" class="form-group row">
 			<label class="col-sm-2 col-form-label">Age: </label><span
 				class="col-sm-2 col-form-label"><input type="text"
-				ng-model="user.age" /></span> 
+				ng-model="participant.age" /></span> 
 		</div>
 		<div class="form-group row">
 		<span class="col-sm-5"></span>
-		<input type="submit" class="btn btn-info col-sm-2" ng-click="update(user)"
-				value="Save" />
+		<input type="submit" class="btn btn-info col-sm-2" ng-click="update(participant)"
+				value="Register" />
 		</div>
 	</form>
 <hr>

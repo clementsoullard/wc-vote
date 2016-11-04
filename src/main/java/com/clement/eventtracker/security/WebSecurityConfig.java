@@ -12,13 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/manager.html").authenticated().and().formLogin().loginPage("/login").permitAll().and().logout()
+		http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/managermoncul.html").authenticated().and().formLogin().loginPage("/login").permitAll().and().logout()
 				.permitAll();
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.ldapAuthentication().userDnPatterns("uid={0},ou=Persons").groupSearchBase("ou=groups").contextSource()
-				.url("ldap://localhost:10399/dc=infosys,dc=com");
+				.url("ldap://10.161.86.8:10399/dc=infosys,dc=com");
 	}
 }
