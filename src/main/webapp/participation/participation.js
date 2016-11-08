@@ -59,8 +59,7 @@ angular.module('myApp.participation', ['ngRoute'])
 	 participant.tracer=x.substring(7);
 
 	var idEvent=$routeParams.idEvent;
-		console.log("Coucou register "+idEvent)
-
+	
 /**
  * retrieve an event
  */
@@ -93,14 +92,14 @@ angular.module('myApp.participation', ['ngRoute'])
 		 * List the entries
 		 */		
 		function list(){
-				 $http.get('ws/event/'+idEvent).
+				 $http.get('ws-event/'+idEvent).
 			      success(function(data) {
 			            $scope.participations = data.participations;
 			            if(data.participations != null){
 			            $scope.nbTotal = data.participations.length;
 			            }
 			            else{
-			            	$scope.nbTotal =0;
+			            	$scope.nbTotal = 0;
 			            }
 			        });
 				 

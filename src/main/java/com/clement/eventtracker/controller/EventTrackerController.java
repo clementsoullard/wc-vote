@@ -44,6 +44,12 @@ public class EventTrackerController {
 		return eventService.getCurrentOpenEvent();
 	}
 
+	@RequestMapping("/ws-event/{idEvent}")
+	public Event getEvent(@PathVariable("idEvent") String idEvent)
+			throws Exception {
+			return eventService.getEvent(idEvent);
+	}
+
 	@RequestMapping("/ws-register/{idEvent}")
 	public void patricipateEvent(@PathVariable("idEvent") String idEvent, @RequestBody Participation participation)
 			throws Exception {

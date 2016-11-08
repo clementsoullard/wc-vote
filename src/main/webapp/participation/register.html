@@ -15,8 +15,10 @@
 <h1>{{event.name}} on {{event.date | date: fullDate}}</h1>	
 <h3>Registration until {{event.dateMaxRegistration| date: fullDate}}<span ng-if="event.maxParticipant">, open to {{event.maxParticipant}} persons max.</span></h3>
 
+<div class="alert alert-info" role="alert">
 			<p>{{event.description}}</p>
 			<p>{{event.childInfo}}</p>
+</div>
 	<form novalidate class="simple-form">
 		<div class="row">
 			<label for="inputFirstName" class="col-sm-2 col-form-label">First
@@ -93,11 +95,11 @@
 	<label ng-if="needChildInfo"  class="col-sm-2 col-form-label">Nb Childs: </label><span
 			 ng-if="needChildInfo" class="col-sm-2 col-form-label">{{participationStats.nbChild}}</span> 
 	</div>
-<div style="background-color: white; height:800px;">
+<div class="row" style="background-color: white; padding:30px; ">
 	<ul class="list-group" ng-repeat="participation in participations"  >
 		<li class="list-group-item col-sm-6">
-			<strong class="col-sm-6">
-				{{participation.firstName}} {{participation.lastName}} </strong> 
+			<strong ng-class="{redInfamed: participation.infamed}"  class="col-sm-6">
+				{{participation.firstName}} {{participation.lastName}}</strong> 
 				<span class="col-sm-5"> {{participation.email}} </span> 
 	 			<span  class="pull-right"><a class="close" data-dismiss="alert" aria-label="close" ng-click="remove(participation.idr)">&times;</a>
 			</span>

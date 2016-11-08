@@ -7,13 +7,28 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import com.clement.eventtracker.PropertyManager;
+/**
+ * This is where the security is configured. 
+ * @author Clement_Soullard
+ *
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	PropertyManager propertyManager;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/managermoncul.html").authenticated().and().formLogin().loginPage("/login").permitAll().and().logout()
-				.permitAll();
+		if (propertyManager.getProductionMode()) {
+			http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/manager.html")
+					.authenticated().and().formLogin().loginPage("/login").permitAll().and().logout().permitAll();
+		} else {
+			http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().and().formLogin().loginPage("/login")
+					.permitAll().and().logout().permitAll();
+		}
 	}
 
 	@Autowired

@@ -1,5 +1,7 @@
 package com.clement.eventtracker.dto;
 
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
@@ -28,6 +30,10 @@ public class Participation {
 	private boolean vegetarian;
 
 	private boolean employee;
+
+	private boolean infamed;
+
+	private Date registrationDate;
 
 	private String gender;
 
@@ -132,6 +138,27 @@ public class Participation {
 
 	public void setIdr(String idr) {
 		id = idr;
+	}
+
+	public boolean isInfamed() {
+		return infamed;
+	}
+
+	public void setInfamed(boolean infamed) {
+		this.infamed = infamed;
+	}
+
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
+	@Override
+	public String toString() {
+		return "" + firstName + ":" + registrationDate;
 	}
 
 }
