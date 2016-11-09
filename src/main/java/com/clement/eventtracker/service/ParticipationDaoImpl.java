@@ -1,5 +1,12 @@
 package com.clement.eventtracker.service;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +73,98 @@ public class ParticipationDaoImpl {
 			LOG.error(e.getMessage(), e);
 		}
 		return null;
+	}
+	
+	void createFile(){
+	    FileWriter fileWriter = null;
+	    
+	    	         
+	    
+	    	        CSVPrinter csvFilePrinter = null;
+	    
+	    	         
+	    
+	    	        //Create the CSVFormat object with "\n" as a record delimiter
+	    
+	    	        CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+	    
+	    	                 
+	    
+	    	        try {
+	    
+	    	             
+	    
+	    	            //initialize FileWriter object
+	    
+	    	            fileWriter = new FileWriter(fileName);
+	    
+	    	             
+	    
+	    	            //initialize CSVPrinter object
+	    
+	    	            csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
+	    
+	    	             
+	    
+	    	            //Create CSV file header
+	    
+	    	            csvFilePrinter.printRecord(FILE_HEADER);
+	    
+	    	             
+	    
+	    	            //Write a new student object list to the CSV file
+	    
+	    	            for (Participation student : students) {
+	    
+	    	                List studentDataRecord = new ArrayList();
+	    
+	    	                studentDataRecord.add(String.valueOf(student.getId()));
+	    
+	    	                studentDataRecord.add(student.getFirstName());
+	    
+	    	                studentDataRecord.add(student.getLastName());
+	    
+	    	                studentDataRecord.add(student.getGender());
+	    
+	    	                studentDataRecord.add(String.valueOf(student.getAge()));
+	    
+	    	                csvFilePrinter.printRecord(studentDataRecord);
+	    
+	    	            }
+	    
+	    	 
+	    
+	    	            System.out.println("CSV file was created successfully !!!");
+	    
+	    	             
+	    
+	    	        } catch (Exception e) {
+	    
+	    	            System.out.println("Error in CsvFileWriter !!!");
+	    
+	    	            e.printStackTrace();
+	    
+	    	        } finally {
+	    
+	    	            try {
+	    
+	    	                fileWriter.flush();
+	    
+	    	                fileWriter.close();
+	    
+	    	                csvFilePrinter.close();
+	    
+	    	            } catch (IOException e) {
+	    
+	    	                System.out.println("Error while flushing/closing fileWriter/csvPrinter !!!");
+	    
+	    	                e.printStackTrace();
+	    
+	    	            }
+	    
+	    	        }
+	    
+	    	    }
 	}
 
 }

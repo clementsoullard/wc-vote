@@ -27,6 +27,12 @@ repositories {
     mavenCentral()
 }
 
+eclipse {
+    classpath {
+       downloadSources=true
+    }
+}
+
 sourceSets.main.resources.srcDirs = ['src/main/resources/' , 'src/main/environment/prod']
 
 sourceCompatibility = 1.8
@@ -38,6 +44,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile("org.springframework.boot:spring-boot-starter-security")
+    compile 'org.apache.commons:commons-csv:1.4'
     compile group: 'org.springframework.security', name: 'spring-security-ldap', version: '4.1.2.RELEASE'  
     compile group: 'com.google.code.gson', name: 'gson', version: '1.7.2'
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
