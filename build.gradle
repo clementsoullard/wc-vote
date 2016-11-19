@@ -49,10 +49,7 @@ dependencies {
     compile group: 'com.google.code.gson', name: 'gson', version: '1.7.2'
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
-    compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '4.1.1.RELEASE'  
-    {
-        exclude module: 'spring-security-jdbc'
-    }
+    compile (group: 'org.springframework.security', name: 'spring-security-taglibs', version: '4.1.1.RELEASE')	   {exclude module: 'spring-jdbc'}
     testCompile('org.springframework.boot:spring-boot-starter-test')
   }
 
