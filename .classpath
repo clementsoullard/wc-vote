@@ -36,7 +36,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-ldap/4.1.2.RELEASE/ff39c494df8ae9d0fcccd000a6658f1b63fad5b0/spring-security-ldap-4.1.2.RELEASE.jar" sourcepath="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-ldap/4.1.2.RELEASE/67afcc6549a58c4e6f8bfcbbe6fe6345b895a4d4/spring-security-ldap-4.1.2.RELEASE-sources.jar">
+	<classpathentry kind="lib" path="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-ldap/4.1.1.RELEASE/74b8be68d390c48f876d22ae6ee9455c086f9e72/spring-security-ldap-4.1.1.RELEASE.jar" sourcepath="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-ldap/4.1.1.RELEASE/de45bc1d73b4beeab1536d648aa61c12f9ed32ae/spring-security-ldap-4.1.1.RELEASE-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
@@ -52,6 +52,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.1.7/9865cf6994f9ff13fce0bf93f2054ef6c65bb462/logback-classic-1.1.7.jar" sourcepath="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.1.7/6cfaf5c02fb50bfdf7ea5e563955d3c229d7e154/logback-classic-1.1.7-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-taglibs/4.1.1.RELEASE/819e4eb36f877ad82481f331242c6cd7ac54100a/spring-security-taglibs-4.1.1.RELEASE.jar" sourcepath="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-taglibs/4.1.1.RELEASE/62bafe83893c6a0da3717c320d69395af0c3540b/spring-security-taglibs-4.1.1.RELEASE-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
@@ -176,6 +181,16 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-acl/4.1.1.RELEASE/ef46ac8ae1e5a0920a07aa4fa46b0e09507c04f4/spring-security-acl-4.1.1.RELEASE.jar" sourcepath="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-acl/4.1.1.RELEASE/290f268d3c9744f1eda843170dfaea3c90849bc3/spring-security-acl-4.1.1.RELEASE-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/4.3.2.RELEASE/7676acd4dde9d186b7f882edce3131dc62dcb590/spring-expression-4.3.2.RELEASE.jar" sourcepath="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/4.3.2.RELEASE/179fbc6fc078a00c0fe0f7e88691022028fd88e7/spring-expression-4.3.2.RELEASE-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-test/1.4.0.RELEASE/2fd44f79ea69c6e2b485d895cbc89e314c6f886c/spring-boot-test-1.4.0.RELEASE.jar" sourcepath="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-test/1.4.0.RELEASE/49d8b8f632f8a796be530405f10c0e7e0d0baabe/spring-boot-test-1.4.0.RELEASE-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -287,11 +302,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.8.1/fd13b1c033741d48291315c6370f7d475a42dccf/jackson-core-2.8.1.jar" sourcepath="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.8.1/efcd4976d0d52d1ab9a4f4f40f727ed518d6070c/jackson-core-2.8.1-sources.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/4.3.2.RELEASE/7676acd4dde9d186b7f882edce3131dc62dcb590/spring-expression-4.3.2.RELEASE.jar" sourcepath="C:/Users/clement_soullard/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/4.3.2.RELEASE/179fbc6fc078a00c0fe0f7e88691022028fd88e7/spring-expression-4.3.2.RELEASE-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
