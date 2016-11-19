@@ -1,3 +1,5 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <div class="container">
 
 <div class="alert alert-danger" ng-if="message&&error">
@@ -13,12 +15,20 @@
 <div style="background-color: white; padding:20px">
 
 <h1>{{event.name}} on {{event.date | date: fullDate}}</h1>	
-<h3>Registration until {{event.dateMaxRegistration| date: fullDate}}<span ng-if="event.maxParticipant">, open to {{event.maxParticipant}} persons max.</span></h3>
+<h3 ng-if="event.dateMaxRegistration">Registration until {{event.dateMaxRegistration| date: fullDate}}</h3>
+<h3 ng-if="event.maxParticipant">Open to {{event.maxParticipant}} persons max.</h3>
 
 <div class="alert alert-info" role="alert">
 			<p>{{event.description}}</p>
 			<p>{{event.childInfo}}</p>
 </div>
+<sec:authorize access="isAuthenticated()">
+
+<a href="ws-download/{{event.idr}}.csv" class="btn btn-info" aria-label="Left Align">
+  Download CSV <span class="glyphicon glyphicon glyphicon-download" aria-hidden="true"></span>
+</a>
+
+</sec:authorize>
 	<form novalidate class="simple-form">
 		<div class="row">
 			<label for="inputFirstName" class="col-sm-2 col-form-label">First
@@ -79,7 +89,7 @@
 		</div>
 		<div class="form-group row">
 		<span class="col-sm-5"></span>
-		<input type="submit" class="btn btn-info col-sm-2" ng-click="update(participant)"
+		<input type="submit" class="btn btn-success col-sm-2" ng-click="update(participant)"
 				value="Register" />
 		</div>
 	</form>

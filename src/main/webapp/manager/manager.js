@@ -19,7 +19,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
  * Insert a new entry fonction
  */
  $scope.update = function (event) {
-    $http.post('/event-tracker/ws/event',event).
+    $http.post('ws/event',event).
         success(function(data) {
      	  	$scope.message='Event registered.';
        	  	$scope.error=false;
@@ -35,7 +35,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
  * List the entries
  */		
 	 function list(){
-		 $http.get('/event-tracker/ws/event').
+		 $http.get('ws/event').
 	      success(function(data) {
 	        	console.log(JSON.stringify(data._embedded));
 	            $scope.events = data._embedded.event;
@@ -44,7 +44,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	/**
 	* List the entries
 	*/		
-	$scope.remove = function(id){ $http.delete('/event-tracker/ws/event/'+id).
+	$scope.remove = function(id){ $http.delete('ws/event/'+id).
 			success(function(data) {
 		  	$scope.message='The entry has been removed.';
 			list();
@@ -62,7 +62,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	 */
 			
 	 $scope.update = function (user) {
-	    $http.post('/event-tracker/ws/song',user).
+	    $http.post('ws/song',user).
 	        success(function(data) {
 	     	  	$scope.message='Thanks for applying. You have been properly registred. You can also register husband/wife and children after closing this window.';
 	       	  	$scope.error=false;
@@ -78,7 +78,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	 * List the entries
 	 */		
 		 function list(){
-			 $http.get('/event-tracker/ws/song').
+			 $http.get('ws/song').
 		      success(function(data) {
 		        	console.log(JSON.stringify(data._embedded));
 		            $scope.songs = data._embedded.song;
@@ -87,7 +87,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 		/**
 		* List the entries
 		*/		
-		$scope.remove = function(id){ $http.delete('/event-tracker/ws/song/'+id).
+		$scope.remove = function(id){ $http.delete('ws/song/'+id).
 				success(function(data) {
 			  	$scope.message='The entry has been removed.';
 				list();
@@ -108,7 +108,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	 */
 			
 	 $scope.update = function (show) {
-	    $http.post('/event-tracker/ws/show',show).
+	    $http.post('ws/show',show).
 	        success(function(data) {
 	     	  	$scope.message='Show registered.';
 	       	  	$scope.error=false;
@@ -124,7 +124,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	 * List the entries
 	 */		
 		 function list(){
-			 $http.get('/event-tracker/ws/show').
+			 $http.get('ws/show').
 		      success(function(data) {
 		        	console.log(JSON.stringify(data._embedded));
 		            $scope.shows = data._embedded.show;
@@ -133,7 +133,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 		/**
 		* List the entries
 		*/		
-		$scope.remove = function(id){ $http.delete('/event-tracker/ws/show/'+id).
+		$scope.remove = function(id){ $http.delete('ws/show/'+id).
 				success(function(data) {
 				list();
 			});

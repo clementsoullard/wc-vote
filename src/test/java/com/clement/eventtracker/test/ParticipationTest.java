@@ -14,17 +14,23 @@ import com.clement.eventtracker.service.ParticipationRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-@TestPropertySource(locations="classpath:test.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 public class ParticipationTest {
 
 	@Resource
-	ParticipationDaoImpl bonPointDaoImpl;
+	ParticipationDaoImpl participationDaoImpl;
 	@Resource
 	ParticipationRepository participationRepository;
 
 	public void insertParticipation() {
 		participationRepository.deleteAll();
-		participationRepository.save(new Participation("Lady", "Di", "lady_di@infosys.com", true, true, false,"Cououc"));
+		participationRepository
+				.save(new Participation("Lady", "Di", "lady_di@infosys.com", true, true, false, "Cououc"));
+	}
+
+	@Test
+	public void testExportParticipationCSV() throws Exception {
+		participationDaoImpl.exportCSVFileParticipation("582347803de8d70678b5b342");
 	}
 
 	@Test

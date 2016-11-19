@@ -8,32 +8,38 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import com.clement.eventtracker.PropertyManager;
+
 /**
- * This is where the security is configured. 
+ * This is where the security is configured.
+ * 
  * @author Clement_Soullard
  *
  */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
+	/**
+	 * 
+	 */
 	@Autowired
 	PropertyManager propertyManager;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		if (propertyManager.getProductionMode()) {
-			http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/manager.html")
+				http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/manager.html")
 					.authenticated().and().formLogin().loginPage("/login").permitAll().and().logout().permitAll();
-		} else {
-			http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().and().formLogin().loginPage("/login")
-					.permitAll().and().logout().permitAll();
 		}
-	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.ldapAuthentication().userDnPatterns("uid={0},ou=Persons").groupSearchBase("ou=groups").contextSource()
-				.url("ldap://10.161.86.8:10399/dc=infosys,dc=com");
+		if (propertyManager.getProductionMode()) {
+			auth.ldapAuthentication().userDnPatterns("uid={0},ou=Persons").groupSearchBase("ou=groups").contextSource()
+					.url("ldap://10.161.86.8:10399/dc=infosys,dc=com");
+		} else {
+			 auth
+	            .inMemoryAuthentication()
+	                .withUser("clement_soullard").password("test").roles("USER");
+		}
 	}
 }

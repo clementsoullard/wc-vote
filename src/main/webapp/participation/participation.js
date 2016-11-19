@@ -7,7 +7,7 @@ angular.module('myApp.participation', ['ngRoute'])
     templateUrl: 'participation/participation.html',
     controller: 'participationCtrl'
   }).when('/register/:idEvent', {
-	    templateUrl: 'participation/register.html',
+	    templateUrl: 'participation/register.jsp',
 	    controller: 'registerCtrl'
 	  });
 }])
@@ -74,7 +74,7 @@ angular.module('myApp.participation', ['ngRoute'])
  */
 		
  $scope.update = function (user) {
-    $http.post('/event-tracker/ws-register/'+idEvent,user).
+    $http.post('ws-register/'+idEvent,user).
         	success(function(data) {
      	  	$scope.message='Thanks for registering.';
      	  	$scope.participant={};

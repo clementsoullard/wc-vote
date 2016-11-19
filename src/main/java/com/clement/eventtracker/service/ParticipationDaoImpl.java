@@ -1,7 +1,12 @@
 package com.clement.eventtracker.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +19,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Repository;
 
+import com.clement.eventtracker.dto.Event;
 import com.clement.eventtracker.dto.Participation;
 
 @Repository
@@ -21,7 +27,13 @@ public class ParticipationDaoImpl {
 
 	final static float DISTRIBUTION_FACTOR = 2F;
 
+	final static String NEW_LINE_SEPARATOR = "\n";
+
 	static final Logger LOG = LoggerFactory.getLogger(ParticipationDaoImpl.class);
+
+	DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	@Autowired
+	EventService eventService;
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
@@ -58,7 +70,9 @@ public class ParticipationDaoImpl {
 			LOG.error(e.getMessage(), e);
 		}
 		return null;
-	}	/**
+	}
+
+	/**
 	 * Return the number of vegatarians
 	 * 
 	 * @return
@@ -74,97 +88,61 @@ public class ParticipationDaoImpl {
 		}
 		return null;
 	}
-	
-	void createFile(){
-	    FileWriter fileWriter = null;
-	    
-	    	         
-	    
-	    	        CSVPrinter csvFilePrinter = null;
-	    
-	    	         
-	    
-	    	        //Create the CSVFormat object with "\n" as a record delimiter
-	    
-	    	        CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
-	    
-	    	                 
-	    
-	    	        try {
-	    
-	    	             
-	    
-	    	            //initialize FileWriter object
-	    
-	    	            fileWriter = new FileWriter(fileName);
-	    
-	    	             
-	    
-	    	            //initialize CSVPrinter object
-	    
-	    	            csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
-	    
-	    	             
-	    
-	    	            //Create CSV file header
-	    
-	    	            csvFilePrinter.printRecord(FILE_HEADER);
-	    
-	    	             
-	    
-	    	            //Write a new student object list to the CSV file
-	    
-	    	            for (Participation student : students) {
-	    
-	    	                List studentDataRecord = new ArrayList();
-	    
-	    	                studentDataRecord.add(String.valueOf(student.getId()));
-	    
-	    	                studentDataRecord.add(student.getFirstName());
-	    
-	    	                studentDataRecord.add(student.getLastName());
-	    
-	    	                studentDataRecord.add(student.getGender());
-	    
-	    	                studentDataRecord.add(String.valueOf(student.getAge()));
-	    
-	    	                csvFilePrinter.printRecord(studentDataRecord);
-	    
-	    	            }
-	    
-	    	 
-	    
-	    	            System.out.println("CSV file was created successfully !!!");
-	    
-	    	             
-	    
-	    	        } catch (Exception e) {
-	    
-	    	            System.out.println("Error in CsvFileWriter !!!");
-	    
-	    	            e.printStackTrace();
-	    
-	    	        } finally {
-	    
-	    	            try {
-	    
-	    	                fileWriter.flush();
-	    
-	    	                fileWriter.close();
-	    
-	    	                csvFilePrinter.close();
-	    
-	    	            } catch (IOException e) {
-	    
-	    	                System.out.println("Error while flushing/closing fileWriter/csvPrinter !!!");
-	    
-	    	                e.printStackTrace();
-	    
-	    	            }
-	    
-	    	        }
-	    
-	    	    }
-	}
 
+	final static String FILE_HEADER[] = { "First Name", "Last Name", "Email", "Child", "Age", "Vegetarian", "Gender" };
+
+	/**
+	 * 
+	 * @param idEvent
+	 */
+	public File exportCSVFileParticipation(String idEvent) throws IOException {
+		FileWriter fileWriter = null;
+
+		CSVPrinter csvFilePrinter = null;
+		File file = File.createTempFile("tmp", "csv");
+		// Create the CSVFormat object with "\n" as a record delimiter
+
+		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+
+		try {
+			// initialize FileWriter object
+			fileWriter = new FileWriter(file);
+			// initialize CSVPrinter object
+			csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
+
+			Event event = eventService.getEvent(idEvent);
+			// Create CSV file header
+			csvFilePrinter.printRecord(
+					"Participation à l'évenement " + event.getName() + " du " + df.format(event.getDate()));
+
+			List<Participation> participations = event.getParticipations();
+
+			for (Participation participation : participations) {
+				List participationDataRecord = new ArrayList();
+				participationDataRecord.add(participation.getFirstName());
+				participationDataRecord.add(participation.getLastName());
+				participationDataRecord.add(participation.getEmail());
+				participationDataRecord.add(participation.isChild());
+				participationDataRecord.add(participation.getAge());
+				participationDataRecord.add(participation.isVegetarian());
+				participationDataRecord.add(participation.getGender());
+				csvFilePrinter.printRecord(participationDataRecord);
+			}
+			LOG.info("CSV file was created successfully in " + file);
+		} catch (Exception e) {
+			LOG.error("Error in CsvFileWriter !!!", e);
+		} finally {
+
+			try {
+				fileWriter.flush();
+				fileWriter.close();
+				csvFilePrinter.close();
+			} catch (IOException e) {
+				LOG.error("Error while flushing/closing fileWriter/csvPrinter !!!", e);
+			}
+
+		}
+		return file;
+
+	}
 }
