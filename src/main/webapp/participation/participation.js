@@ -52,7 +52,7 @@ angular.module('myApp.participation', ['ngRoute'])
 	 	x=document.cookie;
 	 }
 	 else{
-		 console.log('There is one cookie in the session ' + x.substring(7));
+	//	 console.log('There is one cookie in the session ' + x.substring(7));
 	 }
 	 /** This is to identify the event it is related to */
 
@@ -116,6 +116,16 @@ angular.module('myApp.participation', ['ngRoute'])
 				success(function(data) {
 			  	$scope.message='The entry has been removed.';
 				list();
+			});
+		}
+	
+		/**
+		* Register paiement
+		*/		
+		$scope.pay = function(participation,event){ 
+			 console.log('Paiement for participation ' + participation.idr + " valeur "+participation.paid + ", eventId="+event.idr);
+			$http.get('ws-pay/'+idEvent+'/'+participation.idr+'/'+participation.paid).
+				success(function(data) {
 			});
 		}
 

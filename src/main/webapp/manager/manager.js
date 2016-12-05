@@ -37,7 +37,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	 function list(){
 		 $http.get('ws/event').
 	      success(function(data) {
-	        	console.log(JSON.stringify(data._embedded));
+	    //    	console.log(JSON.stringify(data._embedded));
 	            $scope.events = data._embedded.event;
 	        });
 		 }

@@ -7,6 +7,10 @@
   padding: 0 0 0.5em;
 }
 
+.gras {
+  font-weight:bold;
+}
+
 .menu:before {
   content: "[";
 }
@@ -30,6 +34,7 @@
 }
 
 .redInfamed { color: #AA0000; }
+.green { color: #00AA00; }
 .my-drop-zone { border: dotted 3px lightgray; }
 .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
 .another-file-over-class { border: dotted 3px green; }

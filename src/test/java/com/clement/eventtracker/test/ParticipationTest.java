@@ -34,6 +34,11 @@ public class ParticipationTest {
 	}
 
 	@Test
+	public void testPayParticipation() throws Exception {
+		participationDaoImpl.payEvent("582490e03de8d720dc85d312", "582491253de8d720dc85d315", true);
+	}
+
+	@Test
 	public void testInsertParticipation() {
 		insertParticipation();
 	}

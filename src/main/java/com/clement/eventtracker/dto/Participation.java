@@ -33,6 +33,8 @@ public class Participation {
 
 	private boolean infamed;
 
+	private boolean paid;
+
 	private Date registrationDate;
 
 	private String gender;
@@ -159,6 +161,14 @@ public class Participation {
 	@Override
 	public String toString() {
 		return "" + firstName + ":" + registrationDate;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean pay) {
+		this.paid = pay;
 	}
 
 }

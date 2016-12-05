@@ -59,6 +59,12 @@ public class EventTrackerController {
 		eventService.registerEvent(idEvent, participation);
 	}
 
+	@RequestMapping("/ws-pay/{idEvent}/{idParticipation}/{pay}")
+	public void pay(@PathVariable("idEvent") String idEvent,@PathVariable("idParticipation") String idParticipation, @PathVariable("pay") Boolean pay)
+			throws Exception {
+		participationDaoImpl.payEvent(idEvent, idParticipation,pay);
+	}
+
 	@RequestMapping(value = "/ws-unregister/{idEvent}/{id}", method = RequestMethod.DELETE)
 	public void unregister(@PathVariable("idEvent") String idEvent, @PathVariable("id") String idParticipation)
 			throws Exception {

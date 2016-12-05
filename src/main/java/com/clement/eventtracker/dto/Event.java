@@ -24,9 +24,9 @@ public class Event {
 
 	@Id
 	private String id;
-/**
- * Name of the event
- */
+	/**
+	 * Name of the event
+	 */
 	private String name;
 	/**
 	 * If the event is active
@@ -48,32 +48,45 @@ public class Event {
 	/**
 	 * If the event need the info weither the child are welcome.
 	 */
+	private Boolean payingEvent = false;
+
+	public Boolean getPayingEvent() {
+		return payingEvent;
+	}
+
+	public void setPayingEvent(Boolean payingEvent) {
+		this.payingEvent = payingEvent;
+	}
+
+	/**
+	 * If the event need the info weither the child are welcome.
+	 */
 	private String childInfo;
 	/**
- 	* The description of the event
- 	*/
+	 * The description of the event
+	 */
 	private String description;
 	/**
- 	* The date of the event
- 	*/
+	 * The date of the event
+	 */
 	private Date date;
 
 	/**
- 	* The maximum date before regiration of the event
- 	*/
+	 * The maximum date before regiration of the event
+	 */
 	private Date dateMaxRegistration;
 
 	/**
- 	* The maximum date before regiration of the event
- 	*/
+	 * The maximum date before regiration of the event
+	 */
 	private Integer maxParticipant;
 
 	/**
- 	* If a user is red flagged because he regitered too late, or if the number of participants is exceeded. 
- 	*/
+	 * If a user is red flagged because he regitered too late, or if the number
+	 * of participants is exceeded.
+	 */
 	private Boolean redFlagged;
-	
-	
+
 	public String getChildInfo() {
 		return childInfo;
 	}

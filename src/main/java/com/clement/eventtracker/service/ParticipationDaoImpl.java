@@ -12,11 +12,15 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import com.clement.eventtracker.dto.Event;
@@ -145,4 +149,12 @@ public class ParticipationDaoImpl {
 		return file;
 
 	}
+	
+
+	public void payEvent(String idEvent, String idParticipation, Boolean pay) {
+		Query query = Query.query(Criteria.where("_id").is(idEvent).and("participations._id").is(new ObjectId(idParticipation)));
+		Update update = new Update().set("participations.$.paid", pay);
+		mongoTemplate.updateFirst(query, update, Event.class);
+	}
+
 }
