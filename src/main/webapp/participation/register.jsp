@@ -33,7 +33,7 @@
 				class="glyphicon glyphicon glyphicon-download" aria-hidden="true"></span>
 			</a>
 		</sec:authorize>
-		<form novalidate class="simple-form">
+		<form novalidate name="form" class="css-form">
 			<div class="row">
 				<label for="inputFirstName" class="col-sm-2 col-form-label">First
 					Name</label>
@@ -49,9 +49,9 @@
 			<div ng-show="!event.forEmployeeOnly" class="form-group row">
 				<label class="col-sm-2 col-form-label">Infosys Employee: </label><span
 					class="col-sm-2 col-form-label"><input type="radio"
-					ng-model="participant.employee" ng-value="true" />Employee</span><span
+					ng-model="participant.employee" ng-value="true" ng-required="!participant.employee" />Employee</span><span
 					class="col-sm-2 col-form-label"><input type="radio"
-					ng-model="participant.employee" ng-value="false" />Relative</span>
+					ng-model="participant.employee" ng-value="false" ng-required="!participant.employee" />Relative</span>
 			</div>
 			<div ng-show="participant.employee==true"></div>
 			<div
@@ -59,7 +59,7 @@
 				class="form-group row">
 				<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
 				<div class="col-sm-10">
-					<input type="text" ng-model="participant.email" size="50" />
+					<input type="email" ng-model="participant.email" size="50" required />
 				</div>
 			</div>
 
@@ -97,12 +97,17 @@
 			</div>
 			<div class="form-group row">
 				<span class="col-sm-5"></span> <input type="submit"
-					class="btn btn-success col-sm-2" ng-click="update(participant)"
+					class="btn btn-success col-sm-2" ng-click="update(participant,event,form)"
 					value="Register" />
 			</div>
 		</form>
 		<hr>
 	</div>
+	
+	<!-- 
+	Liste des participants
+	 -->
+	
 	<div style="background-color: white; padding: 20px">
 		<h2>Participants list</h2>
 		<div class="row">

@@ -73,12 +73,42 @@ angular.module('myApp.participation', ['ngRoute'])
  * Insert a new entry function
  */
 		
- $scope.update = function (user) {
-    $http.post('ws-register/'+idEvent,user).
+ $scope.update = function (participant,event,form) {
+	 
+	 var master = angular.copy(participant);
+	 
+	 if(event.forEmployeeOnly == false && master.employee == null){
+		 $scope.message='You must select if you are employee or relative';
+	  	 $scope.error=true;
+	  	 return;
+	 }
+
+	 if(! event.forEmployeeOnly && master.employee && !master.email){
+		 $scope.message='Please enter your mail';
+	  	 $scope.error=true;
+	  	 return;
+	 }
+
+	 if(event.forEmployeeOnly==true && !master.email){
+		 $scope.message='Please enter your mail';
+	  	 $scope.error=true;
+	  	 return;
+	 }
+	 
+	 if( event.needChildInformation==true && master.employee==false &&  master.child != null){
+		 $scope.message='Please tell us if you are registering a child';
+	  	 $scope.error=true;
+	  	 return;
+	 }
+
+	 
+    $http.post('ws-register/'+idEvent,participant).
         	success(function(data) {
      	  	$scope.message='Thanks for registering.';
      	  	$scope.participant={};
-       	  	$scope.error=false;
+     		form.$setPristine();
+     		form.$setUntouched();
+         	$scope.error=false;
             list();
         }).
 		error(function(data) {
