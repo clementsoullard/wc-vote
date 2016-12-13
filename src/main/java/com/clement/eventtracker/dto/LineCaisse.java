@@ -2,7 +2,7 @@ package com.clement.eventtracker.dto;
 
 import org.springframework.data.annotation.Id;
 
-public class Song {
+public class LineCaisse {
 
 	public String getIdr() {
 		return id;
@@ -15,14 +15,35 @@ public class Song {
 	@Id
 	private String id;
 
-	private String song;
+	private String label;
+	
+	private Float debit;
 
-	public String getSong() {
-		return song;
+	private Float credit;
+
+	public String getLabel() {
+		return label;
 	}
 
-	public void setSong(String song) {
-		this.song = song;
+	public void setLabel(String label) {
+		this.label = label;
 	}
+
+	public Float getDebit() {
+		return debit;
+	}
+
+	public void setDebit(Float debit) {
+		this.debit = debit;
+	}
+
+	public Float getCredit() {
+		return credit;
+	}
+
+	public void setCredit(Float credit) {
+		this.credit = credit;
+	}
+
 
 }

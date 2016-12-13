@@ -4,14 +4,14 @@
 angular.module('managerApp', [
   'ngRoute',
   'managerApp.manager',
-  'ng-fusioncharts',
+  'managerApp.caisse',
+   'ng-fusioncharts',
   'ngAnimate',
   'ngMaterial',
   'angularFileUpload'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
-
   $routeProvider.otherwise({redirectTo: '/manager'});
 }]);
 
