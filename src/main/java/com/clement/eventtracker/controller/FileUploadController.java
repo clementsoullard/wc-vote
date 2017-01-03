@@ -1,9 +1,14 @@
 package com.clement.eventtracker.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +31,8 @@ import com.clement.eventtracker.service.storage.StorageService;
 public class FileUploadController {
 
 	private final StorageService storageService;
+	@Value("${storage.location}")
+	private String storageLocation;
 
 	@Autowired
 	public FileUploadController(StorageService storageService) {
@@ -56,12 +63,12 @@ public class FileUploadController {
 	}
 
 	@PostMapping("/upload")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-
-		storageService.store(file);
+	public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes)
+			throws IOException {
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
-
+		int rnd = (int) (Math.random() * Integer.MAX_VALUE);
+		storageService.store(file, Integer.toString(rnd));
 		return "redirect:/";
 	}
 

@@ -85,7 +85,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 		        });
 			 }
 		/**
-		* List the entries
+		* Remove one event
 		*/		
 		$scope.remove = function(id){ $http.delete('ws/song/'+id).
 				success(function(data) {

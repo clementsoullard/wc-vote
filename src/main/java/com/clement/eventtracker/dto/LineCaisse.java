@@ -1,5 +1,7 @@
 package com.clement.eventtracker.dto;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 
 public class LineCaisse {
@@ -21,6 +23,11 @@ public class LineCaisse {
 
 	private Float credit;
 
+	/**
+	 * The date of the purchase
+	 */
+	private Date date;
+	
 	public String getLabel() {
 		return label;
 	}
@@ -43,6 +50,14 @@ public class LineCaisse {
 
 	public void setCredit(Float credit) {
 		this.credit = credit;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 
