@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,11 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clement.eventtracker.dto.Event;
+import com.clement.eventtracker.dto.LineCaisse;
 import com.clement.eventtracker.dto.Participation;
 import com.clement.eventtracker.dto.ParticipationStats;
 import com.clement.eventtracker.service.EventService;
+import com.clement.eventtracker.service.LineCaisseRepository;
 import com.clement.eventtracker.service.ParticipationDaoImpl;
 import com.clement.eventtracker.service.ParticipationRepository;
+import com.clement.eventtracker.service.storage.StorageService;
 
 @RestController
 public class EventTrackerController {
@@ -30,8 +36,10 @@ public class EventTrackerController {
 
 	@Resource
 	private ParticipationDaoImpl participationDaoImpl;
+
 	@Autowired
 	private EventService eventService;
+
 
 	@RequestMapping("/ws-participation-stats")
 	public ParticipationStats getParticipationStats() throws Exception {
@@ -60,9 +68,9 @@ public class EventTrackerController {
 	}
 
 	@RequestMapping("/ws-pay/{idEvent}/{idParticipation}/{pay}")
-	public void pay(@PathVariable("idEvent") String idEvent,@PathVariable("idParticipation") String idParticipation, @PathVariable("pay") Boolean pay)
-			throws Exception {
-		participationDaoImpl.payEvent(idEvent, idParticipation,pay);
+	public void pay(@PathVariable("idEvent") String idEvent, @PathVariable("idParticipation") String idParticipation,
+			@PathVariable("pay") Boolean pay) throws Exception {
+		participationDaoImpl.payEvent(idEvent, idParticipation, pay);
 	}
 
 	@RequestMapping(value = "/ws-unregister/{idEvent}/{id}", method = RequestMethod.DELETE)
@@ -74,7 +82,7 @@ public class EventTrackerController {
 	@RequestMapping(value = "/ws-download/{idEvent}.csv", produces = "text/csv", method = RequestMethod.GET)
 	@ResponseBody
 	public FileSystemResource downloadCsv(@PathVariable("idEvent") String idEvent) throws Exception {
-				return new FileSystemResource(participationDaoImpl.exportCSVFileParticipation(idEvent));
+		return new FileSystemResource(participationDaoImpl.exportCSVFileParticipation(idEvent));
 	}
 
 }

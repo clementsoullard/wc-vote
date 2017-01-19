@@ -14,37 +14,58 @@ angular.module('managerApp.caisse', ['ngRoute','angularFileUpload'])
 
 	  var uploader = $scope.uploader = new FileUploader({
 	        url: 'upload',
-	        queueLimit: 1
+	        queueLimit: 1,
+	        
 	    });
 
 	/**
 	 * Insert a new entry function
 	 */
+	  
+	  var tmpLine;
 			
 	 $scope.insert = function (line) {
-		 uploader.uploadAll();
+		 tmpLine=line;
+		 console.info('Begin inserto',  line);
+		 if (uploader.queue.length==0){
+			 console.info('Adding the line without a file',  tmpLine);
+			 addLine(-1);
+		 }
+		 else{
+			 console.info('Uploading a file',  tmpLine);
+			 uploader.uploadAll();	 
+		 }
 		 uploader.queue=[];
-		 
-		 $http.post('ws/line-caisse/',line).
-	        	success(function(data) {
-	     	  	$scope.message='Line saved.';
-	     	  	$scope.line={};
-	     	   $('#bill-file').val('');
-	         	$scope.error=false;
-	            list();
-	        }).
-			error(function(data) {
-	     	  	$scope.message='An issue occured.';
-	     	  	$scope.error=true;
-			})
 		};
+		
+		function afterUpload(imageId) {		
+		 console.info('Insert After upload',  tmpLine);
+		 addLine(imageId); 
+		 };
+
+		function addLine(imageId) {			 
+		$http.post('ws-line-caisse/' + imageId,tmpLine).
+     	success(function(data) {
+  	  	$scope.message='Line saved.';
+  	  	$scope.line={};
+  	  	$('#bill-file').val('');
+      	$scope.error=false;
+         list();
+     }).
+		error(function(data) {
+  	  	$scope.message='An issue occured.';
+  	  	$scope.error=true;
+		})
+		}
+
 		/**
 		 * List the line in caisse
 		 */		
 		function list(){
-				 $http.get('ws/line-caisse/').
+				 $http.get('ws-line-caisse-summary').
 			      success(function(data) {
-			            $scope.linesCaisse = data._embedded.line;
+			            $scope.linesCaisse = data.lineCaisses;
+			            $scope.summary = data.caisseSummary;
 			      });				 
 			}
 		
@@ -85,13 +106,13 @@ angular.module('managerApp.caisse', ['ngRoute','angularFileUpload'])
 		        console.info('onBeforeUploadItem', item);
 		    };
 		    uploader.onProgressItem = function(fileItem, progress) {
-		        console.info('onProgressItem', fileItem, progress);
+		        console.info('onProgressItem', fileItem);
 		    };
 		    uploader.onProgressAll = function(progress) {
 		        console.info('onProgressAll', progress);
 		    };
 		    uploader.onSuccessItem = function(fileItem, response, status, headers) {
-		        console.info('onSuccessItem', fileItem, response, status, headers);
+		        console.info('onSuccessItem', response);
 		    };
 		    uploader.onErrorItem = function(fileItem, response, status, headers) {
 		        console.info('onErrorItem', fileItem, response, status, headers);
@@ -100,7 +121,9 @@ angular.module('managerApp.caisse', ['ngRoute','angularFileUpload'])
 		        console.info('onCancelItem', fileItem, response, status, headers);
 		    };
 		    uploader.onCompleteItem = function(fileItem, response, status, headers) {
-		        console.info('onCompleteItem', fileItem, response, status, headers);
+		    	 //console.info('onCompleteItem', fileItem, response, status, headers);
+		    	 console.info('onCompleteItem',  response);
+		    	 afterUpload(response);
 		    };
 		    uploader.onCompleteAll = function() {
 		        console.info('onCompleteAll');

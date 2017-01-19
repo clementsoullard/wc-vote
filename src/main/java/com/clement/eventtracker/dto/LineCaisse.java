@@ -18,16 +18,25 @@ public class LineCaisse {
 	private String id;
 
 	private String label;
-	
+	/**
+	 * The debit entering in cashier
+	 */
 	private Float debit;
-
+	/**
+	 * The credit entering in cashier
+	 */
 	private Float credit;
+
+	/**
+	 * The debit entering in cashier
+	 */
+	private byte[] image;
 
 	/**
 	 * The date of the purchase
 	 */
 	private Date date;
-	
+
 	public String getLabel() {
 		return label;
 	}
@@ -60,5 +69,12 @@ public class LineCaisse {
 		this.date = date;
 	}
 
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
 
 }

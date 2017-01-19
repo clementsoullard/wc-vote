@@ -1,12 +1,10 @@
 package com.clement.eventtracker.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -20,15 +18,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.clement.eventtracker.service.ParticipationDaoImpl;
 import com.clement.eventtracker.service.storage.StorageFileNotFoundException;
 import com.clement.eventtracker.service.storage.StorageService;
 
-@Controller
+@RestController
 public class FileUploadController {
+
+	
+	static final Logger LOG = LoggerFactory.getLogger(FileUploadController.class);
 
 	private final StorageService storageService;
 	@Value("${storage.location}")
@@ -69,7 +72,8 @@ public class FileUploadController {
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		int rnd = (int) (Math.random() * Integer.MAX_VALUE);
 		storageService.store(file, Integer.toString(rnd));
-		return "redirect:/";
+		LOG.debug("Post file");
+		return Integer.toString(rnd);
 	}
 
 	@ExceptionHandler(StorageFileNotFoundException.class)
