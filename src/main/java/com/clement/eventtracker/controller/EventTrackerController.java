@@ -40,7 +40,11 @@ public class EventTrackerController {
 	@Autowired
 	private EventService eventService;
 
-
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/ws-participation-stats")
 	public ParticipationStats getParticipationStats() throws Exception {
 		ParticipationStats participationStats = new ParticipationStats();
@@ -54,6 +58,11 @@ public class EventTrackerController {
 	public List<Event> getActiveEvents() throws Exception {
 		return eventService.getCurrentOpenEvent();
 	}
+
+//	@RequestMapping("/ws-add-question/{idEvent}")
+//	public List<Event> addQuestion(@PathVariable("idEvent") String idEvent) throws Exception {
+//		return eventService.getCurrentOpenEvent();
+//	}
 
 	@RequestMapping("/ws-event/{idEvent}")
 	public Event getEvent(@PathVariable("idEvent") String idEvent) throws Exception {

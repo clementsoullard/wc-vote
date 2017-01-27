@@ -50,14 +50,6 @@ public class Event {
 	 */
 	private Boolean payingEvent = false;
 
-	public Boolean getPayingEvent() {
-		return payingEvent;
-	}
-
-	public void setPayingEvent(Boolean payingEvent) {
-		this.payingEvent = payingEvent;
-	}
-
 	/**
 	 * If the event need the info weither the child are welcome.
 	 */
@@ -72,23 +64,44 @@ public class Event {
 	private Date date;
 
 	/**
-	 * The maximum date before regiration of the event
+	 * The maximum date before registration of the event
 	 */
 	private Date dateMaxRegistration;
 
 	/**
-	 * The maximum date before regiration of the event
+	 * The maximum date before registration of the event
 	 */
 	private Integer maxParticipant;
 
 	/**
-	 * If a user is red flagged because he regitered too late, or if the number
+	 * If a user is red flagged because he registered too late, or if the number
 	 * of participants is exceeded.
 	 */
 	private Boolean redFlagged;
 
+	/**
+	 * A list of questions
+	 */
+	private List<Question> additionalQuestions;
+
+	public List<Question> getAdditionalQuestions() {
+		return additionalQuestions;
+	}
+
+	public void setAdditionalQuestions(List<Question> additionalQuestions) {
+		this.additionalQuestions = additionalQuestions;
+	}
+
 	public String getChildInfo() {
 		return childInfo;
+	}
+
+	public Boolean getPayingEvent() {
+		return payingEvent;
+	}
+
+	public void setPayingEvent(Boolean payingEvent) {
+		this.payingEvent = payingEvent;
 	}
 
 	public void setChildInfo(String childInfo) {

@@ -51,7 +51,7 @@ angular.module('managerApp.caisse', ['ngRoute','angularFileUpload'])
   	  	$('#bill-file').val('');
       	$scope.error=false;
          list();
-     }).
+     	}).
 		error(function(data) {
   	  	$scope.message='An issue occured.';
   	  	$scope.error=true;

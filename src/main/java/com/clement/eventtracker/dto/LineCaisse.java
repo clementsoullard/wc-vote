@@ -6,10 +6,6 @@ import org.springframework.data.annotation.Id;
 
 public class LineCaisse {
 
-	public String getIdr() {
-		return id;
-	}
-
 	public void setIdr(String id) {
 		this.id = id;
 	}
@@ -18,6 +14,8 @@ public class LineCaisse {
 	private String id;
 
 	private String label;
+
+	private String imageId;
 	/**
 	 * The debit entering in cashier
 	 */
@@ -28,14 +26,14 @@ public class LineCaisse {
 	private Float credit;
 
 	/**
-	 * The debit entering in cashier
-	 */
-	private byte[] image;
-
-	/**
 	 * The date of the purchase
 	 */
-	private Date date;
+	private Date dateOfPurchase;
+
+	/**
+	 * The date of submission
+	 */
+	private Date dateOfSumission;
 
 	public String getLabel() {
 		return label;
@@ -61,20 +59,32 @@ public class LineCaisse {
 		this.credit = credit;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getDateOfPurchase() {
+		return dateOfPurchase;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateOfPurchase(Date date) {
+		this.dateOfPurchase = date;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
+	public String getIdr() {
+		return id;
 	}
 
-	public byte[] getImage() {
-		return image;
+	public Date getDateOfSumission() {
+		return dateOfSumission;
+	}
+
+	public void setDateOfSumission(Date dateOfSumission) {
+		this.dateOfSumission = dateOfSumission;
+	}
+
+	public String getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(String imageId) {
+		this.imageId = imageId;
 	}
 
 }

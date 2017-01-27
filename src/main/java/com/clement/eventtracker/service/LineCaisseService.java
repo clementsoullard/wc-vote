@@ -24,6 +24,9 @@ public class LineCaisseService {
 	@Autowired
 	LineCaisseRepository lineCaisseRepository;
 
+	@Autowired
+	BillBinaryRepository billlBinaryRepository;
+
 	static final Logger LOG = LoggerFactory.getLogger(LineCaisseService.class);
 
 	@Autowired
@@ -50,5 +53,9 @@ public class LineCaisseService {
 		caisseSummary.setDebit(debit);
 		caisseSummary.setTotal(total);
 		return caisseSummary;
+	}
+
+	public byte[] getImage(String id) {
+		return billlBinaryRepository.findOne(id).getImage();
 	}
 }
