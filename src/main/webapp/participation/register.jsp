@@ -95,6 +95,14 @@
 					class="col-sm-2 col-form-label"><input type="text"
 					ng-model="participant.age" /></span>
 			</div>
+			
+		<div ng-repeat="question in event.additionalQuestions">
+			<div style="background-color: white; padding: 10px; margin: 2px; " class="row">
+				
+			<span class="col-sm-5">{{question.name}}</span><input type="text" ng-model="participant.questions[$index]"
+				/>
+		</div>
+	</div>
 			<div class="form-group row">
 				<span class="col-sm-5"></span> <input type="submit"
 					class="btn btn-success col-sm-2" ng-click="update(participant,event,form)"
@@ -103,11 +111,9 @@
 		</form>
 		<hr>
 	</div>
-	
 	<!-- 
 	Liste des participants
 	 -->
-	
 	<div style="background-color: white; padding: 20px">
 		<h2>Participants list</h2>
 		<div class="row">

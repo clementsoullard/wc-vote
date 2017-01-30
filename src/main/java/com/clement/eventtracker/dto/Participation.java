@@ -1,6 +1,8 @@
 package com.clement.eventtracker.dto;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -40,6 +42,10 @@ public class Participation {
 	private String gender;
 
 	private String age;
+	/**
+	 * This is to store the additional questions
+	 */
+	private HashMap<String, String> questions;
 
 	public Participation(String firstName, String lastName, String email, boolean vegetarianOption, boolean isEmployee,
 			boolean isChild, String tracer) {
@@ -169,6 +175,14 @@ public class Participation {
 
 	public void setPaid(boolean pay) {
 		this.paid = pay;
+	}
+
+	public HashMap<String,String> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(HashMap<String,String> questions) {
+		this.questions = questions;
 	}
 
 }
