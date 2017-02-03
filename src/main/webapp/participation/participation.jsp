@@ -17,6 +17,11 @@
 			<span class="col-sm-5"></span> <input type="submit"
 				class="btn btn-info col-sm-2" ng-click="register(event)"
 				value="Register" />
+						<!-- Displayed only in case the user is authenticated -->
+		<sec:authorize access="isAuthenticated()">
+				
+		<a class="btn btn-info col-sm-2" href="manager.html#!/event/{{event.idr}}" >Modifier</a>
+		</sec:authorize>
 		</div>
 	</div>
 </div>

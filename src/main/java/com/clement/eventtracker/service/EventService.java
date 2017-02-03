@@ -2,6 +2,7 @@ package com.clement.eventtracker.service;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -31,7 +32,10 @@ public class EventService {
 
 	public List<Event> getCurrentOpenEvent() {
 		try {
-			List<Event> events = mongoTemplate.find(new Query(where("active").is(true)), Event.class);
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.MONTH, -2);
+			List<Event> events = mongoTemplate.find(new Query(where("active").is(true).and("date").gt(new Date())),
+					Event.class);
 			LOG.debug("Requete effectue");
 			return events;
 		} catch (Exception e) {

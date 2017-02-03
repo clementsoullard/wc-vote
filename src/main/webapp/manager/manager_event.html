@@ -74,15 +74,6 @@
 				<textarea ng-model="event.childInfo" class="form-control" style="min-width: 100%">
 				</textarea>
 			</div>
-			
-
-			<div class="row">
-				<span class="col-sm-5"></span> <input type="submit"
-					class="btn btn-info col-sm-2" ng-click="update(event)" value="Save" />
-			</div>
-		</form>
-		<hr>
-	</div>
 
 	<h2>Additional questions</h2>
 
@@ -95,14 +86,24 @@
 			</div>
 		</li>
 	</ul>
+			<div class="row">
 
-	<input size="60" type="text" ng-model="newQuestion.name" />
-
+	<input size="60" type="text" ng-model="newQuestion.name" style="margin-left: 2cm" class="col-sm-6"/>
+	 <input  type="submit"
+				class="btn btn-info col-sm-2" ng-click="addQuestion(newQuestion)" value="Add a Question" />
+</div>
+<br>
 	
-	<div class="row">
-		<span class="col-sm-5"></span> <input type="submit"
-				class="btn btn-info col-sm-2" ng-click="addQuestion(newQuestion)" value="Save" />
+			
+<br>
+			<div class="row">
+				<span class="col-sm-5"></span> <input type="submit"
+					class="btn btn-success col-sm-2" ng-click="update(event)" value="Save" />
+			</div>
+		</form>
+		<hr>
 	</div>
+
 	
 	
 	

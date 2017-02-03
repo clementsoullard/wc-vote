@@ -4,17 +4,14 @@ angular.module('myApp.participation', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/participation', {
-    templateUrl: 'participation/participation.html',
+    templateUrl: 'participation/participation.jsp',
     controller: 'participationCtrl'
   }).when('/register/:idEvent', {
 	    templateUrl: 'participation/register.jsp',
 	    controller: 'registerCtrl'
 	  });
 }])
-
 .controller('participationCtrl',  ['$scope','$http','$location', function($scope,$http,$location) {
-
- 
 		/**
 		 * List the active events
 		 */
@@ -24,7 +21,6 @@ angular.module('myApp.participation', ['ngRoute'])
 		            $scope.events = data;
 	        });
 		 }
-
 			/**
 			 * Register 
 			 */

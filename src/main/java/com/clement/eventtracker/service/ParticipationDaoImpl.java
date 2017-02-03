@@ -25,6 +25,7 @@ import org.springframework.stereotype.Repository;
 
 import com.clement.eventtracker.dto.Event;
 import com.clement.eventtracker.dto.Participation;
+import com.clement.eventtracker.dto.Question;
 
 @Repository
 public class ParticipationDaoImpl {
@@ -130,10 +131,18 @@ public class ParticipationDaoImpl {
 				participationDataRecord.add(participation.getAge());
 				participationDataRecord.add(participation.isVegetarian());
 				participationDataRecord.add(participation.getGender());
+				if (participation.getQuestions().size() > 0) {
+					for (int i = 0; i < participation.getQuestions().size(); i++) {
+						participationDataRecord.add(participation.getQuestions().get(Integer.toString(i)));
+					}
+
+				}
 				csvFilePrinter.printRecord(participationDataRecord);
 			}
 			LOG.info("CSV file was created successfully in " + file);
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			LOG.error("Error in CsvFileWriter !!!", e);
 		} finally {
 
@@ -149,10 +158,10 @@ public class ParticipationDaoImpl {
 		return file;
 
 	}
-	
 
 	public void payEvent(String idEvent, String idParticipation, Boolean pay) {
-		Query query = Query.query(Criteria.where("_id").is(idEvent).and("participations._id").is(new ObjectId(idParticipation)));
+		Query query = Query
+				.query(Criteria.where("_id").is(idEvent).and("participations._id").is(new ObjectId(idParticipation)));
 		Update update = new Update().set("participations.$.paid", pay);
 		mongoTemplate.updateFirst(query, update, Event.class);
 	}
