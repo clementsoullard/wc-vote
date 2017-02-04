@@ -30,6 +30,8 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 
 		    $http.get('ws/event/'+eventId).
 		        success(function(data) {
+		        // Converting the JSON format to the the Java Script date format.
+		        	
 	       	  	data.dateEventDp=new Date(data.date);
 	       	  	data.dateMaxRegistrationDp=new Date(data.dateMaxRegistration);
 	       	  	console.log('Date'+data.dateMaxRegistrationDp);
@@ -46,7 +48,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 		 get(eventId);
 	 }
 	/**
-	 * Insert a new entry fonction
+	 * Insert a new entry fonction or update (if the id have been specified)
 	 */
 	 $scope.update = function (event) {
      	event.date=event.dateEventDp;
@@ -56,7 +58,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	        success(function(data) {
 	     	  	$scope.message='Event registered.';
 	       	  	$scope.error=false;
-	       	  	// Converting the date to a datepicker format
+	       	  	// Converting the date to a datepicker format (after the post is done the event is reloaded from server side
 	      	  	data.dateEventDp=new Date(data.date);
 	       	  	data.dateMaxRegistrationDp=new Date(data.dateMaxRegistration);
 
@@ -71,12 +73,11 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 			};
 			
 	/**
-	 * Insert a new entry fonction
+	 * Create a new optional question
 	*/
 	 $scope.addQuestion = function (question) {
 		 var questions=$scope.event.additionalQuestions;
 		 if(questions == undefined){
-			 console.log("Creation du tableau");
 			 questions=[];
 		 }
 		 questions.push(question);
@@ -95,7 +96,7 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	        });
 		 }
 	/**
-	* List the entries
+	* Remove an event
 	*/		
 	$scope.remove = function(id){ $http.delete('ws/event/'+id).
 			success(function(data) {
