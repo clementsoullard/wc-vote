@@ -30,6 +30,10 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 
 		    $http.get('ws/event/'+eventId).
 		        success(function(data) {
+	       	  	data.dateEventDp=new Date(data.date);
+	       	  	data.dateMaxRegistrationDp=new Date(data.dateMaxRegistration);
+	       	  	console.log('Date'+data.dateMaxRegistrationDp);
+
 	       	  	$scope.event=data;
 	       	  	console.log("Chargement de l'event "+eventId);
 
@@ -45,10 +49,17 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	 * Insert a new entry fonction
 	 */
 	 $scope.update = function (event) {
-	    $http.post('ws/event',event).
+     	event.date=event.dateEventDp;
+    	event.dateMaxRegistration=event.dateMaxRegistrationDp;
+
+		 $http.post('ws/event',event).
 	        success(function(data) {
 	     	  	$scope.message='Event registered.';
 	       	  	$scope.error=false;
+	       	  	// Converting the date to a datepicker format
+	      	  	data.dateEventDp=new Date(data.date);
+	       	  	data.dateMaxRegistrationDp=new Date(data.dateMaxRegistration);
+
 	       	  	$scope.event=data;
 	       	  	$location.path('/event/'+data.idr);
 	            list();

@@ -85,6 +85,10 @@ public class Event {
 	private List<Question> additionalQuestions;
 
 	public List<Question> getAdditionalQuestions() {
+		if (additionalQuestions == null) {
+			additionalQuestions = new ArrayList<Question>();
+		}
+		additionalQuestions.remove(null);
 		return additionalQuestions;
 	}
 
