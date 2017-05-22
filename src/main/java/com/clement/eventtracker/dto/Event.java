@@ -28,6 +28,16 @@ public class Event {
 	 * Name of the event
 	 */
 	private String name;
+
+	/**
+	 * The temporary image Id of the event
+	 */
+	private String tmpImgId;
+
+	/**
+	 * The temporary image Id of the event
+	 */
+	private String imgId;
 	/**
 	 * If the event is active
 	 */
@@ -210,6 +220,22 @@ public class Event {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public void setTmpImgId(String tmpImgId) {
+		this.tmpImgId = tmpImgId;
+	}
+
+	public String getTmpImgId() {
+		return tmpImgId;
+	}
+
+	public String getImgId() {
+		return imgId;
+	}
+
+	public void setImgId(String imgId) {
+		this.imgId = imgId;
 	}
 
 }

@@ -17,17 +17,42 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	  });
 }])
 
+.directive("fileread", [function () {
+    return {
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+            	scope.tmpImgId = undefined;
+                console.log("Changement");
+                var xhr = new XMLHttpRequest();                 
+                var FD  = new FormData();
+                FD.append('file', changeEvent.target.files[0]);
+                xhr.onreadystatechange = function () {
+                   console.log("Callback");
+                	if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                		console.log("Id generé" + xhr.response);
+                		scope.setTempImage(xhr.response);
+                     }
+                   }
+                xhr.open('POST', 'upload/', true);
+                xhr.send(FD);
+             });
+        }
+    }
+}])
+
 .controller('eventMgrCtrl',  ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
 	
 	 var eventId = $routeParams.id;
 	 
-	 console.log(eventId);
+	 var fichier;
+	 $scope.fichier=fichier;
+	 
+	 console.log("Evenement "+eventId);
 	 
 	 /**
 	  * Function to read an event
 	  */
 	 function get(eventId){
-
 		    $http.get('ws/event/'+eventId).
 		        success(function(data) {
 		        // Converting the JSON format to the the Java Script date format.
@@ -52,9 +77,9 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 	 */
 	 $scope.update = function (event) {
      	event.date=event.dateEventDp;
+     	event.tmpImgId=$scope.tmpImgId;
     	event.dateMaxRegistration=event.dateMaxRegistrationDp;
-
-		 $http.post('ws/event',event).
+    	$http.post('ws-event',event).
 	        success(function(data) {
 	     	  	$scope.message='Event registered.';
 	       	  	$scope.error=false;
@@ -104,6 +129,13 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
 			list();
 		});
 	}
-		
-		list();		 
+	/**
+	* Upload a file
+	*/		
+	$scope.setTempImage = function(tmpImgId){ 
+		 console.log("Set Temporary Image "+tmpImgId);
+		 $scope.tmpImgId=tmpImgId;
+	}
+	
+	list();		 
 }]);

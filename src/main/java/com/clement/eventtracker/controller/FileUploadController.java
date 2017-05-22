@@ -1,8 +1,13 @@
 package com.clement.eventtracker.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +30,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.clement.eventtracker.service.ParticipationDaoImpl;
 import com.clement.eventtracker.service.storage.StorageFileNotFoundException;
+import com.clement.eventtracker.service.storage.StorageProperties;
 import com.clement.eventtracker.service.storage.StorageService;
 
 @RestController
 public class FileUploadController {
 
-	
 	static final Logger LOG = LoggerFactory.getLogger(FileUploadController.class);
 
 	private final StorageService storageService;
-	@Value("${storage.location}")
-	private String storageLocation;
+
+	@Autowired
+	StorageProperties storageProperties;
 
 	@Autowired
 	public FileUploadController(StorageService storageService) {
@@ -71,9 +77,22 @@ public class FileUploadController {
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		int rnd = (int) (Math.random() * Integer.MAX_VALUE);
-		storageService.store(file, Integer.toString(rnd));
+		storageService.storeTemp(file, Integer.toString(rnd));
 		LOG.debug("Post file");
 		return Integer.toString(rnd);
+	}
+
+	@GetMapping("/ws-img/{id}")
+	public void download(@PathVariable("id") String id, HttpServletResponse response) throws IOException {
+		InputStream is = storageService.getInputStream(id);
+		IOUtils.copy(is, response.getOutputStream());
+
+	}
+	@GetMapping("/ws-img-tmp/{id}")
+	public void downloadTemp(@PathVariable("id") String id, HttpServletResponse response) throws IOException {
+		InputStream is = storageService.getTempInputStream(id);
+		IOUtils.copy(is, response.getOutputStream());
+
 	}
 
 	@ExceptionHandler(StorageFileNotFoundException.class)

@@ -1,10 +1,8 @@
 package com.clement.eventtracker.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +34,8 @@ public class ParticipationDaoImpl {
 
 	static final Logger LOG = LoggerFactory.getLogger(ParticipationDaoImpl.class);
 
-	DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	private DateFormat dfHour = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 	@Autowired
 	EventService eventService;
 
@@ -121,9 +120,25 @@ public class ParticipationDaoImpl {
 					"Participation à l'évenement " + event.getName() + " du " + df.format(event.getDate()));
 
 			List<Participation> participations = event.getParticipations();
+			List participationDataRecord = new ArrayList();
+			participationDataRecord.add("First name");
+			participationDataRecord.add("Last name");
+			participationDataRecord.add("Email");
+			participationDataRecord.add("children");
+			participationDataRecord.add("age");
+			participationDataRecord.add("Végetarien");
+			participationDataRecord.add("Gender");
+			participationDataRecord.add("Registration date");
+
+			List<Question> additionalQuestion = event.getAdditionalQuestions();
+			for (Question question : additionalQuestion) {
+				participationDataRecord.add(question.getName());
+			}
+
+			csvFilePrinter.printRecord(participationDataRecord);
 
 			for (Participation participation : participations) {
-				List participationDataRecord = new ArrayList();
+				participationDataRecord = new ArrayList();
 				participationDataRecord.add(participation.getFirstName());
 				participationDataRecord.add(participation.getLastName());
 				participationDataRecord.add(participation.getEmail());
@@ -131,12 +146,13 @@ public class ParticipationDaoImpl {
 				participationDataRecord.add(participation.getAge());
 				participationDataRecord.add(participation.isVegetarian());
 				participationDataRecord.add(participation.getGender());
-				if (participation.getQuestions().size() > 0) {
+				participationDataRecord.add(dfHour.format(participation.getRegistrationDate()));
+				if (participation.getQuestions() != null && participation.getQuestions().size() > 0) {
 					for (int i = 0; i < participation.getQuestions().size(); i++) {
 						participationDataRecord.add(participation.getQuestions().get(Integer.toString(i)));
 					}
-
 				}
+
 				csvFilePrinter.printRecord(participationDataRecord);
 			}
 			LOG.info("CSV file was created successfully in " + file);

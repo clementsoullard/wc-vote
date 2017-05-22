@@ -8,14 +8,27 @@ public class StorageProperties {
     /**
      * Folder location for storing files
      */
-    private String location = "upload-dir";
+    private String tempLocation;
 
-    public String getLocation() {
-        return location;
+    public String getTempLocation() {
+        return tempLocation;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setTempLocation(String location) {
+        this.tempLocation = location;
+    }
+
+    /**
+     * Folder location for storing files
+     */
+    private String rootLocation;
+
+    public String getRootLocation() {
+        return rootLocation;
+    }
+
+    public void setRootLocation(String location) {
+        this.rootLocation = location;
     }
 
 }

@@ -10,6 +10,7 @@ import org.apache.commons.io.IOUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,7 +46,7 @@ public class EventTrackerController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/ws-participation-stats")
+	@GetMapping("/ws-participation-stats")
 	public ParticipationStats getParticipationStats() throws Exception {
 		ParticipationStats participationStats = new ParticipationStats();
 		participationStats.setNbChild(participationDaoImpl.getChildNb());
@@ -54,17 +55,17 @@ public class EventTrackerController {
 		return participationStats;
 	}
 
-	@RequestMapping("/ws-active-events")
+	@GetMapping("/ws-active-events")
 	public List<Event> getActiveEvents() throws Exception {
 		return eventService.getCurrentOpenEvent();
 	}
 
-//	@RequestMapping("/ws-add-question/{idEvent}")
-//	public List<Event> addQuestion(@PathVariable("idEvent") String idEvent) throws Exception {
-//		return eventService.getCurrentOpenEvent();
-//	}
+	@PostMapping("/ws-event")
+	public Event updateEvent(@RequestBody Event event) throws Exception {
+		return eventService.saveEvent(event);
+	}
 
-	@RequestMapping("/ws-event/{idEvent}")
+	@GetMapping("/ws-event/{idEvent}")
 	public Event getEvent(@PathVariable("idEvent") String idEvent) throws Exception {
 		return eventService.getEvent(idEvent);
 	}
@@ -76,6 +77,14 @@ public class EventTrackerController {
 		eventService.registerEvent(idEvent, participation);
 	}
 
+	/**
+	 * Called when clicking on payment of event.
+	 * 
+	 * @param idEvent
+	 * @param idParticipation
+	 * @param pay
+	 * @throws Exception
+	 */
 	@RequestMapping("/ws-pay/{idEvent}/{idParticipation}/{pay}")
 	public void pay(@PathVariable("idEvent") String idEvent, @PathVariable("idParticipation") String idParticipation,
 			@PathVariable("pay") Boolean pay) throws Exception {
