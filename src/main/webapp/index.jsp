@@ -1,3 +1,6 @@
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -23,9 +26,19 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="topFixedNavbar1">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#!/participation">Register<span class="sr-only">(current)</span></a></li>
-         <li ><a href="manager.html">Management Interface</a></li>
+            <li class="active">
+            <a href="#!/participation">Register<span class="sr-only">(current)</span></a></li>
+       		<sec:authorize access="isAuthenticated()"><li><a href="manager.html">Management Interface</a></li>
+       		  </sec:authorize>
              </ul>
+               <ul class="nav navbar-nav navbar-right">
+		   	<sec:authorize access="isAnonymous()">
+		   <li><a href="login"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+		   </sec:authorize>
+		   	<sec:authorize access="isAuthenticated()">
+		   <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+		   	</sec:authorize>
+    </ul>
         </div>
         <!-- /.navbar-collapse -->
       </div>

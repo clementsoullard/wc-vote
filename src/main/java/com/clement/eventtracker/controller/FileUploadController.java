@@ -82,12 +82,26 @@ public class FileUploadController {
 		return Integer.toString(rnd);
 	}
 
+	/**
+	 * Serve an image in its permanent representation.
+	 * 
+	 * @param id
+	 * @param response
+	 * @throws IOException
+	 */
 	@GetMapping("/ws-img/{id}")
 	public void download(@PathVariable("id") String id, HttpServletResponse response) throws IOException {
 		InputStream is = storageService.getInputStream(id);
 		IOUtils.copy(is, response.getOutputStream());
-
 	}
+
+	/**
+	 * Serve an image in its temporary representation.
+	 * 
+	 * @param id
+	 * @param response
+	 * @throws IOException
+	 */
 	@GetMapping("/ws-img-tmp/{id}")
 	public void downloadTemp(@PathVariable("id") String id, HttpServletResponse response) throws IOException {
 		InputStream is = storageService.getTempInputStream(id);

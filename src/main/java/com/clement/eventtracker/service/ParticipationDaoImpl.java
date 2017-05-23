@@ -129,6 +129,7 @@ public class ParticipationDaoImpl {
 			participationDataRecord.add("Végetarien");
 			participationDataRecord.add("Gender");
 			participationDataRecord.add("Registration date");
+			participationDataRecord.add("Paid");
 
 			List<Question> additionalQuestion = event.getAdditionalQuestions();
 			for (Question question : additionalQuestion) {
@@ -147,7 +148,8 @@ public class ParticipationDaoImpl {
 				participationDataRecord.add(participation.isVegetarian());
 				participationDataRecord.add(participation.getGender());
 				participationDataRecord.add(dfHour.format(participation.getRegistrationDate()));
-				if (participation.getQuestions() != null && participation.getQuestions().size() > 0) {
+				participationDataRecord.add(participation.isPaid());
+					if (participation.getQuestions() != null && participation.getQuestions().size() > 0) {
 					for (int i = 0; i < participation.getQuestions().size(); i++) {
 						participationDataRecord.add(participation.getQuestions().get(Integer.toString(i)));
 					}

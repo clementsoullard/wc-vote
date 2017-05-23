@@ -20,7 +20,9 @@
 			{{event.dateMaxRegistration| date: fullDate}}</h3>
 		<h3 ng-if="event.maxParticipant">Open to {{event.maxParticipant}}
 			persons max.</h3>
-
+		<div style="text-align: center">
+		<img ng-show="event.imgId" ng-src="ws-img/{{event.imgId}}"/>
+		</div>
 		<div class="alert alert-info" role="alert">
 			<p>{{event.description}}</p>
 			<p>{{event.childInfo}}</p>
@@ -126,6 +128,7 @@
 				Childs: </label><span ng-if="needChildInfo" class="col-sm-2 col-form-label">{{participationStats.nbChild}}</span>
 		</div>
 		<div class="row" style="background-color: white; padding: 30px;">
+		<div>
 			<ul class="list-group" ng-repeat="participation in participations">
 				<li class="list-group-item col-sm-6" style="height:60px">
 				<div>
@@ -134,7 +137,7 @@
 						 {{participation.email}} </span>
 					 <sec:authorize
 						access="isAuthenticated()">
-						<span ng-if="event.payingEvent" class="col-sm-2">Paid&nbsp;<input type="checkbox"
+						<span ng-if="event.payingEvent" ng-class="(participation.paid==true) ? 'green' : 'redInfamed'" class="col-sm-2"><b>Paid</b>&nbsp;<input type="checkbox"
 							ng-model="participation.paid" ng-change="pay(participation,event)">
 					</span>
 					</sec:authorize> 
@@ -146,5 +149,6 @@
 						</div>
 				</li>		
 			</ul>
+			</div>
 		</div>
 	</div>

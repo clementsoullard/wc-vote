@@ -81,7 +81,7 @@ public class EventService {
 		Event event = eventRepository.findOne(idEvent);
 		Integer maxParticipants = event.getMaxParticipant();
 		List<Participation> participations = event.getParticipations();
-		
+
 		/**
 		 * There is a sophisticated processing here, the reason what we count in
 		 * reverse order is that the result should appear the last registered
@@ -106,7 +106,7 @@ public class EventService {
 		 * is marked as infamed.
 		 * 
 		 */
-		if (maxParticipants != null) {
+		if (maxParticipants != null && participations != null) {
 			for (int i = participations.size() - 1; i > -1; i--) {
 				Participation participation = participations.get(i);
 				if (participations.size() - 1 - i >= maxParticipants) {
