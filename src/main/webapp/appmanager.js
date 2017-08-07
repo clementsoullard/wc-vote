@@ -1,10 +1,10 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('managerApp', [
+angular.module('voteApp', [
   'ngRoute',
-  'managerApp.manager',
-  'managerApp.caisse',
+  'voteApp.manager',
+  'voteApp.caisse',
    'ng-fusioncharts',
   'ngAnimate',
   'ngMaterial',

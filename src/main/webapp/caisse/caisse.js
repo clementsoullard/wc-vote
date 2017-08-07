@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('managerApp.caisse', ['ngRoute','angularFileUpload'])
+angular.module('voteApp.caisse', ['ngRoute','angularFileUpload'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/caisse', {

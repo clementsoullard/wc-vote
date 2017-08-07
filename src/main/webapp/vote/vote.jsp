@@ -1,5 +1,8 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<div ng-include="'menu.jsp'"></div>
+
+
 <div class="container">
 
 	<div class="alert alert-danger" ng-if="message&&error">

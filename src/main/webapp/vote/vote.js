@@ -1,17 +1,20 @@
 ﻿'use strict';
 
-angular.module('myApp.participation', ['ngRoute'])
+angular.module('voteApp.vote', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/participation', {
-    templateUrl: 'participation/participation.jsp',
-    controller: 'participationCtrl'
+  $routeProvider.when('/vote', {
+    templateUrl: 'vote/vote.jsp',
+    controller: 'voteCtrl'
   }).when('/register/:idEvent', {
 	    templateUrl: 'participation/register.jsp',
 	    controller: 'registerCtrl'
 	  });
 }])
-.controller('participationCtrl',  ['$scope','$http','$location', function($scope,$http,$location) {
+.controller('voteCtrl',  ['$scope','$http','$location', function($scope,$http,$location) {
+	console.log('Passage dans le menu de liste des votes');
+	$scope.menuSelected = "listVote";
+	
 		/**
 		 * List the active events
 		 */

@@ -1,20 +1,16 @@
 ﻿'use strict';
 
-angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
+angular.module('voteApp.voteManager', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/event/:id', {
-    templateUrl: 'manager/manager_event.html',
-    controller: 'eventMgrCtrl'
+  $routeProvider.when('/manageVote/:id', {
+    templateUrl: 'manager/manager_vote.html',
+    controller: 'voteMgrCtrl'
   })
-  .when('/event', {
-    templateUrl: 'manager/manager_event.html',
-    controller: 'eventMgrCtrl'
+  .when('/manageVote', {
+    templateUrl: 'manager/manager_vote.html',
+    controller: 'voteMgrCtrl'
   })
-  .when('/show', {
-	    templateUrl: 'manager/manager_show.html',
-	    controller: 'showsCtrl'
-	  });
 }])
 
 .directive("fileread", [function () {
@@ -40,8 +36,9 @@ angular.module('managerApp.manager', ['ngRoute','angularFileUpload'])
     }
 }])
 
-.controller('eventMgrCtrl',  ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
+.controller('voteMgrCtrl',  ['$scope','$http','$routeParams','$location', function($scope,$http,$routeParams,$location) {
 	
+	$scope.menuSelected = "manageVote";
 	 var eventId = $routeParams.id;
 	 
 	 var fichier;
