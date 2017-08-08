@@ -26,8 +26,8 @@
   <script src="js/angular-messages.min.js"></script>
   
     <script src="js/angular-fusioncharts.min.js"></script>
-  <script src="vote/vote.js"></script>
-  <script src="manageVote/manager.js"></script>
+  <script src="vote/list_vote.js"></script>
+  <script src="managePoll/manager_poll.js"></script>
   <script src="app.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>

@@ -14,12 +14,12 @@ angular.module('voteApp', [
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
   
-  $routeProvider.when('/manageVote/:id', {
-	    templateUrl: 'manageVote/manager_vote.jsp',
+  $routeProvider.when('/managePoll/:id', {
+	    templateUrl: 'managePoll/manager_poll.jsp',
 	    controller: 'voteMgrCtrl'
 	  })
-	  .when('/manageVote', {
-	    templateUrl: 'manageVote/manager_vote.jsp',
+	  .when('/managePoll', {
+	    templateUrl: 'managePoll/manager_poll.jsp',
 	    controller: 'voteMgrCtrl'
 	  })
 	  .otherwise({redirectTo: '/vote'});
