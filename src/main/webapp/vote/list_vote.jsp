@@ -16,14 +16,13 @@
 			other peoples (relatives or colleagues)</a>
 	</div>
 
-
 	<div ng-repeat="poll in polls">
 		<div style="background-color: white; padding: 10px; margin: 2px; " class="row">
 				<h3 class="col-sm-5">{{poll.name}}</h3>
 				
 				<h3 class="col-sm-3"></h3>
 		<sec:authorize	access="isAuthenticated()">
-						 <a href="#!/event/{{poll.idr}}"><button 
+						 <a href="#!/poll/{{poll.idr}}"><button 
 				class="btn btn-info col-sm-2" 
 				>Modify</button> 
 				</a>
@@ -40,13 +39,7 @@
 				value="Vote" />
 			<!-- Displayed only in case the user is authenticated -->
 		</sec:authorize>
-		<sec:authorize	access="isAuthenticated()">
-			 <input type="submit"
-				class="btn btn-info col-sm-2" ng-click="register(event)"
-				value="Track payment" />
-			<!-- Displayed only in case the user is authenticated -->
-		</sec:authorize>
-			
+				
 		</div>
 	</div>
 </div>

@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
-import com.clement.poll.service.ParticipationDaoImpl;
+import com.clement.poll.service.VoteDaoImpl;
 
 @Configuration
 @EnableScheduling
@@ -27,7 +27,7 @@ public class DayScheduler {
 	static final Logger LOG = LoggerFactory.getLogger(DayScheduler.class);
 
 	@Resource
-	ParticipationDaoImpl bonPointDaoImpl;
+	VoteDaoImpl bonPointDaoImpl;
 
 	@Resource
 	FileService fileService;

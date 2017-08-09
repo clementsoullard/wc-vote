@@ -8,9 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.clement.poll.dto.Participation;
-import com.clement.poll.service.ParticipationDaoImpl;
-import com.clement.poll.service.ParticipationRepository;
+import com.clement.poll.dto.Vote;
+import com.clement.poll.service.VoteDaoImpl;
+import com.clement.poll.service.VoteRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -18,14 +18,13 @@ import com.clement.poll.service.ParticipationRepository;
 public class ParticipationTest {
 
 	@Resource
-	ParticipationDaoImpl participationDaoImpl;
+	VoteDaoImpl participationDaoImpl;
 	@Resource
-	ParticipationRepository participationRepository;
+	VoteRepository participationRepository;
 
 	public void insertParticipation() {
 		participationRepository.deleteAll();
-		participationRepository
-				.save(new Participation("Lady", "Di", "lady_di@infosys.com", true, true, false, "Cououc"));
+		participationRepository.save(new Vote("Lady", "Di", "lady_di@infosys.com", "Coucou"));
 	}
 
 	@Test

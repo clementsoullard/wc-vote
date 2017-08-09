@@ -1,12 +1,13 @@
 ﻿'use strict';
 
-angular.module('voteApp.vote', ['ngRoute'])
+angular.module('voteApp.vote', ['ngRoute','ngCookies'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/vote', {
     templateUrl: 'vote/list_vote.jsp',
     controller: 'listVoteCtrl'
-  }).when('/vote/:idEvent', {
+  })
+  .when('/vote/:idPoll', {
 	    templateUrl: 'vote/vote.jsp',
 	    controller: 'voteCtrl'
 	  });
@@ -32,137 +33,67 @@ angular.module('voteApp.vote', ['ngRoute'])
 			 }
 		listActivePolls();
 }])
-.controller('voteCtrl',  ['$scope','$http','$routeParams',function($scope,$http,$routeParams) {
-		
+
+.controller('voteCtrl',  ['$scope','$http','$routeParams','$cookies','growl',function($scope,$http,$routeParams,$cookies,growl) {	
 	 /** This is to identify the event it is related to */
-	var participant={forEmployeeOnly: false, employee: null}; 
+	
 	 
+	
 	 /** We use the tracer to identify if a registration has been done on the same computer */
-	 var x = document.cookie;
+	 var idPoll=$routeParams.idPoll;
+
+	 var clientCookie = $cookies.get("client-autogen");
+	 console.log('Cookie angular  ' + clientCookie);
 	 
-	 if(!x){
-		 var d = new Date();
-	 	d.setTime(d.getTime() + (30*24*60*60*1000));
-	 	var expires = "expires="+ d.toUTCString();
-	 	var rndNumber=Math.floor((Math.random() * 1000000) + 1);
-	 	document.cookie =  "tracer="+rndNumber+" ; " + expires;
-	 	x=document.cookie;
+	 
+	 if(clientCookie==null){
+	 	var rndNumber=Math.floor((Math.random() * 1000000));
+	 	$cookies.put("client-autogen",rndNumber);
 	 }
 	 else{
-	//	 console.log('There is one cookie in the session ' + x.substring(7));
+		 console.log('There is one cookie in the session ' + clientCookie);
 	 }
 	 /** This is to identify the event it is related to */
 
-	 participant.tracer=x.substring(7);
-
-	var idEvent=$routeParams.idEvent;
+	 console.log('Poll ID  ' + idPoll);
 	
-/**
- * retrieve an event
- */
-		function getEvent(idEvent){
-			$http.get('ws/event/'+idEvent).
+	 /**
+	  * 	retrieve an Poll
+	  */
+		function getPoll(idPoll){
+			$http.get('ws/poll/'+idPoll).
 			success(function(data) {
-			$scope.event = data;
+			$scope.poll = data;
 			});
 		};
-/**
- * Insert a new entry function
- */
 		
- $scope.update = function (participant,event,form) {
-	 
-	 var master = angular.copy(participant);
-	 
-	 if(event.forEmployeeOnly == false && master.employee == null){
-		 $scope.message='You must select if you are employee or relative';
-	  	 $scope.error=true;
-	  	 return;
-	 }
+		/**
+		 * Insert a new entry function
+		 */
+		
+ $scope.vote = function (voteYN,pollId) {
 
-	 if(! event.forEmployeeOnly && master.employee && !master.email){
-		 $scope.message='Please enter your mail';
-	  	 $scope.error=true;
-	  	 return;
-	 }
 
-	 if(event.forEmployeeOnly==true && !master.email){
-		 $scope.message='Please enter your mail';
-	  	 $scope.error=true;
-	  	 return;
-	 }
-	 
-	 if( event.needChildInformation==true && master.employee==false &&  master.child != null){
-		 $scope.message='Please tell us if you are registering a child';
-	  	 $scope.error=true;
-	  	 return;
-	 }
 
 	 
-    $http.post('ws-register/'+idEvent,participant).
+	 var myBallot={}
+	 myBallot.answer=voteYN;
+	 myBallot.pollId=pollId;
+	 		
+	 
+	 $http.post('ws-vote/'+idPoll,myBallot).
         	success(function(data) {
-     	  	$scope.message='Thanks for registering.';
-     	  	$scope.participant={};
-     		form.$setPristine();
-     		form.$setUntouched();
-         	$scope.error=false;
-            list();
-        }).
+        		 growl.success(data.message);
+      	}).
 		error(function(data) {
-     	  	$scope.message='An issue occured.';
-     	  	$scope.participant={};
-     	  	$scope.error=true;
+   		 growl.error(data.message);
 		})
 	};
 
 		/**
-		 * List the entries
-		 */		
-		function list(){
-				 $http.get('ws-event/'+idEvent).
-			      success(function(data) {
-			            $scope.participations = data.participations;
-			            if(data.participations != null){
-			            $scope.nbTotal = data.participations.length;
-			            }
-			            else{
-			            	$scope.nbTotal = 0;
-			            }
-			        });
-				 
-		$http.get('ws-participation-stats').
-			     success(function(data) {
-			         $scope.participationStats = data;
-			     });
-			}
-		
-		/**
-		* Remove the entries
-		*/		
-		$scope.remove = function(email){ $http.delete('ws-unregister/'+idEvent+'/'+email).
-				success(function(data) {
-			  	$scope.message='The entry has been removed.';
-				list();
-			});
-		}
-	
-		/**
-		* Register paiement
-		*/		
-		$scope.pay = function(participation,event){ 
-			 console.log('Paiement for participation ' + participation.idr + " valeur "+participation.paid + ", eventId="+event.idr);
-			$http.get('ws-pay/'+idEvent+'/'+participation.idr+'/'+participation.paid).
-				success(function(data) {
-			});
-		}
-
-		/**
 		 * Action at page loading.
 		 */
-		list();	
-		getEvent(idEvent);
-
+		getPoll(idPoll);
 }
-
 
 ]);

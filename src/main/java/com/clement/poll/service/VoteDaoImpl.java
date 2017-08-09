@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -15,24 +13,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import com.clement.poll.dto.Poll;
-import com.clement.poll.dto.Participation;
-import com.clement.poll.dto.Question;
 
 @Repository
-public class ParticipationDaoImpl {
+public class VoteDaoImpl {
 
 	final static float DISTRIBUTION_FACTOR = 2F;
 
 	final static String NEW_LINE_SEPARATOR = "\n";
 
-	static final Logger LOG = LoggerFactory.getLogger(ParticipationDaoImpl.class);
+	static final Logger LOG = LoggerFactory.getLogger(VoteDaoImpl.class);
 
 	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	private DateFormat dfHour = new SimpleDateFormat("dd/MM/yyyy hh:mm");

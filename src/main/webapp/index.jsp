@@ -12,22 +12,22 @@
 <link rel="stylesheet" href="app.css">
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="css/angular-material.min.css">
+<link rel="stylesheet" href="css/angular-growl.min.css">
 </head>
 <body style="padding-top: 70px; background-color: #DDDAE8;">
 
 <div  ng-view></div>
-
-
   <script src="js/fusioncharts.js"></script>
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.min.js"></script>
+  <script src="js/angular-cookies.min.js"></script>
   <script src="js/angular-animate.min.js"></script>
   <script src="js/angular-aria.min.js"></script>
   <script src="js/angular-messages.min.js"></script>
-  
-    <script src="js/angular-fusioncharts.min.js"></script>
+  <script src="js/angular-fusioncharts.min.js"></script>
+  <script src="js/angular-growl.min.js"></script>
   <script src="vote/list_vote.js"></script>
-  <script src="managePoll/manager_poll.js"></script>
+ <script src="managePoll/manager_poll.js"></script>
   <script src="app.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>

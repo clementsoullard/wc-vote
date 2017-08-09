@@ -4,28 +4,22 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.clement.poll.dto.Poll;
-import com.clement.poll.dto.Participation;
 import com.clement.poll.service.storage.StorageService;
 
 @Component
 public class PollService {
 	@Autowired
-	EventRepository eventRepository;
+	PollRepository eventRepository;
 
 	@Autowired
 	StorageService storageService;
@@ -59,7 +53,7 @@ public class PollService {
 		return poll;
 	}
 
-	public Poll saveEvent(Poll poll) throws IOException {
+	public Poll savePoll(Poll poll) throws IOException {
 		eventRepository.save(poll);
 		return poll;
 	}

@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.clement.poll.service.ParticipationDaoImpl;
+import com.clement.poll.service.VoteDaoImpl;
 import com.clement.poll.service.storage.StorageFileNotFoundException;
 import com.clement.poll.service.storage.StorageProperties;
 import com.clement.poll.service.storage.StorageService;

@@ -3,13 +3,15 @@
 // Declare app level module which depends on views, and components
 angular.module('voteApp', [
   'ngRoute',
-  'voteApp.vote',
+  'ngCookies',
+   'voteApp.vote',
   'voteApp.voteManager',
   'voteApp.version',
   'ngAnimate',
   'ngMaterial',
   'angularFileUpload',
-  'ng-fusioncharts'
+  'ng-fusioncharts',
+  'angular-growl'
   ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
