@@ -4,11 +4,11 @@ angular.module('voteApp.voteManager', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/manageVote/:id', {
-    templateUrl: 'managePoll/manager_poll.jsp',
+    templateUrl: 'view/managePoll/manager_poll.jsp',
     controller: 'voteMgrCtrl'
   })
   .when('/manageVote', {
-    templateUrl: 'managePoll/manager_poll.jsp',
+    templateUrl: 'view/managePoll/manager_poll.jsp',
     controller: 'voteMgrCtrl'
   })
 }])

@@ -4,11 +4,11 @@ angular.module('voteApp.vote', ['ngRoute','ngCookies'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/vote', {
-    templateUrl: 'vote/list_vote.jsp',
+    templateUrl: 'view/vote/list_vote.jsp',
     controller: 'listVoteCtrl'
   })
   .when('/vote/:idPoll', {
-	    templateUrl: 'vote/vote.jsp',
+	    templateUrl: 'view/vote/vote.jsp',
 	    controller: 'voteCtrl'
 	  });
 }])

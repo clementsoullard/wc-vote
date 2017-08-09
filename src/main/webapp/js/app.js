@@ -10,7 +10,6 @@ angular.module('voteApp', [
   'ngAnimate',
   'ngMaterial',
   'angularFileUpload',
-  'ng-fusioncharts',
   'angular-growl'
   ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
