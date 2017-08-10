@@ -27,5 +27,9 @@
 			</div>
 		</form>
 		<hr>
+		<hc-pie-chart title="Browser usage" data="pieData">Placeholder for pie chart</hc-pie-chart>
 	</div>
+	
+
+     
 </div>

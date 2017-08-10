@@ -24,8 +24,11 @@
   <script src="components/js/angular-aria.min.js"></script>
   <script src="components/js/angular-messages.min.js"></script>
   <script src="components/js/angular-growl.min.js"></script>
-  <script src="js/vote/list_vote.js"></script>
- <script src="js/managePoll/manager_poll.js"></script>
+  <script  src="components/js/highcharts.js"></script>
+  <script src="js/directives/highcharts-directive.js"></script>
+  <script src="js/controllers/vote/ctrl_list_poll.js"></script>
+  <script src="js/controllers/vote/ctrl_vote.js"></script>
+  <script src="js/controllers/managePoll/manager_poll.js"></script>
   <script src="js/app.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
