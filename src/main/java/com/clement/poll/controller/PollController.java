@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clement.poll.dto.Vote;
+import com.clement.poll.dto.ChartData;
 import com.clement.poll.dto.ParticipationStats;
 import com.clement.poll.dto.Poll;
+import com.clement.poll.dto.Slice;
 import com.clement.poll.dto.TransactionResult;
 import com.clement.poll.service.VoteDaoImpl;
 import com.clement.poll.service.VoteRepository;
@@ -56,8 +58,8 @@ public class PollController {
 	}
 
 	@GetMapping("/ws-active-polls")
-	public List<Poll> getActiveEvents() throws Exception {
-		List<Poll> polls = pollService.getCurrentOpenEvent();
+	public List<Poll> getActivePoll() throws Exception {
+		List<Poll> polls = pollService.getCurrentOpenPoll();
 		return polls;
 	}
 
@@ -66,9 +68,29 @@ public class PollController {
 		return pollService.savePoll(event);
 	}
 
-	@GetMapping("/ws-vote/{idVote}")
-	public Poll getEvent(@PathVariable("idVote") String idEvent) throws Exception {
-		return pollService.getEvent(idEvent);
+	/**
+	 * Get a poll based on the id passed in argument
+	 * 
+	 * @param idPoll
+	 * @return
+	 * @throws Exception
+	 */
+	@GetMapping("/ws-vote/{idPoll}")
+	public Poll getPoll(@PathVariable("idPoll") String idPoll) throws Exception {
+		return pollService.getPoll(idPoll);
+	}
+
+	/**
+	 * Get a poll result on the id passed in argument
+	 * 
+	 * @param idPoll
+	 * @return
+	 * @throws Exception
+	 */
+
+	@GetMapping("/ws-poll-result/{idPoll}")
+	public List<Slice> getPollResult(@PathVariable("idPoll") String idPoll) throws Exception {
+		return pollService.getPollResult(idPoll);
 	}
 
 	/**

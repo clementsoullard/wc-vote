@@ -21,7 +21,7 @@ angular.module('voteApp.vote', ['ngRoute','ngCookies'])
                         data: '='
                     },
                     link: function (scope, element) {
-                        Highcharts.chart(element[0], {
+                    	var chart = Highcharts.chart(element[0], {
                             chart: {
                                 type: 'pie'
                             },
@@ -42,6 +42,12 @@ angular.module('voteApp.vote', ['ngRoute','ngCookies'])
                                 data: scope.data
                             }]
                         });
+                        
+                        scope.$watch("data", function (newValue) {
+                            chart.series[0].setData(newValue, true);
+                            console.log("What is the shit");
+                          }, true);
+
                     }
                 };
             })

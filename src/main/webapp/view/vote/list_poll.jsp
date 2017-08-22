@@ -26,16 +26,19 @@
 				class="btn btn-info col-sm-2" 
 				>Modify</button> 
 				</a>
-		</sec:authorize>
+				
+			</sec:authorize>
+		
+	
+	
 		<sec:authorize	access="isAnonymous()">
-				<span 
-				class="col-sm-2" 
-				></span>
-		</sec:authorize>
-
-		<sec:authorize	access="isAnonymous()">
+		
+		Vote pour: {{poll.voteFor}}
+		
+		Vote contre: {{poll.voteAgainst}}
+		
 			 <input type="submit"
-				class="btn btn-info col-sm-2" ng-click="vote(poll)"
+				class="btn btn-info col-sm-2" ng-disabled="!poll.active" ng-click="vote(poll)"
 				value="Vote" />
 			<!-- Displayed only in case the user is authenticated -->
 		</sec:authorize>

@@ -28,7 +28,7 @@
 
 				<div flex-gt-xs>
 					<md-datepicker md-placeholder="Enter date"
-						ng-model="poll.dateMaxVote"></md-datepicker>
+						ng-model="poll.dateMaxVoteDp"></md-datepicker>
 				</div>
 			</div>
 

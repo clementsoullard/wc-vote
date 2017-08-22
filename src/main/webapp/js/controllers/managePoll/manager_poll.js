@@ -3,11 +3,11 @@
 angular.module('voteApp.voteManager', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/manageVote/:id', {
+  $routeProvider.when('/poll/:id', {
     templateUrl: 'view/managePoll/manager_poll.jsp',
     controller: 'voteMgrCtrl'
   })
-  .when('/manageVote', {
+  .when('/poll', {
     templateUrl: 'view/managePoll/manager_poll.jsp',
     controller: 'voteMgrCtrl'
   })
@@ -53,13 +53,11 @@ angular.module('voteApp.voteManager', ['ngRoute'])
 		    $http.get('ws/poll/'+voteId).
 		        success(function(data) {
 		        // Converting the JSON format to the the Java Script date format.
-		        	
-	       	  	data.dateEventDp=new Date(data.date);
-	       	  	data.dateMaxRegistrationDp=new Date(data.dateMaxRegistration);
-	       	  	console.log('Date'+data.dateMaxRegistrationDp);
+	       	  	data.dateMaxVoteDp=new Date(data.dateMaxVote);
+	       	  	console.log('Date'+data.dateMaxVoteDp);
 
-	       	  	$scope.event=data;
-	       	  	console.log("Chargement de l'event "+voteId);
+	       	  	$scope.poll=data;
+	       	  	console.log("Chargement du Poll "+voteId);
 
 		        }).
 				error(function(data) {
@@ -74,13 +72,16 @@ angular.module('voteApp.voteManager', ['ngRoute'])
 	 * Insert a new entry fonction or update (if the id have been specified)
 	 */
 	 $scope.update = function (poll) {
-     	//poll.date=poll.dateMaxVote;
+     	poll.dateMaxVote=poll.dateMaxVoteDp;
+   	  	console.log('Date'+poll.dateMaxVoteDp);
+
+     	
     	$http.post('ws-poll',poll).
 	        success(function(data) {
 	     	  	$scope.message='Poll registered.';
 	       	  	$scope.error=false;
 	       	  	// Converting the date to a datepicker format (after the post is done the event is reloaded from server side
-	       	  	data.dateMaxVote=new Date(data.dateMaxVote);
+	       	  	data.dateMaxVoteDp=new Date(data.dateMaxVote);
 
 	       	  	$scope.poll=data;
 	       	  	$location.path('/poll/'+data.idr);
@@ -98,16 +99,16 @@ angular.module('voteApp.voteManager', ['ngRoute'])
  * List the entries
  */		
 	 function list(){
-		 $http.get('ws/event').
+		 $http.get('ws/poll').
 	      success(function(data) {
 	    //    	console.log(JSON.stringify(data._embedded));
-	            $scope.events = data._embedded.event;
+	            $scope.events = data._embedded.poll;
 	        });
 		 }
 	/**
 	* Remove an event
 	*/		
-	$scope.remove = function(id){ $http.delete('ws/event/'+id).
+	$scope.remove = function(id){ $http.delete('ws/poll/'+id).
 			success(function(data) {
 		  	$scope.message='The entry has been removed.';
 			list();

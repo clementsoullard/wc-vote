@@ -61,7 +61,7 @@ public class VoteDaoImpl {
 			// initialize CSVPrinter object
 			csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
 
-			Poll event = eventService.getEvent(idEvent);
+			Poll event = eventService.getPoll(idEvent);
 			// Create CSV file header
 			csvFilePrinter.printRecord(
 					"Participation à l'évenement " + event.getName() + " du " + df.format(event.getDateMaxVote()));

@@ -1,8 +1,6 @@
 package com.clement.poll.dto;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
@@ -14,13 +12,9 @@ import org.springframework.data.annotation.Id;
  */
 public class Poll {
 
-	public String getIdr() {
-		return id;
-	}
+	private int voteFor;
 
-	public void setIdr(String id) {
-		this.id = id;
-	}
+	private int voteAgainst;
 
 	@Id
 	private String id;
@@ -48,7 +42,14 @@ public class Poll {
 	 * The creation Date
 	 */
 	private Date creationDate;
-	
+
+	public String getIdr() {
+		return id;
+	}
+
+	public void setIdr(String id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -88,6 +89,22 @@ public class Poll {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public int getVoteFor() {
+		return voteFor;
+	}
+
+	public void setVoteFor(int voteFor) {
+		this.voteFor = voteFor;
+	}
+
+	public int getVoteAgainst() {
+		return voteAgainst;
+	}
+
+	public void setVoteAgainst(int voteAgainst) {
+		this.voteAgainst = voteAgainst;
 	}
 
 }

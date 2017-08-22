@@ -3,9 +3,10 @@
 angular.module('voteApp.vote')
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/vote', {
-    templateUrl: 'view/vote/list_vote.jsp',
+    templateUrl: 'view/vote/list_poll.jsp',
     controller: 'listVoteCtrl'
   })
+  
   .when('/vote/:idPoll', {
 	    templateUrl: 'view/vote/vote.jsp',
 	    controller: 'voteCtrl'

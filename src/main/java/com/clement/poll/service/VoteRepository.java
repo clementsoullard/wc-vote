@@ -10,7 +10,7 @@ import com.clement.poll.dto.Vote;
 
 @RepositoryRestResource(collectionResourceRel = "vote", path = "vote")
 public interface VoteRepository extends MongoRepository<Vote, String> {
-	
+
 	/**
 	 * 
 	 * @param pollId
@@ -18,4 +18,6 @@ public interface VoteRepository extends MongoRepository<Vote, String> {
 	 * @return
 	 */
 	List<Vote> findByPollIdAndTracer(String pollId, String tracer);
+
+	int countByAnswerAndPollId(Boolean answer, String pollId);
 }
