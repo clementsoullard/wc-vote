@@ -42,6 +42,18 @@
     background-color: #78FA89;
   }
 
+.OK{
+    background-color: #b9e39f;
+}
+.KO{
+	    background-color: #ff8c8c;
+}
+.PENDING{
+    background-color: #FFFFFF;
+}
+.DRAW{
+    background-color: #bccfde;
+}
 .redInfamed { color: #AA0000; }
 .green { color: #00AA00; }
 .my-drop-zone { border: dotted 3px lightgray; }

@@ -59,7 +59,7 @@ public class PollController {
 
 	@GetMapping("/ws-active-polls")
 	public List<Poll> getActivePoll() throws Exception {
-		List<Poll> polls = pollService.getCurrentOpenPoll();
+		List<Poll> polls = pollService.getCurrentOpenPolls();
 		return polls;
 	}
 

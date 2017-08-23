@@ -42,6 +42,10 @@ public class Poll {
 	 * The creation Date
 	 */
 	private Date creationDate;
+	/**
+	 * OK, DRAW, KO, NOT COMPLETED
+	 */
+	private String conclusion;
 
 	public String getIdr() {
 		return id;
@@ -105,6 +109,14 @@ public class Poll {
 
 	public void setVoteAgainst(int voteAgainst) {
 		this.voteAgainst = voteAgainst;
+	}
+
+	public String getConclusion() {
+		return conclusion;
+	}
+
+	public void setConclusion(String conclusion) {
+		this.conclusion = conclusion;
 	}
 
 }

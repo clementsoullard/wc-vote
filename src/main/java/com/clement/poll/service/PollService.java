@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import com.clement.poll.AppConstants;
 import com.clement.poll.dto.ChartData;
 import com.clement.poll.dto.Poll;
 import com.clement.poll.dto.Slice;
@@ -39,7 +40,7 @@ public class PollService {
 	@Autowired
 	MongoTemplate mongoTemplate;
 
-	public List<Poll> getCurrentOpenPoll() {
+	public List<Poll> getCurrentOpenPolls() {
 		try {
 			Calendar calendar = Calendar.getInstance();
 			calendar.add(Calendar.MONTH, -2);
@@ -57,6 +58,18 @@ public class PollService {
 				poll.setVoteFor(voteFor);
 				int voteAgainst = voteRepository.countByAnswerAndPollId(false, poll.getIdr());
 				poll.setVoteAgainst(voteAgainst);
+
+				if (poll.getActive() == false) {
+					if (voteFor > voteAgainst) {
+						poll.setConclusion(AppConstants.OK);
+					} else if (voteFor == voteAgainst) {
+						poll.setConclusion(AppConstants.DRAW);
+					} else {
+						poll.setConclusion(AppConstants.KO);
+					}
+				} else {
+					poll.setConclusion(AppConstants.PENDING);
+				}
 
 			}
 

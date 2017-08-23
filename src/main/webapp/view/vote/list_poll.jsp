@@ -17,7 +17,7 @@
 	</div>
 
 	<div ng-repeat="poll in polls">
-		<div style="background-color: white; padding: 10px; margin: 2px; " class="row">
+		<div ng-class="poll.conclusion" style="padding: 10px; margin: 2px; " class="row">
 				<h3 class="col-sm-5">{{poll.name}}</h3>
 				
 				<h3 class="col-sm-3"></h3>
@@ -32,11 +32,6 @@
 	
 	
 		<sec:authorize	access="isAnonymous()">
-		
-		Vote pour: {{poll.voteFor}}
-		
-		Vote contre: {{poll.voteAgainst}}
-		
 			 <input type="submit"
 				class="btn btn-info col-sm-2" ng-disabled="!poll.active" ng-click="vote(poll)"
 				value="Vote" />
